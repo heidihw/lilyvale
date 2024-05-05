@@ -6,6 +6,15 @@
   index.css landing page styles specific to index.html if needed
 */
 
-body {
+div {
+  position: relative;
+}
 
+div button {
+  position: absolute;
+  bottom: 50%;
+  left: 10%;
+  border: none;
+  background-color: peachpuff;
+  padding: 10px 30px 10px 30px;
 }
