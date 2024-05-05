@@ -1,3 +1,11 @@
+/*
+  Name:    Heidi Wang
+  Date:    2024 05 05 Sun
+  Section: CSE 154 AG
+
+  list.css styles specific to list.html
+*/
+
 body > div {
   text-align: right;
 }
@@ -21,6 +29,7 @@ section#items {
 }
 
 article {
+  background-color: gainsboro;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -28,7 +37,6 @@ article {
   width: 200px;
   margin: 10px;
   padding: 25px 0px 0px;
-  background-color: gainsboro;
 }
 
 img {
@@ -36,7 +44,7 @@ img {
   height: 150px;
 }
 
-section.line {
+div.line {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;

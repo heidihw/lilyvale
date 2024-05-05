@@ -17,23 +17,31 @@ nav {
   margin: 0px;
   padding: 10px;
   height: 40px;
+  text-align: right;
   position: fixed;
-  top: 0;
   width: 100%;
   right: 0;
-  text-align: right;
+  top: 0;
 }
 
 nav input {
-  border: none;
   width: 25%;
   height: 40px;
-  margin-right: 375px;
+  margin-right: 25%;
   padding-left: 10px;
+  border: none;
+}
+
+nav a {
+  padding: 0px 2%;
 }
 
 footer {
-  background-color: lightcoral;
+  background-color: lightpink;
+  margin-top: 150px;
   padding: 30px;
   text-align: right;
+  position: absolute;
+  width: 100%;
+  right: 0;
 }
