@@ -8,14 +8,32 @@
 
 body {
   background-color: #F2F3F4;
-  margin: 0% 16%;
+  margin: 90px 16% 0%;
+  font-family: "Titillium Web", "arial", sans-serif;
 }
 
 nav {
-  background-color:aqua;
+  background-color: peachpuff;
   margin: 0px;
+  padding: 10px;
+  height: 40px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  right: 0;
+  text-align: right;
 }
 
-input {
+nav input {
   border: none;
+  width: 25%;
+  height: 40px;
+  margin-right: 375px;
+  padding-left: 10px;
+}
+
+footer {
+  background-color: lightcoral;
+  padding: 30px;
+  text-align: right;
 }

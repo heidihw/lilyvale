@@ -1,13 +1,23 @@
-section#filters {
+body > div {
+  text-align: right;
+}
+
+section {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+section#filters {
+  flex-direction: column;
+  margin: 10px;
+  width: 18%;
 }
 
 section#items {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  width: 82%;
 }
 
 article {
@@ -33,5 +43,6 @@ section.line {
   width: 150px;
 }
 
-section.line p {
+select {
+  margin: 16px 0%;
 }
