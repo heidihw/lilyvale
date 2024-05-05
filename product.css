@@ -1,0 +1,16 @@
+/*
+  Name: Daria Manguling
+  Date: 5 May 2024
+  CSE 154 Section AG
+
+  This is the css specific page for the product.html page.
+ */
+
+img {
+  width: 450px;
+  margin-right: 40px;
+}
+
+#product-listing {
+  display: flex;
+}
