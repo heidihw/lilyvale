@@ -8,10 +8,12 @@
 
 body {
   background-color: #F2F3F4;
+  margin: 0% 16%;
 }
 
 nav {
   background-color:aqua;
+  margin: 0px;
 }
 
 input {

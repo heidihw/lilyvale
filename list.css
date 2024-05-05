@@ -1,0 +1,37 @@
+section#filters {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+section#items {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+article {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 200px;
+  margin: 10px;
+  padding: 25px 0px 0px;
+  background-color: gainsboro;
+}
+
+img {
+  width: 150px;
+  height: 150px;
+}
+
+section.line {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 150px;
+}
+
+section.line p {
+}
