@@ -16,17 +16,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
     <script src="list.js"></script>
     <script src="product.js"></script>
-    <title>List | Anime Shopping Site</title>
+    <title>List | SITE NAME</title>
   </head>
   <body>
     <nav>
-      <input type="text" placeholder="Search">
-      <a href="index.html">Home</a>
-      <a href="list.html">All Items</a>
-      <a href="cart.html">Cart</a>
-      <a href="history.html">History</a>
+      <div>
+        <h1>SITE NAME</h1>
+        <input type="text" placeholder="Search">
+      </div>
+      <div>
+        <a href="index.html">Home</a>
+        <a href="list.html">All Items</a>
+        <a href="product.html">This Item</a>
+        <a href="cart.html">Cart</a>
+        <a href="purchase.html">Payment</a>
+        <a href="history.html">History</a>
+      </div>
     </nav>
-    <h1>Anime Shopping Site</h1>
     <h2>All Items</h2>
     <div>
       <label for="sort">Sort:</label>
@@ -59,6 +65,8 @@
           <label for="toradora">Toradora</label><br>
           <input type="checkbox" id="re-zero" name="re-zero">
           <label for="re-zero">Re:Zero</label><br>
+          <input type="checkbox" id="fate-stay-night" name="fate-stay-night">
+          <label for="fate-stay-night">Fate/Stay Night</label><br>
         </div>
         <div>
           <p>Price:</p>
@@ -72,7 +80,9 @@
       </section>
       <section id="items">
         <article>
-          <img src="img/item1.png" alt="item1">
+          <div class="img">
+            <img src="imgs/toradora-taiga-figurine.jpeg" alt="Taiga">
+          </div>
           <a href="product.html" class="listing-link">Toradora Taiga Plush</a>
           <div class="line">
             <p>$25</p>
@@ -80,15 +90,19 @@
           </div>
         </article>
         <article>
-          <img src="img/item2.png" alt="item2">
-          <a href="product.html" class="listing-link">Re:Zero Saber Pin</a>
+          <div class="img">
+            <img src="imgs/rezero-rem-figurine.jpeg" alt="Emilia">
+          </div>
+          <a href="product.html" class="listing-link">Re:Zero Emilia Pin</a>
           <div class="line">
             <p>$10</p>
             <p>5 stars</p>
           </div>
         </article>
         <article>
-          <img src="img/item3.png" alt="item3">
+          <div class="img">
+            <img src="imgs/toradora-taiga-figurine.jpeg" alt="Taiga">
+          </div>
           <a href="product.html" class="listing-link">Toradora Taiga Keychain</a>
           <div class="line">
             <p>$10</p>
@@ -96,7 +110,9 @@
           </div>
         </article>
         <article>
-          <img src="img/item4.png" alt="item4">
+          <div class="img">
+            <img src="imgs/toradora-taiga-figurine.jpeg" alt="Taiga">
+          </div>
           <a href="product.html" class="listing-link">Toradora Taiga Standee</a>
           <div class="line">
             <p>$15</p>
@@ -104,8 +120,10 @@
           </div>
         </article>
         <article>
-          <img src="img/item5.png" alt="item5">
-          <a href="product.html" class="listing-link">Re:Zero Saber Poster</a>
+          <div class="img">
+            <img src="imgs/rezero-rem-figurine.jpeg" alt="Saber">
+          </div>
+          <a href="product.html" class="listing-link">Fate/Stay Night Saber Poster</a>
           <div class="line">
             <p>$20</p>
             <p>5 stars</p>

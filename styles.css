@@ -13,21 +13,33 @@ body {
 }
 
 nav {
+  display: flex;
   background-color: peachpuff;
   margin: 0px;
   padding: 10px;
   height: 40px;
-  text-align: right;
   position: fixed;
   width: 100%;
   right: 0;
   top: 0;
 }
 
+nav div {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 50%;
+}
+
+nav h1 {
+  display: inline;
+  margin: 0;
+}
+
 nav input {
-  width: 25%;
+  width: 50%;
   height: 40px;
-  margin-right: 25%;
+  margin: 0% 10%;
   padding-left: 10px;
   border: none;
 }
