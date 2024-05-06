@@ -3,9 +3,9 @@
   Date:    2024 05 05 Sun
   Section: CSE 154 AG
 
-  history.css styles specific to history.html
-  pt.2
-*/
+  Formats the list of previous transactions in a list view that prioritizes the ease of
+  viewing each individual card.
+  */
 
 article {
   display: flex;
