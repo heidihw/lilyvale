@@ -7,7 +7,7 @@
   website. This css page mainly helps with page layout and maintaining the website's white and
   peach with black text aesthetic
 */
-section {
+section > img {
   position: relative;
 }
 
@@ -24,7 +24,7 @@ figcaption {
 section button {
   position: absolute;
   bottom: 50%;
-  left: 10%;
+  left: 20%;
   border: none;
   padding: 10px 30px 10px 30px;
 }
