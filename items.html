@@ -4,8 +4,8 @@
   Date:    2024 05 05 Sun
   Section: CSE 154 AG
 
-  list
-  pt.1-1
+  Page that shows all items on sale.
+
 -->
 
 <html lang="en">
@@ -13,9 +13,9 @@
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="list.css">
-    <script src="list.js"></script>
-    <title>List | SITE NAME</title>
+    <link rel="stylesheet" href="items.css">
+    <script src="items.js"></script>
+    <title>Items | SITE NAME</title>
   </head>
   <body>
     <nav>
@@ -26,7 +26,7 @@
       <div>
         <a href="index.html">Home</a>
         <a href="index.html">Log in</a>
-        <a href="list.html">All Items</a>
+        <a href="items.html">All Items</a>
         <a href="product.html">This Item</a>
         <a href="cart.html">Cart</a>
         <a href="purchase.html">Payment</a>
@@ -75,12 +75,12 @@
         </div>
         <div>
           <p>Price:</p>
-          <input type="checkbox" id="0-10" name="0-10">
-          <label for="0-10">&lt;10</label><br>
-          <input type="checkbox" id="10-20" name="10-20">
-          <label for="10-20">10-20</label><br>
-          <input type="checkbox" id="20-n" name="20-n">
-          <label for="20-n">&gt;20</label><br>
+          <input type="checkbox" id="n0-10" name="n0-10">
+          <label for="n0-10">&lt;10</label><br>
+          <input type="checkbox" id="n10-20" name="n10-20">
+          <label for="n10-20">10-20</label><br>
+          <input type="checkbox" id="n20-n" name="n20-n">
+          <label for="n20-n">&gt;20</label><br>
         </div>
       </section>
       <section id="items" class="list-view">

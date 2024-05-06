@@ -4,7 +4,7 @@
  * CSE 154 Section AG, Allison and Marina
  *
  * This is the product.js for specific interactivity for the product.html page.
- * Specifically, it displays whatever product a user clicks on from the list.html.
+ * Specifically, it displays whatever product a user clicks on from the items.html.
  */
 'use strict';
 (function() {
