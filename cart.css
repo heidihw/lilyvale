@@ -3,8 +3,8 @@
   Date:    2024 05 05 Sun
   Section: CSE 154 AG
 
-  cart.css styles specific to cart.html
-  pt.1-2
+  Formats the display of the information on the item in the cart in a manner similar to the
+  all items list view display but optimized for the individual card.
 */
 
 body > div {
