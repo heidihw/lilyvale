@@ -3,21 +3,33 @@
   Date:    2024 05 05 Sun
   Section: CSE 154 AG
 
-  cart.css styles specific to cart.html
-  pt.1-2
+  history.css styles specific to history.html
+  pt.2
 */
-
-body > div {
-  text-align: right;
-}
 
 article {
   display: flex;
-  align-items: end;
+  flex-direction: column;
+  justify-content: end;
   background-color: gainsboro;
   margin: 25px 0;
-  padding: 25px;
-  height: 200px;
+  padding: 15px;
+  min-height: 200px;
+}
+
+article > div {
+  padding: 5px 10px;
+}
+
+div.order p {
+  margin: 0;
+}
+
+div.item {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: auto;
 }
 
 div.img {
