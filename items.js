@@ -22,7 +22,7 @@
       console.log(items.classList);
     });
 
-    let filters = document.querySelectorAll('input')
+    let filters = document.querySelectorAll('input');
     for (let i = 0; i < filters.length; i++) {
       filters[i].addEventListener('change', filter);
     }
