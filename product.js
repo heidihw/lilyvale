@@ -3,7 +3,7 @@
  * Date: 5 May 2025
  * CSE 154 Section AG, Allison and Marina
  *
- * This is the product.js for specific interactivity for the product.html page.
+ * This is the product.js for specific interactivity on the product.html page.
  * Specifically, it allows a user to write reviews and post them on the product's page.
  */
 'use strict';
