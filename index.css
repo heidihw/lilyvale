@@ -1,20 +1,51 @@
 /*
   Name:    Daria Manguling
   Date:    2024 05 05 Sun
-  Section: CSE 154 AG
+  Section: CSE 154 AG, Allison and Marina
 
-  index.css landing page styles specific to index.html if needed
+  This is the index.css page for the index.html, the landing page, of our anime ecommerce
+  website. This css page mainly helps with page layout and maintaining the website's white and
+  peach with black text aesthetic.
 */
-
-div {
+section > img {
   position: relative;
 }
 
-div button {
+figure {
+  flex-flow: column;
+}
+
+figcaption {
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+section button {
   position: absolute;
   bottom: 50%;
-  left: 10%;
+  left: 20%;
   border: none;
-  background-color: peachpuff;
   padding: 10px 30px 10px 30px;
+}
+
+figcaption, section button {
+  background-color: peachpuff;
+}
+
+section a:link, section a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+button:hover, figcaption:hover {
+  background: pink;
+}
+
+#secondary, figure {
+  display: flex;
+}
+
+#secondary img {
+  width: 300px;
 }
