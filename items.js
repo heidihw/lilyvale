@@ -3,7 +3,7 @@
  * Date:    2024 05 05 Sun
  * Section: CSE 154 AG
  *
- * list.js interactions specific to list.html
+ * items.js interactions specific to items.html
  * pt.1-1
  */
 
