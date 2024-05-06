@@ -38,6 +38,10 @@ section a:link, section a:visited {
   text-decoration: none;
 }
 
+button:hover, figcaption:hover {
+  background: pink;
+}
+
 #secondary, figure {
   display: flex;
 }
