@@ -22,7 +22,6 @@ section#filters {
 }
 
 section#items {
-  display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
   width: 82%;
@@ -45,10 +44,10 @@ article {
 
 div.img {
   display: flex;
-  width: 150px;
-  height: 150px;
   justify-content: center;
   align-items: center;
+  width: 150px;
+  height: 150px;
 }
 
 img {
@@ -62,7 +61,3 @@ div.line {
   flex-wrap: wrap;
   width: 150px;
 }
-
-/* div.img a {
-  white-space: normal;
-} */
