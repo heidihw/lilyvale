@@ -18,7 +18,7 @@
   }
 
   /**
-   *
+   * Displays button that allows user to write a review on a product.
    */
   function makeButton() {
     let reviewButton = gen('button');
@@ -28,7 +28,7 @@
   }
 
   /**
-   *
+   * Displays form for the user to write a review for a product.
    */
   function writeReview() {
     qs('#reviews button').parentNode.removeChild(qs('#reviews button'));
@@ -45,9 +45,9 @@
   }
 
   /**
-   *
-   * @param {*} text
-   * @param {*} content
+   * Creates a portion of what will be part of the form to write a review.
+   * @param {string} text - header for the specific portion of the review form.
+   * @param {string} content - signifies what part of the form a user is writing in.
    */
   function createLabelInput(text, content) {
     let label = gen('label');
@@ -61,7 +61,8 @@
   }
 
   /**
-   *
+   * Taking in user input from the write-a-review form, posts the user's review among the
+   * list of reviews for the product they reviewed.
    */
   function postReview() {
     let container = gen('article');
@@ -71,7 +72,7 @@
     let header = gen('h3');
     header.textContent = headerTitle;
     let rating = gen('h4');
-    rating.textContent = ratingValue + ' star(s)';
+    rating.textContent = ratingValue + ' Star(s)';
     let description = gen('p');
     description.textContent = descriptionText;
     container.appendChild(header);
@@ -84,7 +85,6 @@
 
   /**
    * Finds the element with the specified ID attribute.
-   *
    * @param {string} id - element ID
    * @returns {HTMLElement} DOM object associated with id.
    */
