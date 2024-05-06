@@ -49,11 +49,11 @@ nav a {
 }
 
 footer {
+  position: absolute;
+  width: 100%;
+  right: 0;
   background-color: lightpink;
   margin-top: 150px;
   padding: 30px;
   text-align: right;
-  position: absolute;
-  width: 100%;
-  right: 0;
 }
