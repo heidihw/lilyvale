@@ -6,6 +6,21 @@
   list.css styles specific to list.html
 */
 
-body {
+article {
+  display: flex;
+  align-items: end;
+  background-color: gainsboro;
+  margin: 2% 0%;
+  padding: 2%;
+  height: 200px;
+}
 
+article div {
+  margin-left: 2%;
+}
+
+img {
+  max-width: 200px;
+  max-height: 200px;
+  align-self: center;
 }
