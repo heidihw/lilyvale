@@ -19,10 +19,9 @@
     document.getElementById('view').addEventListener('change', () => {
       const items = document.getElementById('items');
       items.classList.toggle('list-view');
-      console.log(items.classList);
     });
 
-    let filters = document.querySelectorAll('input')
+    let filters = document.querySelectorAll('input');
     for (let i = 0; i < filters.length; i++) {
       filters[i].addEventListener('change', filter);
     }
@@ -32,7 +31,30 @@
    * Functionality for the filters.
    */
   function filter() {
-    console.log('cry');
+    let cleared = true;
+    let filters = document.querySelectorAll('input');
+    let selected = [];
+    for (let i = 0; i < filters.length; i++) {
+      if (filters[i].checked) {
+        selected.push(filters[i]);
+        cleared = false;
+      }
+    }
+    let items = document.querySelectorAll('article');
+    if (cleared) {
+      for (let i = 0; i < items.length; i++) {
+        items[i].style.display = 'unset';
+      }
+    } else {
+      for (let i = 0; i < items.length; i++) {
+        items[i].style.display = 'none';
+        for (let j = 0; j < selected.length; j++) {
+          if (items[i].classList.contains(selected[j].id)) {
+            items[i].style.display = 'unset';
+          }
+        }
+      }
+    }
   }
 
 })();
