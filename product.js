@@ -14,13 +14,13 @@
    * Initializes button to be able to write a review.
    */
   function init() {
-    reviewButton();
+    makeButton();
   }
 
   /**
    *
    */
-  function reviewButton() {
+  function makeButton() {
     let reviewButton = gen('button');
     reviewButton.textContent = 'Write a Review';
     id('reviews').appendChild(reviewButton);
@@ -70,7 +70,6 @@
     let headerTitle = id('title').value;
     let header = gen('h3');
     header.textContent = headerTitle;
-    console.log(header);
     let rating = gen('h4');
     rating.textContent = ratingValue + ' star(s)';
     let description = gen('p');
@@ -80,7 +79,7 @@
     container.appendChild(description);
     id('reviews').appendChild(container);
     id('write-review').parentNode.removeChild(id('write-review'));
-    reviewButton();
+    makeButton();
   }
 
   /**
@@ -89,7 +88,7 @@
    * @param {string} id - element ID
    * @returns {HTMLElement} DOM object associated with id.
    */
-   function id(id) {
+  function id(id) {
     return document.getElementById(id);
   }
 
@@ -98,7 +97,7 @@
    * @param {string} tag - HTML tag
    * @returns {HTMLElement} DOM object with specified HTML tag.
    */
-   function gen(tag) {
+  function gen(tag) {
     return document.createElement(tag);
   }
 
@@ -107,7 +106,7 @@
    * @param {string} selector - CSS query selector.
    * @returns {object} - DOM object associated selector.
    */
-   function qs(selector) {
+  function qs(selector) {
     return document.querySelector(selector);
   }
 })();
