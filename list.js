@@ -4,6 +4,7 @@
  * Section: CSE 154 AG
  *
  * list.js interactions specific to list.html
+ * pt.1-1
  */
 
 'use strict';
@@ -11,7 +12,11 @@
   window.addEventListener('load', init);
 
   function init() {
-
+    document.getElementById('view').addEventListener('change', () => {
+      const items = document.getElementById('items');
+      items.classList.toggle('list-view');
+      console.log(items.classList);
+    });
   }
 
 })();

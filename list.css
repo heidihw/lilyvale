@@ -4,11 +4,21 @@
   Section: CSE 154 AG
 
   list.css styles specific to list.html
+  pt.1-1
 */
+
+/* sort */
 
 body > div {
   text-align: right;
 }
+
+select {
+  margin: 16px;
+  margin-left: 0;
+}
+
+/* filter, items */
 
 section {
   display: flex;
@@ -27,9 +37,7 @@ section#items {
   width: 82%;
 }
 
-select {
-  margin: 16px 0%;
-}
+/* items default, grid-view */
 
 article {
   display: flex;
@@ -37,9 +45,9 @@ article {
   justify-content: space-between;
   align-items: center;
   background-color: gainsboro;
-  width: 150px;
   margin: 10px;
-  padding: 25px 25px 0px;
+  padding: 25px 25px 0;
+  width: 150px;
 }
 
 div.img {
@@ -60,4 +68,20 @@ div.line {
   justify-content: space-between;
   flex-wrap: wrap;
   width: 150px;
+}
+
+/* items specific list-view */
+
+section#items.list-view article {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: end;
+  margin: 25px 0;
+  padding: 25px;
+  width: 100%;
+  height: 150px;
+}
+
+section#items.list-view div.text {
+  margin-left: 25px;
 }
