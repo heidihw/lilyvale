@@ -35,16 +35,14 @@
    */
   /**
    * Heidi Wang
-   * Initializes the nav bar buttons.
+   * Initializes the nav bar.
    * Initializes the filters.
    * Toggles between grid and list view.
    */
   function init() {
-    const navBtns = document.querySelectorAll('nav button');
-    for (let i = 0; i < navBtns.length; i++) {
-      if (navBtns[i].id) {
-        navBtns[i].addEventListener('click', toggleScreens);
-      }
+    const links = document.querySelectorAll('a');
+    for (let i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', toggleScreens);
     }
 
     makeButton();
@@ -62,18 +60,22 @@
 
   /**
    * Heidi Wang
-   * Functionality for the nav bar buttons to toggle between screens.
+   * Functionality for the nav bar to toggle between screens.
    */
-  function toggleScreens(evt) {
-    evt.preventDefault();
+  function toggleScreens() {
+    // const url = window.location.href;
+    // const page = url.split('#');
+    // if (page.length > 1) {
+    // }
+    // window.scroll(0, 300);
     const pages = document.querySelectorAll('main > section');
     for (let i = 0; i < pages.length; i++) {
       if (!pages[i].classList.contains('hidden')) {
         pages[i].classList.add('hidden');
       }
     }
-    const page = this.id.split('-btn');
-    document.getElementById(page[0]).classList.toggle('hidden');
+    const page = this.href.split('#');
+    document.getElementById(page[1]).classList.toggle('hidden');
   }
 
   /**

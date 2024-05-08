@@ -65,6 +65,10 @@ nav input {
   border: none;
 }
 
+nav a {
+  padding: 0 2%;
+}
+
 /* footer */
 
 footer {
