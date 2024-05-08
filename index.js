@@ -40,10 +40,10 @@
    * Toggles between grid and list view.
    */
   function init() {
-    const url = window.location.href;
-    const page = url.split('#');
-    if (page.length > 1) {
-      goTo(page[1]);
+    const currUrl = window.location.href;
+    const splitUrl = currUrl.split('#');
+    if (splitUrl.length > 1) {
+      goTo(splitUrl[1]);
     }
     const links = document.querySelectorAll('a');
     for (let i = 0; i < links.length; i++) {
@@ -68,30 +68,30 @@
    * Functionality for the nav bar to toggle between screens.
    */
   function toggleScreens() {
-    // window.scroll(0, 300);
     const pages = document.querySelectorAll('main > section');
     for (let i = 0; i < pages.length; i++) {
       if (!pages[i].classList.contains('hidden')) {
         pages[i].classList.add('hidden');
       }
     }
-    const page = this.href.split('#');
-    document.getElementById(page[1]).classList.toggle('hidden');
+    const splitUrl = this.href.split('#');
+    document.getElementById(splitUrl[1]).classList.toggle('hidden');
+    window.scroll(0, 0);
   }
 
   /**
    * Heidi Wang
    * Functionality for going to the correct screen on load.
    */
-  function goTo(screen) {
-    // window.scroll(0, 300);
+  function goTo(page) {
     const pages = document.querySelectorAll('main > section');
     for (let i = 0; i < pages.length; i++) {
       if (!pages[i].classList.contains('hidden')) {
         pages[i].classList.add('hidden');
       }
     }
-    document.getElementById(screen).classList.toggle('hidden');
+    document.getElementById(page).classList.toggle('hidden');
+    window.scroll(0, 0);
   }
 
   /**
