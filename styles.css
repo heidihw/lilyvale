@@ -175,7 +175,7 @@ section#product #write-review {
   all items list view display but optimized for the individual card.
 */
 
-section#cart body > div {
+section#cart > div {
   text-align: right;
 }
 
@@ -215,6 +215,10 @@ section#cart div.text {
   Formats the list of previous transactions in a list view that prioritizes the ease of
   viewing each individual card.
 */
+
+section#history > div {
+  text-align: right;
+}
 
 section#history article {
   display: flex;
@@ -270,7 +274,7 @@ section#history div.text {
 
 /* sort */
 
-section#items body > div {
+section#items > div {
   text-align: right;
 }
 
