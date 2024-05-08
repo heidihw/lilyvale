@@ -113,6 +113,7 @@ section#index section button {
   left: 20%;
   border: none;
   padding: 10px 30px 10px 30px;
+  cursor: pointer;
 }
 
 section#index figcaption, section#index section button {
