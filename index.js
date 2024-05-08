@@ -35,10 +35,18 @@
    */
   /**
    * Heidi Wang
+   * Initializes the nav bar buttons.
    * Initializes the filters.
    * Toggles between grid and list view.
    */
   function init() {
+    const navBtns = document.querySelectorAll('nav button');
+    for (let i = 0; i < navBtns.length; i++) {
+      if (navBtns[i].id) {
+        navBtns[i].addEventListener('click', toggleScreens);
+      }
+    }
+
     makeButton();
 
     document.getElementById('view').addEventListener('change', () => {
@@ -50,6 +58,22 @@
     for (let i = 0; i < filters.length; i++) {
       filters[i].addEventListener('change', filter);
     }
+  }
+
+  /**
+   * Heidi Wang
+   * Functionality for the nav bar buttons to toggle between screens.
+   */
+  function toggleScreens(evt) {
+    evt.preventDefault();
+    const pages = document.querySelectorAll('main > section');
+    for (let i = 0; i < pages.length; i++) {
+      if (!pages[i].classList.contains('hidden')) {
+        pages[i].classList.add('hidden');
+      }
+    }
+    const page = this.id.split('-btn');
+    document.getElementById(page[0]).classList.toggle('hidden');
   }
 
   /**

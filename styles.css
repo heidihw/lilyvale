@@ -7,11 +7,31 @@
   the general styling for all pages for uniformity. The theme is peach and light pink.
 */
 
+/* to hide page sections */
+
+.hidden {
+  display: none;
+}
+
 body {
   background-color: #F2F3F4;
   margin: 90px 16% 0%;
   font-family: "Titillium Web", "Arial", "Helvetica", sans-serif;
 }
+
+a:link {
+  color: hsl(172, 100%, 24%);
+}
+
+a:visited {
+  color: hsl(173, 100%, 14%);
+}
+
+::selection {
+  background-color: hsl(37, 74%, 50%);
+}
+
+/* nav */
 
 nav {
   position: fixed;
@@ -45,9 +65,7 @@ nav input {
   border: none;
 }
 
-nav a {
-  padding: 0px 2%;
-}
+/* footer */
 
 footer {
   position: absolute;
@@ -59,24 +77,13 @@ footer {
   text-align: right;
 }
 
-a:link {
-  color: hsl(172, 100%, 24%);
-}
-
-a:visited {
-  color: hsl(173, 100%, 14%);
-}
-
-::selection {
-  background-color: hsl(37, 74%, 50%);
-}
-
 
 /*
   Name:    Daria Manguling
   Date:    2024 05 05 Sun
   Section: CSE 154 AG, Allison and Marina
 
+  index.css
   This is the index.css page for the index.html, the landing page, of our anime ecommerce
   website. This css page mainly helps with page layout and maintaining the website's white and
   peach with black text aesthetic.
@@ -132,6 +139,7 @@ section#index #secondary img {
   CSE 154 Section AG
 
   product.css
+  This is the css specific page for the product.html page.
 */
 
 section#product img {
