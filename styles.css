@@ -1,7 +1,7 @@
 /*
   Name:    Daria Manguling, Heidi Wang
   Date:    2024 05 05 Sun
-  Section: CSE 154 AG
+  Section: CSE 154 AG, Allison and Marina
 
   This is the styles.css for all pages of the anime merch ecommerce website. It provides
   the general styling for all pages for uniformity. The theme is peach and light pink.
@@ -57,4 +57,285 @@ footer {
   margin-top: 150px;
   padding: 30px;
   text-align: right;
+}
+
+a:link {
+  color: hsl(172, 100%, 24%);
+}
+
+a:visited {
+  color: hsl(173, 100%, 14%);
+}
+
+::selection {
+  background-color: hsl(37, 74%, 50%);
+}
+
+
+/*
+  Name:    Daria Manguling
+  Date:    2024 05 05 Sun
+  Section: CSE 154 AG, Allison and Marina
+
+  This is the index.css page for the index.html, the landing page, of our anime ecommerce
+  website. This css page mainly helps with page layout and maintaining the website's white and
+  peach with black text aesthetic.
+*/
+
+section > img {
+  position: relative;
+}
+
+figure {
+  flex-flow: column;
+}
+
+figcaption {
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+section button {
+  position: absolute;
+  bottom: 50%;
+  left: 20%;
+  border: none;
+  padding: 10px 30px 10px 30px;
+}
+
+figcaption, section button {
+  background-color: peachpuff;
+}
+
+section a:link, section a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+button:hover, figcaption:hover {
+  background: pink;
+}
+
+#secondary, figure {
+  display: flex;
+}
+
+#secondary img {
+  width: 300px;
+}
+
+
+/*
+  Name: Daria Manguling
+  Date: 5 May 2024
+  CSE 154 Section AG
+
+  product.css
+*/
+
+img {
+  width: 450px;
+  margin-right: 40px;
+}
+
+#product-listing, #write-review {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+#write-review {
+  flex-direction: column;
+  align-items: baseline;
+}
+
+
+/*
+  Name:    Heidi Wang
+  Date:    2024 05 05 Sun
+  Section: CSE 154 AG
+
+  cart.css
+  Formats the display of the information on the item in the cart in a manner similar to the
+  all items list view display but optimized for the individual card.
+*/
+
+body > div {
+  text-align: right;
+}
+
+article {
+  display: flex;
+  align-items: end;
+  background-color: gainsboro;
+  margin: 25px 0;
+  padding: 25px;
+  height: 200px;
+}
+
+div.img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+}
+
+img {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+div.text {
+  margin-left: 25px;
+}
+
+
+/*
+  Name:    Heidi Wang
+  Date:    2024 05 05 Sun
+  Section: CSE 154 AG
+
+  history.css
+  Formats the list of previous transactions in a list view that prioritizes the ease of
+  viewing each individual card.
+*/
+
+article {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  background-color: gainsboro;
+  margin: 25px 0;
+  padding: 15px;
+  min-height: 200px;
+}
+
+article > div {
+  padding: 5px 10px;
+}
+
+div.order p {
+  margin: 0;
+}
+
+div.item {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: auto;
+}
+
+div.img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+}
+
+img {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+div.text {
+  margin-left: 25px;
+}
+
+
+/*
+  Name:    Heidi Wang
+  Date:    2024 05 05 Sun
+  Section: CSE 154 AG
+
+  items.css
+  Sets up formatting for grid and list views and the filters sidebar.
+*/
+
+/* sort */
+
+body > div {
+  text-align: right;
+}
+
+select {
+  margin: 16px;
+  margin-left: 0;
+}
+
+/* filter, items */
+
+section {
+  display: flex;
+  flex-direction: row;
+}
+
+section#filters {
+  flex-direction: column;
+  margin: 10px;
+  width: 18%;
+}
+
+section#items {
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  width: 82%;
+}
+
+/* items default, grid-view */
+
+article {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: gainsboro;
+  margin: 10px;
+  padding: 25px 25px 0;
+  width: 150px;
+  height: 260px;
+}
+
+div.img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+}
+
+img {
+  max-width: 150px;
+  max-height: 150px;
+}
+
+div.text {
+  justify-content: end;
+}
+
+div.line {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 150px;
+}
+
+/* items specific list-view */
+
+section#items.list-view article {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: end;
+  margin: 12.5px 0;
+  padding: 25px;
+  width: 100%;
+  height: 150px;
+}
+
+section#items.list-view div.text {
+  margin-left: 25px;
 }
