@@ -40,6 +40,11 @@
    * Toggles between grid and list view.
    */
   function init() {
+    const url = window.location.href;
+    const page = url.split('#');
+    if (page.length > 1) {
+      goTo(page[1]);
+    }
     const links = document.querySelectorAll('a');
     for (let i = 0; i < links.length; i++) {
       links[i].addEventListener('click', toggleScreens);
@@ -63,10 +68,6 @@
    * Functionality for the nav bar to toggle between screens.
    */
   function toggleScreens() {
-    // const url = window.location.href;
-    // const page = url.split('#');
-    // if (page.length > 1) {
-    // }
     // window.scroll(0, 300);
     const pages = document.querySelectorAll('main > section');
     for (let i = 0; i < pages.length; i++) {
@@ -76,6 +77,21 @@
     }
     const page = this.href.split('#');
     document.getElementById(page[1]).classList.toggle('hidden');
+  }
+
+  /**
+   * Heidi Wang
+   * Functionality for going to the correct screen on load.
+   */
+  function goTo(screen) {
+    // window.scroll(0, 300);
+    const pages = document.querySelectorAll('main > section');
+    for (let i = 0; i < pages.length; i++) {
+      if (!pages[i].classList.contains('hidden')) {
+        pages[i].classList.add('hidden');
+      }
+    }
+    document.getElementById(screen).classList.toggle('hidden');
   }
 
   /**
