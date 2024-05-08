@@ -82,21 +82,21 @@ a:visited {
   peach with black text aesthetic.
 */
 
-section > img {
+section#index section > img {
   position: relative;
 }
 
-figure {
+section#index figure {
   flex-flow: column;
 }
 
-figcaption {
+section#index figcaption {
   text-align: center;
   padding-bottom: 10px;
   padding-top: 10px;
 }
 
-section button {
+section#index section button {
   position: absolute;
   bottom: 50%;
   left: 20%;
@@ -104,24 +104,24 @@ section button {
   padding: 10px 30px 10px 30px;
 }
 
-figcaption, section button {
+section#index figcaption, section#index section button {
   background-color: peachpuff;
 }
 
-section a:link, section a:visited {
+section#index section a:link, section#index section a:visited {
   color: black;
   text-decoration: none;
 }
 
-button:hover, figcaption:hover {
+section#index button:hover, section#index figcaption:hover {
   background: pink;
 }
 
-#secondary, figure {
+section#index #secondary, section#index figure {
   display: flex;
 }
 
-#secondary img {
+section#index #secondary img {
   width: 300px;
 }
 
@@ -134,20 +134,20 @@ button:hover, figcaption:hover {
   product.css
 */
 
-img {
+section#product img {
   width: 450px;
   margin-right: 40px;
 }
 
-#product-listing, #write-review {
+section#product #product-listing, section#product #write-review {
   display: flex;
 }
 
-.hidden {
+section#product .hidden {
   display: none;
 }
 
-#write-review {
+section#product #write-review {
   flex-direction: column;
   align-items: baseline;
 }
@@ -163,11 +163,11 @@ img {
   all items list view display but optimized for the individual card.
 */
 
-body > div {
+section#cart body > div {
   text-align: right;
 }
 
-article {
+section#cart article {
   display: flex;
   align-items: end;
   background-color: gainsboro;
@@ -176,7 +176,7 @@ article {
   height: 200px;
 }
 
-div.img {
+section#cart div.img {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -184,12 +184,12 @@ div.img {
   height: 200px;
 }
 
-img {
+section#cart img {
   max-width: 200px;
   max-height: 200px;
 }
 
-div.text {
+section#cart div.text {
   margin-left: 25px;
 }
 
@@ -204,7 +204,7 @@ div.text {
   viewing each individual card.
 */
 
-article {
+section#history article {
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -214,22 +214,22 @@ article {
   min-height: 200px;
 }
 
-article > div {
+section#history article > div {
   padding: 5px 10px;
 }
 
-div.order p {
+section#history div.order p {
   margin: 0;
 }
 
-div.item {
+section#history div.item {
   display: flex;
   flex-direction: row;
   align-items: end;
   justify-content: auto;
 }
 
-div.img {
+section#history div.img {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -237,12 +237,12 @@ div.img {
   height: 200px;
 }
 
-img {
+section#history img {
   max-width: 200px;
   max-height: 200px;
 }
 
-div.text {
+section#history div.text {
   margin-left: 25px;
 }
 
@@ -258,29 +258,29 @@ div.text {
 
 /* sort */
 
-body > div {
+section#items body > div {
   text-align: right;
 }
 
-select {
+section#items select {
   margin: 16px;
   margin-left: 0;
 }
 
 /* filter, items */
 
-section {
+section#items section {
   display: flex;
   flex-direction: row;
 }
 
-section#filters {
+section#items section#filters {
   flex-direction: column;
   margin: 10px;
   width: 18%;
 }
 
-section#items {
+section#items section#all-items {
   justify-content: space-evenly;
   flex-wrap: wrap;
   width: 82%;
@@ -288,7 +288,7 @@ section#items {
 
 /* items default, grid-view */
 
-article {
+section#items article {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -300,7 +300,7 @@ article {
   height: 260px;
 }
 
-div.img {
+section#items div.img {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -308,16 +308,16 @@ div.img {
   height: 150px;
 }
 
-img {
+section#items img {
   max-width: 150px;
   max-height: 150px;
 }
 
-div.text {
+section#items div.text {
   justify-content: end;
 }
 
-div.line {
+section#items div.line {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -326,7 +326,7 @@ div.line {
 
 /* items specific list-view */
 
-section#items.list-view article {
+section#items section#all-items.list-view article {
   flex-direction: row;
   justify-content: flex-start;
   align-items: end;
@@ -336,6 +336,6 @@ section#items.list-view article {
   height: 150px;
 }
 
-section#items.list-view div.text {
+section#items section#all-items.list-view div.text {
   margin-left: 25px;
 }
