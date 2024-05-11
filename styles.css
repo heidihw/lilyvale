@@ -14,17 +14,14 @@
 }
 
 body {
-  background-color: #F2F3F4;
+  /* background-color: #F2F3F4; */
   margin: 90px 16% 0%;
   font-family: "Titillium Web", "Arial", "Helvetica", sans-serif;
 }
 
-a:link {
-  color: hsl(172, 100%, 24%);
-}
-
-a:visited {
-  color: hsl(173, 100%, 14%);
+a:link, a:visited {
+  color: #3d52a0;
+  text-decoration: none;
 }
 
 ::selection {
@@ -39,10 +36,12 @@ nav {
   right: 0;
   top: 0;
   display: flex;
-  background-color: peachpuff;
+  background-color: #3d52a0;
+  color: #ede8f5;
   margin: 0px;
   padding: 10px;
   height: 40px;
+  user-select: none;
 }
 
 nav div {
@@ -69,13 +68,17 @@ nav a {
   padding: 0 2%;
 }
 
+nav a:link, nav a:visited {
+  color: #ede8f5;
+}
+
 /* footer */
 
 footer {
   position: absolute;
   width: 100%;
   right: 0;
-  background-color: lightpink;
+  background-color: #adbbda;
   margin-top: 150px;
   padding: 30px;
   text-align: right;
@@ -183,7 +186,7 @@ section#cart > div {
 section#cart article {
   display: flex;
   align-items: end;
-  background-color: gainsboro;
+  background-color: #ede8f5;
   margin: 25px 0;
   padding: 25px;
   height: 200px;
@@ -225,7 +228,7 @@ section#history article {
   display: flex;
   flex-direction: column;
   justify-content: end;
-  background-color: gainsboro;
+  background-color: #ede8f5;
   margin: 25px 0;
   padding: 15px;
   min-height: 200px;
@@ -298,7 +301,7 @@ section#items section#filters {
 }
 
 section#items section#all-items {
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-wrap: wrap;
   width: 82%;
 }
@@ -308,19 +311,20 @@ section#items section#all-items {
 section#items article {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
-  background-color: gainsboro;
   margin: 10px;
-  padding: 25px 25px 0;
+  padding: 0;
   width: 150px;
-  height: 260px;
+  height: 240px;
 }
 
 section#items div.img {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #ede8f5;
+  padding: 5px;
   width: 150px;
   height: 150px;
 }
@@ -331,14 +335,25 @@ section#items img {
 }
 
 section#items div.text {
+  flex-direction: column;
   justify-content: end;
+  height: 80px;
 }
 
 section#items div.line {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* flex-wrap: wrap; */
   width: 150px;
+}
+
+section#items a {
+  font-size: 80%;
+  font-family: "Arial", "Helvetica", sans-serif;
+}
+
+section#items p {
+  margin: 0;
 }
 
 /* items specific list-view */
