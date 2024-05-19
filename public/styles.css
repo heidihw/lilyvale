@@ -242,7 +242,7 @@ section#history div.order p {
   margin: 0;
 }
 
-section#history div.item {
+section#history article article {
   display: flex;
   flex-direction: row;
   align-items: end;
@@ -294,13 +294,13 @@ section#items section {
   flex-direction: row;
 }
 
-section#items section#filters {
+section#items section#filters-container {
   flex-direction: column;
   margin: 10px;
   width: 18%;
 }
 
-section#items section#all-items {
+section#items section#items-container {
   justify-content: space-between;
   flex-wrap: wrap;
   width: 82%;
@@ -358,7 +358,7 @@ section#items p {
 
 /* items specific list-view */
 
-section#items section#all-items.list-view article {
+section#items section#items-container.list-view article {
   flex-direction: row;
   justify-content: flex-start;
   align-items: end;
@@ -368,6 +368,6 @@ section#items section#all-items.list-view article {
   height: 150px;
 }
 
-section#items section#all-items.list-view div.text {
+section#items section#items-container.list-view div.text {
   margin-left: 25px;
 }

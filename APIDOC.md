@@ -1,28 +1,32 @@
-# Daria Manguling, Heidi Wang | API Documentation
+# Daria Manguling, Heidi Wang API Documentation
 *Fill in a short description here about the API's purpose.*
 
 This API provides 4 endpoints to search and filter a list of items, purchase items, and track past purchases.
 
-## *Fill in Endpoint 1 Title*
-**Request Format:** *Fill in example request format, i.e. the path*
+## Get all data
+**Request Format:** get
 
-**Request Type:** *Fill in request type*
+**Request Type:** GET
 
-**Returned Data Format**: Plain Text
+**Returned Data Format**: JSON
 
-**Description:** *Fill in description*
+**Description:** Gets all the data from the API.
 
-**Example Request:** *Fill in example request*
+**Example Request:** get
 
 **Example Response:**
-*Fill in example response in the ticks*
 
-```
+```json
+{
+  "history": [],
+  "filters": [],
+  "items": []
+}
 
 ```
 
 **Error Handling:**
-*Fill in an example of the error handling*
+File not found on the server
 
 
 ## *Fill in Endpoint 2 Title*

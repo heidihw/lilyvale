@@ -1,0 +1,114 @@
+{
+  "history": [
+    {
+      "id": 1726598321,
+      "time": "2024/03/12 Fri 16:39 pm",
+      "item": 1
+    },
+    {
+      "id": 1726598578,
+      "time": "2024/03/12 Fri 18:23 pm",
+      "item": 2
+    }
+  ],
+  "filters": {
+    "type": [
+      {
+        "id": "plush",
+        "name": "Plush"
+      },
+      {
+        "id": "pin",
+        "name": "Pin"
+      },
+      {
+        "id": "keychain",
+        "name": "Keychain"
+      },
+      {
+        "id": "poster",
+        "name": "Poster"
+      },
+      {
+        "id": "standee",
+        "name": "Standee"
+      }
+    ],
+    "franchise": [
+      {
+        "id": "toradora",
+        "name": "Toradora"
+      },
+      {
+        "id": "re-zero",
+        "name": "Re:Zero"
+      },
+      {
+        "id": "fate-stay-night",
+        "name": "Fate/Stay Night"
+      }
+    ]
+  },
+  "items": [
+    {
+      "id": 1,
+      "name": "Toradora Taiga Plush",
+      "price": 25,
+      "rating": 5,
+      "img-src": "../imgs/xie-lian-nendoroid.jpeg",
+      "filters": {
+        "type": "plush",
+        "franchise": "toradora"
+      },
+      "state": "purchased"
+    },
+    {
+      "id": 2,
+      "name": "Re:Zero Emilia Pin",
+      "price": 10,
+      "rating": 5,
+      "img-src": "../imgs/rezero-rem-figurine.jpeg",
+      "filters": {
+        "type": "pin",
+        "franchise": "re-zero"
+      },
+      "state": "purchased"
+    },
+    {
+      "id": 3,
+      "name": "Toradora Taiga Keychain",
+      "price": 10,
+      "rating": 5,
+      "img-src": "../imgs/toradora-set-one-bluray.jpeg",
+      "filters": {
+        "type": "keychain",
+        "franchise": "toradora"
+      },
+      "state": "cart"
+    },
+    {
+      "id": 4,
+      "name": "Toradora Taiga Standee",
+      "price": 15,
+      "rating": 5,
+      "img-src": "../imgs/toradora-taiga-figurine.jpeg",
+      "filters": {
+        "type": "standee",
+        "franchise": "toradora"
+      },
+      "state": "selling"
+    },
+    {
+      "id": 5,
+      "name": "Fate/Stay Night Saber Poster",
+      "price": 20,
+      "rating": 5,
+      "img-src": "../imgs/gojo-nendoroid.jpeg",
+      "filters": {
+        "type": "poster",
+        "franchise": "fate-stay-night"
+      },
+      "state": "selling"
+    }
+  ]
+}

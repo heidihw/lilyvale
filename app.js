@@ -8,6 +8,12 @@
 
 'use strict';
 
+const DATA_URL = 'data/data.json';
+
+const CLIENT_ERR_STATUS = 400;
+const SERVER_ERR_STATUS = 500;
+const LOCAL_PORT = 8000;
+
 const express = require('express');
 const app = express();
 
@@ -23,7 +29,15 @@ app.use(express.json()); // built-in middleware
 // for multipart/form-data (required with FormData)
 app.use(multer().none()); // requires the "multer" module
 
-/** TODO: app code here */
+app.get('/get', async function (req, res) {
+  try {
+    let data = await fs.readFile(DATA_URL, 'utf8');
+    data = JSON.parse(data);
+    res.type('json').send(data);
+  } catch (err) {
+    handleError(err, res);
+  }
+});
 
 /**
  * Sends the appropriate error message for the situation with the status code for a server error.

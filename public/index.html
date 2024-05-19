@@ -4,7 +4,7 @@
   Date:    2024 05 05 Sun
   Section: CSE 154 AG, Allison and Marina
 
-  This is the index.html for all pages of the anime shopping site.
+  This is the index.html for all views of the anime shopping site.
 -->
 
 <!-- All images and product names are from the crunchyroll store -->
@@ -37,41 +37,35 @@
 
     <main>
       <!--
-        Name: Daria Manguling
-        Date: 5 May 2024
-        CSE 154 Section AG, Allison and Marina
-
-        index.html
-        This index.html page is the landing page for our anime website. It's the first page the
+        Daria Manguling
+        index
+        This index section is the landing view for our anime website. It's the first view the
         the user sees.
       -->
 
       <section id="index">
         <section id="banner">
-          <img src="imgs/xie-lian-nendoroid.jpeg" alt="xie lian nendoroid">
+          <img src="../imgs/xie-lian-nendoroid.jpeg" alt="xie lian nendoroid">
           <form action="index.html#items">
             <button>Shop Now!</button>
           </form>
         </section>
         <section id="secondary">
           <figure>
-            <img src="imgs/rezero-rem-figurine.jpeg" alt="re zero rem figurine">
+            <img src="../imgs/rezero-rem-figurine.jpeg" alt="re zero rem figurine">
             <figcaption><a href="index.html#items">Shop Figurines</a></figcaption>
           </figure>
           <figure>
-            <img src="imgs/gojo-nendoroid.jpeg" alt="gojo nendoroid">
+            <img src="../imgs/gojo-nendoroid.jpeg" alt="gojo nendoroid">
             <figcaption><a href="index.html#items">Shop Plushies</a></figcaption>
           </figure>
         </section>
       </section>
 
       <!--
-        Name: Daria Manguling
-        Date: 5 May 2024
-        CSE 154 Section AG, Allison and Marina
-
-        purchase.html
-        This is the page the user sees when they're ready to make a purchase.
+        Daria Manguling
+        purchase
+        This is the view the user sees when they're ready to make a purchase.
       -->
 
       <section class="hidden" id="purchase">
@@ -80,19 +74,16 @@
       </section>
 
       <!--
-        Name: Daria Manguling
-        Date: 5 May 2024
-        CSE 154 Section AG, Allison and Marina
-
-        product.html
-        This is the page where if someone clicked on a product from the list.html, it will show them
+        Daria Manguling
+        product
+        This is the view where if someone clicked on a product from the list, it will show them
         more information about the product. Ratings and being able to rate the product are also
         included. As of 5 May 2024, this is the mock up and not dynamic.
       -->
 
       <section class="hidden" id="product">
         <section id="product-listing">
-          <img src="imgs/gojo-nendoroid.jpeg" alt="Gojo Nendoroid Figurine">
+          <img src="../imgs/gojo-nendoroid.jpeg" alt="Gojo Nendoroid Figurine">
           <section id="product-info">
             <h1>JUJUTSU KAISEN - Satoru Gojo Nendoroid (Suit Ver.)</h1>
             <p>rating here. Requires database to retrieve info</p>
@@ -125,39 +116,26 @@
       </section>
 
       <!--
-        Name:    Heidi Wang
-        Date:    2024 05 05 Sun
-        Section: CSE 154 AG
-
-        cart.html
-        Page that shows the item currently in the cart.
+        Heidi Wang
+        cart
+        View that shows the item currently in the cart to confirm the transaction.
       -->
 
       <section class="hidden" id="cart">
-        <h2>Cart</h2>
+        <h2>Confirm transaction</h2>
         <div>
-          <p>1 item</p>
+          <p><span></span> items</p>
         </div>
-        <article>
-          <div class="img">
-            <img src="imgs/toradora-taiga-figurine.jpeg" alt="Taiga">
-          </div>
-          <div class="text">
-            <p><a href="index.html#product">Toradora Taiga Plush</a></p>
-            <p>$25</p>
-          </div>
-        </article>
+        <section id="cart-container"></section>
         <section>
           <a href="index.html#purchase">Proceed to payment</a>
+          <!-- to submit transaction -->
         </section>
       </section>
 
       <!--
-        Name:    Heidi Wang
-        Date:    2024 05 05 Sun
-        Section: CSE 154 AG
-
-        history.html
+        Heidi Wang
+        history
         Shows a list of previous transactions with the order confirmation number and item name,
         among other information.
       -->
@@ -165,47 +143,16 @@
       <section class="hidden" id="history">
         <h2>History</h2>
         <div>
-          <p>2 past purchases</p>
+          <p><span></span> past purchases</p>
         </div>
-        <article>
-          <div class="order">
-            <p>Time: 2024/03/12 Fri 16:39 pm</p>
-            <p>Confirmation number: 1726598321</p>
-          </div>
-          <div class="item">
-            <div class="img">
-              <img src="imgs/toradora-taiga-figurine.jpeg" alt="Taiga">
-            </div>
-            <div class="text">
-              <p><a href="index.html#product">Toradora Taiga Plush</a></p>
-              <p>$25</p>
-            </div>
-          </div>
-        </article>
-        <article>
-          <div class="order">
-            <p>Time: 2024/03/12 Fri 18:23 pm</p>
-            <p>Confirmation number: 1726598578</p>
-          </div>
-          <div class="item">
-            <div class="img">
-              <img src="imgs/rezero-rem-figurine.jpeg" alt="Taiga">
-            </div>
-            <div class="text">
-              <p><a href="index.html#product">Toradora Taiga Plush</a></p>
-              <p>$25</p>
-            </div>
-          </div>
-        </article>
+        <section id="history-container"></section>
       </section>
 
       <!--
-        Name:    Heidi Wang
-        Date:    2024 05 05 Sun
-        Section: CSE 154 AG
-
-        items.html
-        Page that shows all items on sale.
+        Heidi Wang
+        items
+        View that shows all items on sale.
+        Allows to filter, sort, and change the layout of the display.
       -->
 
       <section class="hidden" id="items">
@@ -225,30 +172,10 @@
           </select>
         </div>
         <section>
-          <section id="filters">
+          <section id="filters-container">
             <h3>Filters</h3>
-            <div>
-              <p>Item Type:</p>
-              <input type="checkbox" id="plush" name="plush">
-              <label for="plush">Plush</label><br>
-              <input type="checkbox" id="pin" name="pin">
-              <label for="pin">Pin</label><br>
-              <input type="checkbox" id="keychain" name="keychain">
-              <label for="keychain">Keychain</label><br>
-              <input type="checkbox" id="poster" name="poster">
-              <label for="poster">Poster</label><br>
-              <input type="checkbox" id="standee" name="standee">
-              <label for="standee">Standee</label><br>
-            </div>
-            <div>
-              <p>Franchise:</p>
-              <input type="checkbox" id="toradora" name="toradora">
-              <label for="toradora">Toradora</label><br>
-              <input type="checkbox" id="re-zero" name="re-zero">
-              <label for="re-zero">Re:Zero</label><br>
-              <input type="checkbox" id="fate-stay-night" name="fate-stay-night">
-              <label for="fate-stay-night">Fate/Stay Night</label><br>
-            </div>
+            <div id="filters-type-container"></div>
+            <div id="filters-franchise-container"></div>
             <div>
               <p>Price:</p>
               <input type="checkbox" id="n0-10" name="n0-10">
@@ -259,73 +186,12 @@
               <label for="n20-n">&ge;20</label><br>
             </div>
           </section>
-          <section id="all-items">
-            <article>
-              <div class="img">
-                <img src="imgs/xie-lian-nendoroid.jpeg" alt="Taiga">
-              </div>
-              <div class="text">
-                <a href="index.html#product" class="listing-link">Toradora Taiga Plush</a>
-                <div class="line">
-                  <p>$25</p>
-                  <p>5 stars</p>
-                </div>
-              </div>
-            </article>
-            <article class="pin re-zero n10-20">
-              <div class="img">
-                <img src="imgs/rezero-rem-figurine.jpeg" alt="Emilia">
-              </div>
-              <div class="text">
-                <a href="index.html#product" class="listing-link">Re:Zero Emilia Pin</a>
-                <div class="line">
-                  <p>$10</p>
-                  <p>5 stars</p>
-                </div>
-              </div>
-            </article>
-            <article class="keychain toradora n10-20">
-              <div class="img">
-                <img src="imgs/toradora-set-one-bluray.jpeg" alt="Taiga">
-              </div>
-              <div class="text">
-                <a href="index.html#product" class="listing-link">Toradora Taiga Keychain</a>
-                <div class="line">
-                  <p>$10</p>
-                  <p>5 stars</p>
-                </div>
-              </div>
-            </article>
-            <article class="standee toradora n10-20">
-              <div class="img">
-                <img src="imgs/toradora-taiga-figurine.jpeg" alt="Taiga">
-              </div>
-              <div class="text">
-                <a href="index.html#product" class="listing-link">Toradora Taiga Standee</a>
-                <div class="line">
-                  <p>$15</p>
-                  <p>5 stars</p>
-                </div>
-              </div>
-            </article>
-            <article class="poster fate-stay-night n20-n">
-              <div class="img">
-                <img src="imgs/gojo-nendoroid.jpeg" alt="Saber">
-              </div>
-              <div class="text">
-                <a href="index.html#product" class="listing-link">Fate/Stay Night Saber Poster</a>
-                <div class="line">
-                  <p>$20</p>
-                  <p>5 stars</p>
-                </div>
-              </div>
-            </article>
-          </section>
+          <section id="items-container"></section>
         </section>
       </section>
 
       <!--
-        End pages.
+        End page views.
       -->
     </main>
 
