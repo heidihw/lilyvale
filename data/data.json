@@ -47,6 +47,20 @@
         "id": "fate-stay-night",
         "name": "Fate/Stay Night"
       }
+    ],
+    "price": [
+      {
+        "id": "n0-10",
+        "name": "&lt;10"
+      },
+      {
+        "id": "n10-20",
+        "name": "&ge;10, &lt;20"
+      },
+      {
+        "id": "n20-n",
+        "name": "&ge;20"
+      }
     ]
   },
   "items": [
@@ -55,10 +69,11 @@
       "name": "Toradora Taiga Plush",
       "price": 25,
       "rating": 5,
-      "img-src": "../imgs/xie-lian-nendoroid.jpeg",
+      "img-src": "imgs/xie-lian-nendoroid.jpeg",
       "filters": {
         "type": "plush",
-        "franchise": "toradora"
+        "franchise": "toradora",
+        "price": "n20-n"
       },
       "state": "purchased"
     },
@@ -67,10 +82,11 @@
       "name": "Re:Zero Emilia Pin",
       "price": 10,
       "rating": 5,
-      "img-src": "../imgs/rezero-rem-figurine.jpeg",
+      "img-src": "imgs/rezero-rem-figurine.jpeg",
       "filters": {
         "type": "pin",
-        "franchise": "re-zero"
+        "franchise": "re-zero",
+        "price": "n10-20"
       },
       "state": "purchased"
     },
@@ -79,10 +95,11 @@
       "name": "Toradora Taiga Keychain",
       "price": 10,
       "rating": 5,
-      "img-src": "../imgs/toradora-set-one-bluray.jpeg",
+      "img-src": "imgs/toradora-set-one-bluray.jpeg",
       "filters": {
         "type": "keychain",
-        "franchise": "toradora"
+        "franchise": "toradora",
+        "price": "n10-20"
       },
       "state": "cart"
     },
@@ -91,10 +108,11 @@
       "name": "Toradora Taiga Standee",
       "price": 15,
       "rating": 5,
-      "img-src": "../imgs/toradora-taiga-figurine.jpeg",
+      "img-src": "imgs/toradora-taiga-figurine.jpeg",
       "filters": {
         "type": "standee",
-        "franchise": "toradora"
+        "franchise": "toradora",
+        "price": "n10-20"
       },
       "state": "selling"
     },
@@ -103,10 +121,11 @@
       "name": "Fate/Stay Night Saber Poster",
       "price": 20,
       "rating": 5,
-      "img-src": "../imgs/gojo-nendoroid.jpeg",
+      "img-src": "imgs/gojo-nendoroid.jpeg",
       "filters": {
         "type": "poster",
-        "franchise": "fate-stay-night"
+        "franchise": "fate-stay-night",
+        "price": "n20-n"
       },
       "state": "selling"
     }

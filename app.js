@@ -29,6 +29,7 @@ app.use(express.json()); // built-in middleware
 // for multipart/form-data (required with FormData)
 app.use(multer().none()); // requires the "multer" module
 
+// Heidi Wang
 app.get('/get', async function (req, res) {
   try {
     let data = await fs.readFile(DATA_URL, 'utf8');

@@ -19,7 +19,7 @@ body {
   font-family: "Titillium Web", "Arial", "Helvetica", sans-serif;
 }
 
-a:link, a:visited {
+a.listing-link:link, a.listing-link:visited {
   color: #3d52a0;
   text-decoration: none;
 }
@@ -224,7 +224,7 @@ section#history > div {
   text-align: right;
 }
 
-section#history article {
+section#history section > article {
   display: flex;
   flex-direction: column;
   justify-content: end;

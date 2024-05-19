@@ -9,6 +9,7 @@
  */
 
 'use strict';
+
 (function() {
   window.addEventListener('load', init);
 
@@ -48,10 +49,10 @@
       filters[i].addEventListener('change', filter);
     }
 
-    document.getElementById('cart-container').addEventListener(popCart);
-    document.getElementById('history-container').addEventListener(popHistory);
-    document.getElementById('filters-container').addEventListener(popFilters);
-    document.getElementById('items-container').addEventListener(popItems);
+    fillCart();
+    fillHistory();
+    fillItems();
+    popFilters();
   }
 
   /**
@@ -81,7 +82,7 @@
         pages[i].classList.add('hidden');
       }
     }
-    document.getElementById(page).classList.toggle('hidden');
+    document.getElementById(page).classList.remove('hidden');
     window.scroll(0, 0);
   }
 
@@ -120,7 +121,7 @@
    * Heidi Wang
    * Populates the cart with the items in the cart.
    */
-  function popCart() {
+  function fillCart() {
 
   // <article>
   //   <div class="img">
@@ -137,9 +138,29 @@
    * Heidi Wang
    * Populates the purchase history with the items purchased.
    */
-  function popHistory() {
+  async function fillHistory() {
+    let container = document.getElementById('history-container');
+    container.innerHTML = '';
     try {
+      let res = await fetch('/get');
+      await statusCheck(res);
+      res = await res.json();
 
+      for (let i = 0; i < res.history.length; i++) {
+        let order = document.createElement('article');
+        let orderData = document.createElement('div');
+        orderData.classList.add('order');
+        let time = document.createElement('p');
+        time.textContent = 'Time: ' + res.history[i].time;
+        let id = document.createElement('p');
+        id.textContent = 'Confirmation number: ' + res.history[i].id;
+        orderData.appendChild(time);
+        orderData.appendChild(id);
+        order.appendChild(orderData);
+        let item = fillItem(res.items[res.history[i].item - 1]);
+        order.appendChild(item);
+        container.appendChild(order);
+      }
     } catch (err) {
       handleError(err, container);
     }
@@ -162,11 +183,79 @@
 
   /**
    * Heidi Wang
+   * Populates the items list with the items for sale.
+   */
+  function fillItems() {
+
+
+  // <article class="poster fate-stay-night n20-n">
+  //   <div class="img">
+  //     <img src="../imgs/gojo-nendoroid.jpeg" alt="Saber">
+  //   </div>
+  //   <div class="text">
+  //     <a href="index.html#product" class="listing-link">Fate/Stay Night Saber Poster</a>
+  //     <div class="line">
+  //       <p>$20</p>
+  //       <p>5 stars</p>
+  //     </div>
+  //   </div>
+  // </article>
+  }
+
+  /**
+   * Heidi Wang
+   * Populates the DOM element with formatted data for a singular given item.
+   * @param {JSON} item - the data from the json for the given item.
+   * @returns an article DOM element with the formatted data for the given item.
+   */
+  function fillItem(item) {
+    let container = document.createElement('article');
+    container.classList.add(item.filters.type);
+    container.classList.add(item.filters.franchise);
+    container.classList.add(item.filters.price);
+    let img = document.createElement('div');
+    img.classList.add('img');
+    console.log(item['img-src']);
+    img.src = item['img-src'];
+    img.alt = item.name;
+    container.appendChild(img);
+    let text = document.createElement('div');
+    text.classList.add('text');
+    let name = document.createElement('p');
+    let link = document.createElement('p');
+    link.classList.add('listing-link');
+    link.href = 'index.html#product';
+    link.textContent = item.name;
+    name.appendChild(link);
+    text.appendChild(name);
+    let price = document.createElement('p');
+    price.textContent = '$' + item.price;
+    text.appendChild(price);
+    let rating = document.createElement('p');
+    rating.textContent = item.rating + ' stars';
+    text.appendChild(rating);
+    container.appendChild(text);
+    return container;
+  }
+
+  /**
+   * Heidi Wang
    * Populates the filters to filter the items for sale.
    */
   function popFilters() {
-    popType();
-    popFranchise();
+
+    // <h3>Filters</h3>
+    // <div id="filters-type-container"></div>
+    // <div id="filters-franchise-container"></div>
+    // <div>
+    //   <p>Price:</p>
+    //   <input type="checkbox" id="n0-10" name="n0-10">
+    //   <label for="n0-10">&lt;10</label><br>
+    //   <input type="checkbox" id="n10-20" name="n10-20">
+    //   <label for="n10-20">&ge;10, &lt;20</label><br>
+    //   <input type="checkbox" id="n20-n" name="n20-n">
+    //   <label for="n20-n">&ge;20</label><br>
+    // </div>
   // <div id="filters-type-container">
   //   <p>Item Type:</p>
   //   <input type="checkbox" id="plush" name="plush">
@@ -189,27 +278,6 @@
   //   <input type="checkbox" id="fate-stay-night" name="fate-stay-night">
   //   <label for="fate-stay-night">Fate/Stay Night</label><br>
   // </div>
-  }
-
-  /**
-   * Heidi Wang
-   * Populates the items list with the items for sale.
-   */
-  function popItems() {
-
-
-  // <article>
-  //   <div class="img">
-  //     <img src="../imgs/xie-lian-nendoroid.jpeg" alt="Taiga">
-  //   </div>
-  //   <div class="text">
-  //     <a href="index.html#product" class="listing-link">Toradora Taiga Plush</a>
-  //     <div class="line">
-  //       <p>$25</p>
-  //       <p>5 stars</p>
-  //     </div>
-  //   </div>
-  // </article>
   }
 
   /**
