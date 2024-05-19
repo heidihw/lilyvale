@@ -75,7 +75,7 @@
         "franchise": "toradora",
         "price": "n20-n"
       },
-      "state": "purchased"
+      "purchase-status": "purchased"
     },
     {
       "id": 2,
@@ -88,7 +88,7 @@
         "franchise": "re-zero",
         "price": "n10-20"
       },
-      "state": "purchased"
+      "purchase-status": "purchased"
     },
     {
       "id": 3,
@@ -101,7 +101,7 @@
         "franchise": "toradora",
         "price": "n10-20"
       },
-      "state": "cart"
+      "purchase-status": "cart"
     },
     {
       "id": 4,
@@ -114,7 +114,7 @@
         "franchise": "toradora",
         "price": "n10-20"
       },
-      "state": "selling"
+      "purchase-status": "selling"
     },
     {
       "id": 5,
@@ -127,7 +127,7 @@
         "franchise": "fate-stay-night",
         "price": "n20-n"
       },
-      "state": "selling"
+      "purchase-status": "selling"
     }
   ]
 }

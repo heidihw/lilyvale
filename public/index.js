@@ -49,10 +49,7 @@
       filters[i].addEventListener('change', filter);
     }
 
-    fillCart();
-    fillHistory();
-    fillItems();
-    popFilters();
+    fillData();
   }
 
   /**
@@ -119,110 +116,153 @@
 
   /**
    * Heidi Wang
-   * Populates the cart with the items in the cart.
+   * Fills the filters, items, cart, and history appropriately with data from the API.
    */
-  function fillCart() {
-
-  // <article>
-  //   <div class="img">
-  //     <img src="../imgs/img-src.jpeg" alt="item img">
-  //   </div>
-  //   <div class="text">
-  //     <p><a href="index.html#product">item name</a></p>
-  //     <p>$<span>item price</span></p>
-  //   </div>
-  // </article>
-  }
-
-  /**
-   * Heidi Wang
-   * Populates the purchase history with the items purchased.
-   */
-  async function fillHistory() {
-    let container = document.getElementById('history-container');
-    container.innerHTML = '';
+  async function fillData() {
     try {
       let res = await fetch('/get');
       await statusCheck(res);
       res = await res.json();
 
-      for (let i = 0; i < res.history.length; i++) {
-        let order = document.createElement('article');
-        let orderData = document.createElement('div');
-        orderData.classList.add('order');
-        let time = document.createElement('p');
-        time.textContent = 'Time: ' + res.history[i].time;
-        let id = document.createElement('p');
-        id.textContent = 'Confirmation number: ' + res.history[i].id;
-        orderData.appendChild(time);
-        orderData.appendChild(id);
-        order.appendChild(orderData);
-        let item = fillItem(res.items[res.history[i].item - 1]);
-        order.appendChild(item);
-        container.appendChild(order);
-      }
+      fillCart(res);
+      fillHistory(res);
+      fillItems(res);
+      fillFilters(res);
     } catch (err) {
       handleError(err, container);
     }
-  // <article>
-  //   <div class="order">
-  //     <p>Time: 2024/03/12 Fri 18:23 pm</p>
-  //     <p>Confirmation number: 1726598578</p>
-  //   </div>
-  //   <div class="item">
-  //     <div class="img">
-  //       <img src="../imgs/rezero-rem-figurine.jpeg" alt="Taiga">
-  //     </div>
-  //     <div class="text">
-  //       <p><a href="index.html#product">Toradora Taiga Plush</a></p>
-  //       <p>$25</p>
-  //     </div>
-  //   </div>
-  // </article>
+  }
+
+  /**
+   * Heidi Wang
+   * Populates the cart with the items in the cart.
+   * @param {JSON} res - the data from the API call.
+   */
+  function fillCart(res) {
+    let container = document.getElementById('cart-container');
+    container.innerHTML = '';
+    for (let i = 0; i < res.items.length; i++) {
+      if (res.items[i]['purchase-status'] === 'cart') {
+        let item = fillItem(res.items[i]);
+        container.appendChild(item);
+      }
+    }
+  }
+
+  /**
+   * Heidi Wang
+   * Populates the purchase history with the items purchased.
+   * @param {JSON} res - the data from the API call.
+   */
+  function fillHistory(res) {
+    let container = document.getElementById('history-container');
+    container.innerHTML = '';
+    for (let i = 0; i < res.history.length; i++) {
+      let order = document.createElement('article');
+      let orderData = document.createElement('div');
+      orderData.classList.add('order');
+      let time = document.createElement('p');
+      time.textContent = 'Time: ' + res.history[i].time;
+      let id = document.createElement('p');
+      id.textContent = 'Confirmation number: ' + res.history[i].id;
+      orderData.appendChild(time);
+      orderData.appendChild(id);
+      order.appendChild(orderData);
+      let item = fillItem(res.items[res.history[i].item - 1]);
+      order.appendChild(item);
+      container.appendChild(order);
+    }
   }
 
   /**
    * Heidi Wang
    * Populates the items list with the items for sale.
+   * @param {JSON} res - the data from the API call.
    */
-  function fillItems() {
-
-
-  // <article class="poster fate-stay-night n20-n">
-  //   <div class="img">
-  //     <img src="../imgs/gojo-nendoroid.jpeg" alt="Saber">
-  //   </div>
-  //   <div class="text">
-  //     <a href="index.html#product" class="listing-link">Fate/Stay Night Saber Poster</a>
-  //     <div class="line">
-  //       <p>$20</p>
-  //       <p>5 stars</p>
-  //     </div>
-  //   </div>
-  // </article>
+  function fillItems(res) {
+    let container = document.getElementById('items-container');
+    container.innerHTML = '';
+    for (let i = 0; i < res.items.length; i++) {
+      let item = fillItem(res.items[i]);
+      container.appendChild(item);
+    }
   }
 
   /**
    * Heidi Wang
-   * Populates the DOM element with formatted data for a singular given item.
-   * @param {JSON} item - the data from the json for the given item.
-   * @returns an article DOM element with the formatted data for the given item.
+   * Populates the filters to filter the items for sale.
+   * @param {JSON} res - the data from the API call.
+   */
+  function fillFilters(res) {
+    let container = document.getElementById('filters-container');
+    container.innerHTML = '';
+    let heading3 = document.createElement('h3');
+    heading3.textContent = 'Filters';
+    container.appendChild(heading3);
+
+    let types = fillFilterDiv('types', 'Type', res.filters);
+    container.appendChild(types);
+    let franchises = fillFilterDiv('franchises', 'Franchise', res.filters);
+    container.appendChild(franchises);
+    let prices = fillFilterDiv('prices', 'Price', res.filters);
+    container.appendChild(prices);
+  }
+
+  function fillFilterDiv(id, name, filters) {
+    let div = document.createElement('div');
+    div.id = 'filters-' + id + '-container';
+    let divName = document.createElement('p');
+    divName.textContent = name + ':';
+    div.appendChild(divName);
+    for (let i = 0; i < filters[id].length; i++) {
+      let filter = fillFilter(filters[id][i]);
+      div.appendChild(filter);
+    }
+    return div;
+  }
+
+  /**
+   * Heidi Wang
+   * Populates a div DOM element with formatted data for a singular given filter.
+   * @param {JSON} filter - the data from the API call for the given filter.
+   * @returns the formatted div DOM element.
+   */
+  function fillFilter(filter) {
+    let div = document.createElement('div');
+    let input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = filter.id;
+    input.name = filter.id;
+    div.appendChild(input);
+    let label = document.createElement('label');
+    label.for = filter.id;
+    label.textContent = filter.name;
+    div.appendChild(label);
+    return div;
+  }
+
+  /**
+   * Heidi Wang
+   * Populates an article DOM element with formatted data for a singular given item.
+   * @param {JSON} item - the data from the API call for the given item.
+   * @returns the formatted article DOM element.
    */
   function fillItem(item) {
     let container = document.createElement('article');
     container.classList.add(item.filters.type);
     container.classList.add(item.filters.franchise);
     container.classList.add(item.filters.price);
-    let img = document.createElement('div');
-    img.classList.add('img');
-    console.log(item['img-src']);
+    let imgDiv = document.createElement('div');
+    imgDiv.classList.add('img');
+    let img = document.createElement('img');
     img.src = item['img-src'];
     img.alt = item.name;
-    container.appendChild(img);
+    imgDiv.appendChild(img);
+    container.appendChild(imgDiv);
     let text = document.createElement('div');
     text.classList.add('text');
     let name = document.createElement('p');
-    let link = document.createElement('p');
+    let link = document.createElement('a');
     link.classList.add('listing-link');
     link.href = 'index.html#product';
     link.textContent = item.name;
@@ -236,48 +276,6 @@
     text.appendChild(rating);
     container.appendChild(text);
     return container;
-  }
-
-  /**
-   * Heidi Wang
-   * Populates the filters to filter the items for sale.
-   */
-  function popFilters() {
-
-    // <h3>Filters</h3>
-    // <div id="filters-type-container"></div>
-    // <div id="filters-franchise-container"></div>
-    // <div>
-    //   <p>Price:</p>
-    //   <input type="checkbox" id="n0-10" name="n0-10">
-    //   <label for="n0-10">&lt;10</label><br>
-    //   <input type="checkbox" id="n10-20" name="n10-20">
-    //   <label for="n10-20">&ge;10, &lt;20</label><br>
-    //   <input type="checkbox" id="n20-n" name="n20-n">
-    //   <label for="n20-n">&ge;20</label><br>
-    // </div>
-  // <div id="filters-type-container">
-  //   <p>Item Type:</p>
-  //   <input type="checkbox" id="plush" name="plush">
-  //   <label for="plush">Plush</label><br>
-  //   <input type="checkbox" id="pin" name="pin">
-  //   <label for="pin">Pin</label><br>
-  //   <input type="checkbox" id="keychain" name="keychain">
-  //   <label for="keychain">Keychain</label><br>
-  //   <input type="checkbox" id="poster" name="poster">
-  //   <label for="poster">Poster</label><br>
-  //   <input type="checkbox" id="standee" name="standee">
-  //   <label for="standee">Standee</label><br>
-  // </div>
-  // <div id="filters-franchise-container">
-  //   <p>Franchise:</p>
-  //   <input type="checkbox" id="toradora" name="toradora">
-  //   <label for="toradora">Toradora</label><br>
-  //   <input type="checkbox" id="re-zero" name="re-zero">
-  //   <label for="re-zero">Re:Zero</label><br>
-  //   <input type="checkbox" id="fate-stay-night" name="fate-stay-night">
-  //   <label for="fate-stay-night">Fate/Stay Night</label><br>
-  // </div>
   }
 
   /**

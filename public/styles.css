@@ -7,6 +7,11 @@
   the general styling for all pages for uniformity. The theme is peach and light pink.
 */
 
+/*
+  Heidi Wang
+  General styles for all page views.
+*/
+
 /* to hide page sections */
 
 .hidden {
@@ -19,7 +24,7 @@ body {
   font-family: "Titillium Web", "Arial", "Helvetica", sans-serif;
 }
 
-a.listing-link:link, a.listing-link:visited {
+a:link, a:visited {
   color: #3d52a0;
   text-decoration: none;
 }
@@ -64,7 +69,7 @@ nav input {
   border: none;
 }
 
-nav a {
+nav div > a {
   padding: 0 2%;
 }
 
@@ -86,13 +91,10 @@ footer {
 
 
 /*
-  Name:    Daria Manguling
-  Date:    2024 05 05 Sun
-  Section: CSE 154 AG, Allison and Marina
-
-  index.css
-  This is the index.css page for the index.html, the landing page, of our anime ecommerce
-  website. This css page mainly helps with page layout and maintaining the website's white and
+  Daria Manguling
+  index
+  This is the styling for the index, the landing page, of our anime ecommerce
+  website. This mainly helps with page layout and maintaining the website's white and
   peach with black text aesthetic.
 */
 
@@ -142,12 +144,9 @@ section#index #secondary img {
 
 
 /*
-  Name: Daria Manguling
-  Date: 5 May 2024
-  CSE 154 Section AG
-
-  product.css
-  This is the css specific page for the product.html page.
+  Daria Manguling
+  product
+  This is the specific styles for the product page.
 */
 
 section#product img {
@@ -170,11 +169,8 @@ section#product #write-review {
 
 
 /*
-  Name:    Heidi Wang
-  Date:    2024 05 05 Sun
-  Section: CSE 154 AG
-
-  cart.css
+  Heidi Wang
+  cart
   Formats the display of the information on the item in the cart in a manner similar to the
   all items list view display but optimized for the individual card.
 */
@@ -211,11 +207,8 @@ section#cart div.text {
 
 
 /*
-  Name:    Heidi Wang
-  Date:    2024 05 05 Sun
-  Section: CSE 154 AG
-
-  history.css
+  Heidi Wang
+  history
   Formats the list of previous transactions in a list view that prioritizes the ease of
   viewing each individual card.
 */
@@ -268,11 +261,8 @@ section#history div.text {
 
 
 /*
-  Name:    Heidi Wang
-  Date:    2024 05 05 Sun
-  Section: CSE 154 AG
-
-  items.css
+  Heidi Wang
+  items
   Sets up formatting for grid and list views and the filters sidebar.
 */
 
