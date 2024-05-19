@@ -138,7 +138,11 @@
    * Populates the purchase history with the items purchased.
    */
   function popHistory() {
+    try {
 
+    } catch (err) {
+      handleError(err, container);
+    }
   // <article>
   //   <div class="order">
   //     <p>Time: 2024/03/12 Fri 18:23 pm</p>
@@ -276,6 +280,29 @@
     id('reviews').appendChild(container);
     id('write-review').parentNode.removeChild(id('write-review'));
     makeButton();
+  }
+
+  /**
+   * Checks the status of the given Response and throws an error if the status is not ok.
+   * @param {Response} res - the given Response of which to check the status.
+   * @returns {Response} given as the parameter.
+   */
+  async function statusCheck(res) {
+    if (!res.ok) {
+      throw new Error(await res.text());
+    }
+    return res;
+  }
+
+  /**
+   * Updates the DOM to display the message in the given error.
+   * @param {exception} err - the contents of the error.
+   * @param {HTMLElement} container - the DOM element within which to display the error message.
+   */
+  function handleError(err, container) {
+    let errMsg = document.createElement('p');
+    errMsg.textContent = err.message;
+    container.appendChild(errMsg);
   }
 
   /**
