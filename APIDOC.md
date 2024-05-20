@@ -98,13 +98,13 @@ Logged in.
   "reviews": [
     {
       "title": "Cool!",
-      "num-rating": "5",
-      "review": "Omg! I love itttt!"
+      "stars": 5,
+      "description": "Omg! I love itttt!"
     },
     {
       "title": "Woahhhhh",
-      "num-rating": "5",
-      "review": "This nendoroid is so adorable! I'm so glad I bought it"
+      "stars": 5,
+      "description": "This nendoroid is so adorable! I'm so glad I bought it"
     }
   ]
 }
@@ -146,7 +146,7 @@ Logged in.
 
 ## Search all items
 
-**Request Format:** `/search?name={name}&type={type}&franchise={franchise}&price={price}&rating={rating}`
+**Request Format:** `/search?name={name}&type={type}&franchise={franchise}&price={price}&order={order}`
 
 **Request Type:** GET
 
@@ -227,7 +227,7 @@ Logged in.
 
 **Returned Data Format**: JSON
 
-**Description:** Returns the transaction history for the user. The user must be logged in.
+**Description:** Writes a new review with the given title, stars, and description.
 
 **Example Request:** POST parameters of `title=Cool!`, `stars=5`, and `description=Omg! I love itttt!`
 

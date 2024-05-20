@@ -68,7 +68,6 @@
     {
       "id": 1,
       "name": "Toradora Taiga Plush",
-      "description": "Toradora plushie released by ANIPLEX!",
       "price": 25,
       "rating": 5,
       "img-src": "imgs/xie-lian-nendoroid.jpeg",
@@ -77,19 +76,7 @@
         "franchise": "toradora",
         "price": "n20-n"
       },
-      "count": 3,
-      "reviews": [
-        {
-          "title": "Cool!",
-          "num-rating": "5",
-          "review": "Omg! I love itttt!"
-        },
-        {
-          "title": "Woahhhhh",
-          "num-rating": "5",
-          "review": "This nendoroid is so adorable! I'm so glad I bought it"
-        }
-      ]
+      "count": 3
     },
     {
       "id": 2,
@@ -115,19 +102,7 @@
         "franchise": "toradora",
         "price": "n10-20"
       },
-      "count": 1,
-      "reviews": [
-        {
-          "title": "Cool!",
-          "num-rating": "5",
-          "review": "Omg! I love itttt!"
-        },
-        {
-          "title": "Woahhhhh",
-          "num-rating": "5",
-          "review": "This nendoroid is so adorable! I'm so glad I bought it"
-        }
-      ]
+      "count": 1
     },
     {
       "id": 4,
@@ -154,6 +129,35 @@
         "price": "n20-n"
       },
       "count": 2
+    },
+    {
+      "id": 6,
+      "name": "JUJUTSU KAISEN - Satoru Gojo Nendoroid (Suit Ver.)",
+      "price": 45,
+      "rating": 5,
+      "img-src": "imgs/gojo-nendoroid.jpeg"
+    }
+  ],
+  "item-detailed": [
+    {
+      "id": 1,
+      "description": "Toradora plushie released by ANIPLEX!"
+    },
+    {
+      "id": 6,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "reviews": [
+        {
+          "title": "Cool!",
+          "stars": 5,
+          "description": "Omg! I love itttt!"
+        },
+        {
+          "title": "Woahhhhh",
+          "stars": 5,
+          "description": "This nendoroid is so adorable! I'm so glad I bought it"
+        }
+      ]
     }
   ]
 }

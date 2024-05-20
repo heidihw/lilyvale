@@ -129,11 +129,13 @@
     if (res['cart'] > 0) {
       let item = fillItem(res['items'][res['cart']]);
       container.appendChild(item);
+      document.querySelector('section#cart > div').classList.remove('hidden');
       document.getElementById('confirm-transaction').classList.remove('hidden');
     } else {
       let empty = document.createElement('p');
       empty.textContent = 'Your cart is empty';
       container.appendChild(empty);
+      document.querySelector('section#cart > div').classList.add('hidden');
       document.getElementById('confirm-transaction').classList.add('hidden');
     }
   }
@@ -146,6 +148,8 @@
   function fillHistory(res) {
     let container = document.getElementById('history-container');
     container.innerHTML = '';
+    let count = document.querySelector('section#history > div p span');
+    count.textContent = res['history'].length;
     for (let i = 0; i < res['history'].length; i++) {
       let order = document.createElement('article');
       let orderData = document.createElement('div');

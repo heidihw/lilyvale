@@ -25,7 +25,8 @@ body {
 }
 
 a:link, a:visited {
-  color: #3d52a0;
+  /* color: #3d52a0; */
+  color: #000000;
   text-decoration: none;
 }
 
@@ -312,7 +313,7 @@ section#items div.img {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ede8f5;
+  /* background-color: #ede8f5; */
   padding: 5px;
   width: 150px;
   height: 150px;
@@ -328,11 +329,7 @@ section#items div.text {
   justify-content: end;
   height: 80px;
   width: 150px;
-}
-
-section#items a {
-  font-size: 80%;
-  font-family: "Arial", "Helvetica", sans-serif;
+  /* font-size: 80%; */
 }
 
 section#items p {
@@ -344,7 +341,7 @@ section#items p {
 section#items section#items-container.list-layout article {
   flex-direction: row;
   justify-content: flex-start;
-  align-items: end;
+  align-items: center;
   margin: 12.5px 0;
   padding: 25px;
   width: 100%;
