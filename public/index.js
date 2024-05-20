@@ -14,14 +14,14 @@
   window.addEventListener('load', init);
 
   /**
-   * Daria Manguling
-   * Initializes button to be able to write a review.
-   *
    * Heidi Wang
    * Initializes the nav bar to switch between views.
    * Toggles between grid and list layout in the items view.
    * Initializes the filters to display only the items that are in the selected categories.
    * Fills the filters, items, cart, and history appropriately with data from the API.
+   *
+   * Daria Manguling
+   * Initializes button to be able to write a review.
    */
   async function init() {
     /** Heidi */
@@ -40,6 +40,7 @@
 
     await fillData();
 
+    // filtering with css classes
     let filters = document.querySelectorAll('input');
     for (let i = 0; i < filters.length; i++) {
       filters[i].addEventListener('change', filterItems);
@@ -204,6 +205,7 @@
   }
 
   /**
+   * Heidi Wang
    * Populates a div DOM element with formatted data for a category of filters.
    * @param {string} id - the id of the filter category.
    * @param {string} name - the name of the filter category.
@@ -349,6 +351,8 @@
     id('write-review').parentNode.removeChild(id('write-review'));
     makeButton();
   }
+
+  // standard functions
 
   /**
    * Checks the status of the given Response and throws an error if the status is not ok.

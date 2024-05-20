@@ -95,82 +95,6 @@ footer {
 }
 
 /*
-  Daria Manguling
-  index
-  This is the styling for the index, the landing page, of our anime ecommerce
-  website. This mainly helps with page layout and maintaining the website's white and
-  peach with black text aesthetic.
-*/
-
-section#index section > img {
-  position: relative;
-}
-
-section#index figure {
-  flex-flow: column;
-}
-
-section#index figcaption {
-  text-align: center;
-  padding-bottom: 10px;
-  padding-top: 10px;
-}
-
-section#index section button {
-  position: absolute;
-  bottom: 50%;
-  left: 20%;
-  border: none;
-  padding: 10px 30px 10px 30px;
-  cursor: pointer;
-}
-
-section#index figcaption, section#index section button {
-  background-color: peachpuff;
-}
-
-section#index section a:link, section#index section a:visited {
-  color: black;
-  text-decoration: none;
-}
-
-section#index button:hover, section#index figcaption:hover {
-  background: pink;
-}
-
-section#index #secondary, section#index figure {
-  display: flex;
-}
-
-section#index #secondary img {
-  width: 300px;
-}
-
-/*
-  Daria Manguling
-  product
-  This is the specific styles for the product page.
-*/
-
-section#product img {
-  width: 450px;
-  margin-right: 40px;
-}
-
-section#product #product-listing, section#product #write-review {
-  display: flex;
-}
-
-section#product .hidden {
-  display: none;
-}
-
-section#product #write-review {
-  flex-direction: column;
-  align-items: baseline;
-}
-
-/*
   Heidi Wang
   cart
   Formats the display of the information on the item in the cart in a manner similar to the
@@ -350,4 +274,80 @@ section#items section#items-container.list-layout article {
 
 section#items section#items-container.list-layout div.text {
   margin-left: 25px;
+}
+
+/*
+  Daria Manguling
+  index
+  This is the styling for the index, the landing page, of our anime ecommerce
+  website. This mainly helps with page layout and maintaining the website's white and
+  peach with black text aesthetic.
+*/
+
+section#index section > img {
+  position: relative;
+}
+
+section#index figure {
+  flex-flow: column;
+}
+
+section#index figcaption {
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+section#index section button {
+  position: absolute;
+  bottom: 50%;
+  left: 20%;
+  border: none;
+  padding: 10px 30px 10px 30px;
+  cursor: pointer;
+}
+
+section#index figcaption, section#index section button {
+  background-color: peachpuff;
+}
+
+section#index section a:link, section#index section a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+section#index button:hover, section#index figcaption:hover {
+  background: pink;
+}
+
+section#index #secondary, section#index figure {
+  display: flex;
+}
+
+section#index #secondary img {
+  width: 300px;
+}
+
+/*
+  Daria Manguling
+  product
+  This is the specific styles for the product page.
+*/
+
+section#product img {
+  width: 450px;
+  margin-right: 40px;
+}
+
+section#product #product-listing, section#product #write-review {
+  display: flex;
+}
+
+section#product .hidden {
+  display: none;
+}
+
+section#product #write-review {
+  flex-direction: column;
+  align-items: baseline;
 }
