@@ -56,9 +56,13 @@
       const view = this.id.split('-')[1];
       document.getElementById(view).classList.toggle('hidden');
       window.scroll(0, 0);
-      if (view === 'cart') {fillCart();}
-      else if (view === 'history') {fillHistory();}
-      else if (view === 'items') {fillItems();}
+      if (view === 'cart') {
+        fillCart();
+      } else if (view === 'history') {
+        fillHistory();
+      } else if (view === 'items') {
+        fillItems();
+      }
     }
   }
 
@@ -152,6 +156,7 @@
         }
       }
       await fillFilters();
+
       // currently filtering with css classes; later should be done through API call instead
       let filters = document.querySelectorAll('input');
       for (let i = 0; i < filters.length; i++) {

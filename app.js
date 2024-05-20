@@ -44,13 +44,19 @@ app.get('/items', async function(req, res) {
   }
 });
 
-// TODO
+/**
+ * TODO
+ * POST parameters: username, password
+ */
 app.post('/login', async function(req, res) {
 });
 
-// TODO
+/**
+ * TODO
+ * query parameters: id
+ * but APIDOC has id as a query parameter
+ */
 app.get('/item/:id', async function(req, res) {
-  // but APIDOC has id as a query parameter
   try {
     let data = await fs.readFile(ITEM_DETAILED_URL, 'utf8');
     data = JSON.parse(data);
@@ -60,7 +66,10 @@ app.get('/item/:id', async function(req, res) {
   }
 });
 
-// TODO POST
+/**
+ * TODO
+ * POST parameters: id
+ */
 app.get('/purchase', async function(req, res) {
   try {
     let data = await fs.readFile(CART_URL, 'utf8');
@@ -71,9 +80,11 @@ app.get('/purchase', async function(req, res) {
   }
 });
 
-// TODO
+/**
+ * TODO
+ * query parameters: name type franchise price order
+ */
 app.get('/search', async function(req, res) {
-  // name type franchise price order
   try {
     let data = await fs.readFile(FILTERS_URL, 'utf8');
     data = JSON.parse(data);
@@ -83,7 +94,10 @@ app.get('/search', async function(req, res) {
   }
 });
 
-// TODO POST
+/**
+ * TODO
+ * POST parameters: username
+ */
 app.get('/history', async function(req, res) {
   try {
     let data = await fs.readFile(HISTORY_URL, 'utf8');
@@ -94,11 +108,17 @@ app.get('/history', async function(req, res) {
   }
 });
 
-// TODO
+/**
+ * TODO
+ * POST parameters: title, stars, description
+ */
 app.post('/feedback', async function(req, res) {
 });
 
-// TODO
+/**
+ * TODO
+ * POST parameters: username, password, email
+ */
 app.post('/create-user', async function(req, res) {
 });
 
