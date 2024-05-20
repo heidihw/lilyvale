@@ -1,7 +1,5 @@
 # Daria Manguling, Heidi Wang API Documentation
-*Fill in a short description here about the API's purpose.*
-
-This API provides 4 endpoints to search and filter a list of items, purchase items, and track past purchases.
+This API is for an anime ecommerce site. It allows the client to get data on all items for sale, log in to a user, get detailed information for a specific item including ratings, purchase an item, search and filter for a selection of all of the items, see past purchases, write a rating, and create a new user.
 
 ## Get all items
 **Request Format:** `/items`
@@ -128,7 +126,7 @@ Logged in.
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
 
-## Search the database
+## Search all items
 **Request Format:** `/search?name={name}&type={type}&franchise={franchise}&price={price}`
 
 **Request Type:** GET
