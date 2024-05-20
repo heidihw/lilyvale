@@ -25,13 +25,13 @@ body {
 }
 
 a:link, a:visited {
-  /* color: #3d52a0; */
+  /* color: #3D52A0; */
   color: #000000;
   text-decoration: none;
 }
 
 ::selection {
-  background-color: hsl(37, 74%, 50%);
+  background-color: #ADBBDA;
 }
 
 /* nav */
@@ -42,8 +42,8 @@ nav {
   right: 0;
   top: 0;
   display: flex;
-  background-color: #3d52a0;
-  color: #ede8f5;
+  background-color: #3D52A0;
+  color: #EDE8F5;
   margin: 0px;
   padding: 10px;
   height: 40px;
@@ -67,6 +67,7 @@ nav input {
 
 nav h1, nav p {
   cursor: pointer;
+  white-space: nowrap;
 }
 
 nav h1 {
@@ -78,8 +79,9 @@ nav p {
   padding: 0 2%;
 }
 
+/* for login page title */
 nav a:link, nav a:visited {
-  color: #ede8f5;
+  color: #EDE8F5;
 }
 
 /* footer */
@@ -88,7 +90,7 @@ footer {
   position: absolute;
   width: 100%;
   right: 0;
-  background-color: #adbbda;
+  background-color: #ADBBDA;
   margin-top: 150px;
   padding: 30px;
   text-align: right;
@@ -97,183 +99,114 @@ footer {
 /*
   Heidi Wang
   cart
-  Formats the display of the information on the item in the cart in a manner similar to the
-  all items list view display but optimized for the individual card.
-*/
+  Formats the display of the information on the item in the cart
+  in a list view display optimized for the individual card.
 
-section#cart > div {
-  text-align: right;
-}
-
-section#cart article {
-  display: flex;
-  align-items: end;
-  background-color: #ede8f5;
-  margin: 25px 0;
-  padding: 25px;
-  height: 200px;
-}
-
-section#cart div.img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
-  height: 200px;
-}
-
-section#cart img {
-  max-width: 200px;
-  max-height: 200px;
-}
-
-section#cart div.text {
-  margin-left: 25px;
-}
-
-/*
-  Heidi Wang
   history
-  Formats the list of previous transactions in a list view that prioritizes the ease of
-  viewing each individual card.
-*/
+  Formats the list of previous transactions in a list view
+  that prioritizes the ease of viewing each individual card.
 
-section#history > div {
-  text-align: right;
-}
-
-section#history section > article {
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  background-color: #ede8f5;
-  margin: 25px 0;
-  padding: 15px;
-  min-height: 200px;
-}
-
-section#history article > div {
-  padding: 5px 10px;
-}
-
-section#history div.order p {
-  margin: 0;
-}
-
-section#history article article {
-  display: flex;
-  flex-direction: row;
-  align-items: end;
-  justify-content: auto;
-}
-
-section#history div.img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
-  height: 200px;
-}
-
-section#history img {
-  max-width: 200px;
-  max-height: 200px;
-}
-
-section#history div.text {
-  margin-left: 25px;
-}
-
-/*
-  Heidi Wang
   items
-  Sets up formatting for grid and list views and the filters sidebar.
+  Sets up formatting for grid and list layouts to display all items and a filters sidebar.
 */
 
-/* sort */
-
-section#items > div {
+/* in all 3, top right menu/message */
+section#cart > div, section#history > div, section#items > div {
   text-align: right;
 }
 
-section#items select {
+/* in items view, dropdown menus for sorting options */
+section#items > div > select {
   margin: 16px;
   margin-left: 0;
 }
 
-/* filter, items */
+/* in items view, separating the sidebar for filtering and main section for displaying the list */
 
-section#items section {
+section#items > section {
   display: flex;
   flex-direction: row;
 }
 
-section#items section#filters-container {
-  flex-direction: column;
+section#items > section > section#filters-container {
   margin: 10px;
   width: 18%;
 }
 
-section#items section#items-container {
-  justify-content: start;
+section#items > section > section#items-container {
+  display: flex;
   flex-wrap: wrap;
   width: 82%;
 }
 
-/* items default, grid-view */
+/* item cards */
 
-section#items article {
+section#cart-container > article, section#history-container > article {
   display: flex;
-  flex-direction: column;
-  justify-content: start;
   align-items: center;
-  margin: 10px;
-  padding: 0;
-  width: 150px;
-  height: 240px;
+  background-color: #EDE8F5;
+  margin: 15px 0;
+  padding: 25px;
 }
 
-section#items div.img {
+section#items-container article {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #EDE8F5;
+  margin: 5px 0;
+  padding: 5px;
+  width: 100%;
+}
+
+section#items-container.grid-layout article {
+  flex-direction: column;
+  background-color: unset;
+  margin: 5px 5px 0 0;
+  padding: 0 5px 0;
+  width: 150px;
+  height: 260px;
+}
+
+/* in an item, the img */
+
+div.img {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: #ede8f5; */
+  width: 200px;
+  height: 200px;
+}
+
+section#items div.img {
   padding: 5px;
   width: 150px;
   height: 150px;
 }
 
-section#items img {
+div.img img {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+section#items div.img img {
   max-width: 150px;
   max-height: 150px;
 }
 
-section#items div.text {
-  flex-direction: column;
-  justify-content: end;
-  height: 80px;
-  width: 150px;
-  /* font-size: 80%; */
-}
+/* in an item, the text */
 
-section#items p {
-  margin: 0;
-}
-
-/* items specific list-layout */
-
-section#items section#items-container.list-layout article {
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 12.5px 0;
-  padding: 25px;
-  width: 100%;
-  height: 150px;
-}
-
-section#items section#items-container.list-layout div.text {
+div.text {
   margin-left: 25px;
+}
+
+section.grid-layout div.text {
+  margin-left: unset;
+  max-width: 150px;
+}
+
+section#cart p, section#history p, section#items p {
+  margin: 0;
 }
 
 /*

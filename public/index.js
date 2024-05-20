@@ -26,16 +26,15 @@
   async function init() {
     /** Heidi */
     // nav bar
-    const links = document.querySelectorAll('p');
+    document.getElementById('title-index').addEventListener('click', toggleScreens);
+    const links = document.querySelectorAll('nav p');
     for (let i = 0; i < links.length; i++) {
       links[i].addEventListener('click', toggleScreens);
     }
-    document.getElementById('title-index').addEventListener('click', toggleScreens);
 
     // switch grid and list layout
     document.getElementById('layout').addEventListener('change', () => {
-      const items = document.getElementById('items-container');
-      items.classList.toggle('list-layout');
+      document.getElementById('items-container').classList.toggle('grid-layout');
     });
 
     await fillData();
@@ -66,6 +65,7 @@
       }
       const splitUrl = this.id.split('-');
       document.getElementById(splitUrl[1]).classList.toggle('hidden');
+      window.scroll(0, 0);
     }
   }
 
@@ -152,19 +152,14 @@
     let count = document.querySelector('section#history > div p span');
     count.textContent = res['history'].length;
     for (let i = 0; i < res['history'].length; i++) {
-      let order = document.createElement('article');
-      let orderData = document.createElement('div');
-      orderData.classList.add('order');
+      let item = fillItem(res['items'][res['history'][i]['item'] - 1]);
       let time = document.createElement('p');
       time.textContent = 'Time: ' + res['history'][i]['time'];
       let id = document.createElement('p');
       id.textContent = 'Confirmation number: ' + res['history'][i]['id'];
-      orderData.appendChild(time);
-      orderData.appendChild(id);
-      order.appendChild(orderData);
-      let item = fillItem(res['items'][res['history'][i]['item'] - 1]);
-      order.appendChild(item);
-      container.appendChild(order);
+      item.querySelector('div.text').appendChild(time);
+      item.querySelector('div.text').appendChild(id);
+      container.appendChild(item);
     }
   }
 
@@ -179,6 +174,9 @@
     for (let i = 0; i < res['items'].length; i++) {
       if (res['items'][i].count > 0) {
         let item = fillItem(res['items'][i]);
+        let rating = document.createElement('p');
+        rating.textContent = res['items'][i]['rating'] + ' stars';
+        item.querySelector('div.text').appendChild(rating);
         container.appendChild(item);
       }
     }
@@ -275,9 +273,6 @@
     let price = document.createElement('p');
     price.textContent = '$' + item['price'];
     text.appendChild(price);
-    let rating = document.createElement('p');
-    rating.textContent = item['rating'] + ' stars';
-    text.appendChild(rating);
     container.appendChild(text);
     return container;
   }
