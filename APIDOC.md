@@ -1,7 +1,9 @@
 # Daria Manguling, Heidi Wang API Documentation
+
 This API is for an anime ecommerce site. It allows the client to get data on all items for sale, log in to a user, get detailed information for a specific item including ratings, purchase an item, search and filter for a selection of all of the items, see past purchases, write a rating, and create a new user.
 
 ## Get all items
+
 **Request Format:** `/items`
 
 **Request Type:** GET
@@ -34,13 +36,14 @@ This API is for an anime ecommerce site. It allows the client to get data on all
 ```
 
 **Error Handling:**
+
 - Possible 400 (invalid request) errors (all plain text):
   - None
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-
 ## Login with credentials
+
 **Request Format:** `/login` endpoint with POST parameters of `username` and `password`
 
 **Request Type:** POST
@@ -58,13 +61,14 @@ Logged in.
 ```
 
 **Error Handling:**
+
 - Possible 400 (invalid request) errors (all plain text):
   - If the provided credentials do not match an entry in the database, returns error with `Invalid username or password.`
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-
 ## Get detailed information on an item
+
 **Request Format:** `/item?id={id}`
 
 **Request Type:** GET
@@ -89,18 +93,32 @@ Logged in.
     "franchise": "toradora",
     "price": "n20-n"
   },
-  "count": 3
+  "count": 3,
+  "description": "Toradora plushie released by ANIPLEX!",
+  "reviews": [
+    {
+      "title": "Cool!",
+      "num-rating": "5",
+      "review": "Omg! I love itttt!"
+    },
+    {
+      "title": "Woahhhhh",
+      "num-rating": "5",
+      "review": "This nendoroid is so adorable! I'm so glad I bought it"
+    }
+  ]
 }
 ```
 
 **Error Handling:**
+
 - Possible 400 (invalid request) errors (all plain text):
   - If item id is invalid, returns error with `Item does not exist.`
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-
 ## Make a transaction
+
 **Request Format:** `/purchase` endpoint with POST parameters of `id`
 
 **Request Type:** POST
@@ -118,6 +136,7 @@ Logged in.
 ```
 
 **Error Handling:**
+
 - Possible 400 (invalid request) errors (all plain text):
   - If user is not logged in, returns error with `User not logged in.`
   - If item is out of stock, returns error with `Item out of stock.`
@@ -125,9 +144,9 @@ Logged in.
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-
 ## Search all items
-**Request Format:** `/search?name={name}&type={type}&franchise={franchise}&price={price}`
+
+**Request Format:** `/search?name={name}&type={type}&franchise={franchise}&price={price}&rating={rating}`
 
 **Request Type:** GET
 
@@ -158,13 +177,14 @@ Logged in.
 ```
 
 **Error Handling:**
+
 - Possible 400 (invalid request) errors (all plain text):
   - None
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-
 ## Get transaction history
+
 **Request Format:** `/history` endpoint with POST parameter of `username`
 
 **Request Type:** POST
@@ -193,13 +213,14 @@ Logged in.
 ```
 
 **Error Handling:**
+
 - Possible 400 (invalid request) errors (all plain text):
   - If user is not logged in, returns error with `User not logged in.`
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-
 ## Give feedback
+
 **Request Format:** `/feedback` endpoint with POST parameters of `title`, `stars`, and `description`
 
 **Request Type:** POST
@@ -221,13 +242,14 @@ Logged in.
 ```
 
 **Error Handling:**
+
 - Possible 400 (invalid request) errors (all plain text):
   - If user is not logged in, returns error with `User not logged in.`
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-
 ## Create a user
+
 **Request Format:** `/create-user` endpoint with POST parameters of `username`, `password`, and `email`
 
 **Request Type:** POST
@@ -245,6 +267,7 @@ User john successfully created.
 ```
 
 **Error Handling:**
+
 - Possible 400 (invalid request) errors (all plain text):
   - If user with given username already exists, returns error with `User already exists.`
   - If user with given email already exists, returns error with `Email already in use.`
