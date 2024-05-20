@@ -10,7 +10,7 @@
 
 const DATA_URL = 'data/data.json';
 
-const CLIENT_ERR_STATUS = 400;
+// const CLIENT_ERR_STATUS = 400;
 const SERVER_ERR_STATUS = 500;
 const LOCAL_PORT = 8000;
 

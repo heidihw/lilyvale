@@ -77,6 +77,10 @@ nav p {
   padding: 0 2%;
 }
 
+nav a:link, nav a:visited {
+  color: #ede8f5;
+}
+
 /* footer */
 
 footer {

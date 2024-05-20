@@ -30,6 +30,7 @@
     for (let i = 0; i < links.length; i++) {
       links[i].addEventListener('click', toggleScreens);
     }
+    document.getElementById('title-index').addEventListener('click', toggleScreens);
 
     // switch grid and list layout
     document.getElementById('layout').addEventListener('change', () => {
@@ -50,18 +51,21 @@
 
   /**
    * Heidi Wang
-   * For the nav bar. Toggles between views.
+   * For the nav bar. Toggles between page views.
    */
   function toggleScreens() {
-    const pages = document.querySelectorAll('main > section');
-    for (let i = 0; i < pages.length; i++) {
-      if (!pages[i].classList.contains('hidden')) {
-        pages[i].classList.add('hidden');
+    if (this.id === 'nav-login') {
+      window.location.href = 'login.html';
+    } else {
+      const pages = document.querySelectorAll('main > section');
+      for (let i = 0; i < pages.length; i++) {
+        if (!pages[i].classList.contains('hidden')) {
+          pages[i].classList.add('hidden');
+        }
       }
+      const splitUrl = this.id.split('-');
+      document.getElementById(splitUrl[1]).classList.toggle('hidden');
     }
-    const splitUrl = this.id.split('-');
-    document.getElementById(splitUrl[1]).classList.toggle('hidden');
-    window.scroll(0, 0);
   }
 
   /**
