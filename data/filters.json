@@ -1,0 +1,52 @@
+{
+  "type": [
+    {
+      "id": "plush",
+      "name": "Plush"
+    },
+    {
+      "id": "pin",
+      "name": "Pin"
+    },
+    {
+      "id": "keychain",
+      "name": "Keychain"
+    },
+    {
+      "id": "poster",
+      "name": "Poster"
+    },
+    {
+      "id": "standee",
+      "name": "Standee"
+    }
+  ],
+  "franchise": [
+    {
+      "id": "toradora",
+      "name": "Toradora"
+    },
+    {
+      "id": "re-zero",
+      "name": "Re:Zero"
+    },
+    {
+      "id": "fate-stay-night",
+      "name": "Fate/Stay Night"
+    }
+  ],
+  "price": [
+    {
+      "id": "n0-10",
+      "name": "Under $10"
+    },
+    {
+      "id": "n10-20",
+      "name": "$10 to $20"
+    },
+    {
+      "id": "n20-n",
+      "name": "Over $20"
+    }
+  ]
+}

@@ -8,7 +8,11 @@
 
 'use strict';
 
-const DATA_URL = 'data/data.json';
+const ITEMS_URL = 'data/items.json';
+const ITEM_DETAILED_URL = 'data/item-detailed.json';
+const CART_URL = 'data/cart.json';
+const FILTERS_URL = 'data/filters.json';
+const HISTORY_URL = 'data/history.json';
 
 // const CLIENT_ERR_STATUS = 400;
 const SERVER_ERR_STATUS = 500;
@@ -30,15 +34,72 @@ app.use(express.json()); // built-in middleware
 app.use(multer().none()); // requires the "multer" module
 
 // Heidi Wang
-// temporary endpoint to work with json file
-app.get('/get', async function(req, res) {
+app.get('/items', async function(req, res) {
   try {
-    let data = await fs.readFile(DATA_URL, 'utf8');
+    let data = await fs.readFile(ITEMS_URL, 'utf8');
     data = JSON.parse(data);
     res.type('json').send(data);
   } catch (err) {
     handleError(err, res);
   }
+});
+
+// TODO
+app.post('/login', async function(req, res) {
+});
+
+// TODO
+app.get('/item/:id', async function(req, res) {
+  // but APIDOC has id as a query parameter
+  try {
+    let data = await fs.readFile(ITEM_DETAILED_URL, 'utf8');
+    data = JSON.parse(data);
+    res.type('json').send(data);
+  } catch (err) {
+    handleError(err, res);
+  }
+});
+
+// TODO POST
+app.get('/purchase', async function(req, res) {
+  try {
+    let data = await fs.readFile(CART_URL, 'utf8');
+    data = JSON.parse(data);
+    res.type('json').send(data);
+  } catch (err) {
+    handleError(err, res);
+  }
+});
+
+// TODO
+app.get('/search', async function(req, res) {
+  // name type franchise price order
+  try {
+    let data = await fs.readFile(FILTERS_URL, 'utf8');
+    data = JSON.parse(data);
+    res.type('json').send(data);
+  } catch (err) {
+    handleError(err, res);
+  }
+});
+
+// TODO POST
+app.get('/history', async function(req, res) {
+  try {
+    let data = await fs.readFile(HISTORY_URL, 'utf8');
+    data = JSON.parse(data);
+    res.type('json').send(data);
+  } catch (err) {
+    handleError(err, res);
+  }
+});
+
+// TODO
+app.post('/feedback', async function(req, res) {
+});
+
+// TODO
+app.post('/create-user', async function(req, res) {
 });
 
 /**
