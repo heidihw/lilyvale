@@ -30,6 +30,7 @@ app.use(express.json()); // built-in middleware
 app.use(multer().none()); // requires the "multer" module
 
 // Heidi Wang
+// temporary endpoint to work with json file
 app.get('/get', async function(req, res) {
   try {
     let data = await fs.readFile(DATA_URL, 'utf8');
