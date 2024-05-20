@@ -54,9 +54,9 @@ app.post('/login', async function(req, res) {
 /**
  * TODO
  * query parameters: id
- * but APIDOC has id as a query parameter
+ * should use query parameter or path parameter?
  */
-app.get('/item/:id', async function(req, res) {
+app.get('/item', async function(req, res) {
   try {
     let data = await fs.readFile(ITEM_DETAILED_URL, 'utf8');
     data = JSON.parse(data);
