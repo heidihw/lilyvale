@@ -1,4 +1,5 @@
 {
+  "cart": 3,
   "history": [
     {
       "id": 1726598321,
@@ -51,15 +52,15 @@
     "price": [
       {
         "id": "n0-10",
-        "name": "&lt;10"
+        "name": "Under $10"
       },
       {
         "id": "n10-20",
-        "name": "&ge;10, &lt;20"
+        "name": "$10 to $20"
       },
       {
         "id": "n20-n",
-        "name": "&ge;20"
+        "name": "Over $20"
       }
     ]
   },
@@ -75,7 +76,7 @@
         "franchise": "toradora",
         "price": "n20-n"
       },
-      "purchase-status": "purchased"
+      "count": 3
     },
     {
       "id": 2,
@@ -88,7 +89,7 @@
         "franchise": "re-zero",
         "price": "n10-20"
       },
-      "purchase-status": "purchased"
+      "count": 0
     },
     {
       "id": 3,
@@ -101,7 +102,7 @@
         "franchise": "toradora",
         "price": "n10-20"
       },
-      "purchase-status": "cart"
+      "count": 1
     },
     {
       "id": 4,
@@ -114,7 +115,7 @@
         "franchise": "toradora",
         "price": "n10-20"
       },
-      "purchase-status": "selling"
+      "count": 3
     },
     {
       "id": 5,
@@ -127,7 +128,7 @@
         "franchise": "fate-stay-night",
         "price": "n20-n"
       },
-      "purchase-status": "selling"
+      "count": 2
     }
   ]
 }

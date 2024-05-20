@@ -23,33 +23,29 @@
    * Initializes the filters to display only the items that are in the selected categories.
    * Fills the filters, items, cart, and history appropriately with data from the API.
    */
-  function init() {
+  async function init() {
     /** Heidi */
-    const currUrl = window.location.href;
-    const splitUrl = currUrl.split('#');
-    if (splitUrl.length > 1) {
-      goTo(splitUrl[1]);
-    }
-    const links = document.querySelectorAll('a');
+    // nav bar
+    const links = document.querySelectorAll('p');
     for (let i = 0; i < links.length; i++) {
       links[i].addEventListener('click', toggleScreens);
     }
 
-    /** Daria */
-    makeButton();
-
-    /** Heidi */
-    document.getElementById('view').addEventListener('change', () => {
-      const items = document.getElementById('items');
-      items.classList.toggle('list-view');
+    // switch grid and list layout
+    document.getElementById('layout').addEventListener('change', () => {
+      const items = document.getElementById('items-container');
+      items.classList.toggle('list-layout');
     });
+
+    await fillData();
 
     let filters = document.querySelectorAll('input');
     for (let i = 0; i < filters.length; i++) {
-      filters[i].addEventListener('change', filter);
+      filters[i].addEventListener('change', filterItems);
     }
 
-    fillData();
+    /** Daria */
+    makeButton();
   }
 
   /**
@@ -63,23 +59,8 @@
         pages[i].classList.add('hidden');
       }
     }
-    const splitUrl = this.href.split('#');
+    const splitUrl = this.id.split('-');
     document.getElementById(splitUrl[1]).classList.toggle('hidden');
-    window.scroll(0, 0);
-  }
-
-  /**
-   * Heidi Wang
-   * Goes to the correct view on page load.
-   */
-  function goTo(page) {
-    const pages = document.querySelectorAll('main > section');
-    for (let i = 0; i < pages.length; i++) {
-      if (!pages[i].classList.contains('hidden')) {
-        pages[i].classList.add('hidden');
-      }
-    }
-    document.getElementById(page).classList.remove('hidden');
     window.scroll(0, 0);
   }
 
@@ -87,7 +68,7 @@
    * Heidi Wang
    * Filters all the items for the ones that are in the selected categories.
    */
-  function filter() {
+  function filterItems() {
     let cleared = true;
     let filters = document.querySelectorAll('input');
     let selected = [];
@@ -129,23 +110,27 @@
       fillItems(res);
       fillFilters(res);
     } catch (err) {
-      handleError(err, container);
+      console.error(err);
     }
   }
 
   /**
    * Heidi Wang
-   * Populates the cart with the items in the cart.
+   * Populates the cart with the item in the cart or a message indicating it is empty.
    * @param {JSON} res - the data from the API call.
    */
   function fillCart(res) {
     let container = document.getElementById('cart-container');
     container.innerHTML = '';
-    for (let i = 0; i < res.items.length; i++) {
-      if (res.items[i]['purchase-status'] === 'cart') {
-        let item = fillItem(res.items[i]);
-        container.appendChild(item);
-      }
+    if (res['cart'] > 0) {
+      let item = fillItem(res['items'][res['cart']]);
+      container.appendChild(item);
+      document.getElementById('confirm-transaction').classList.remove('hidden');
+    } else {
+      let empty = document.createElement('p');
+      empty.textContent = 'Your cart is empty';
+      container.appendChild(empty);
+      document.getElementById('confirm-transaction').classList.add('hidden');
     }
   }
 
@@ -157,18 +142,18 @@
   function fillHistory(res) {
     let container = document.getElementById('history-container');
     container.innerHTML = '';
-    for (let i = 0; i < res.history.length; i++) {
+    for (let i = 0; i < res['history'].length; i++) {
       let order = document.createElement('article');
       let orderData = document.createElement('div');
       orderData.classList.add('order');
       let time = document.createElement('p');
-      time.textContent = 'Time: ' + res.history[i].time;
+      time.textContent = 'Time: ' + res['history'][i]['time'];
       let id = document.createElement('p');
-      id.textContent = 'Confirmation number: ' + res.history[i].id;
+      id.textContent = 'Confirmation number: ' + res['history'][i]['id'];
       orderData.appendChild(time);
       orderData.appendChild(id);
       order.appendChild(orderData);
-      let item = fillItem(res.items[res.history[i].item - 1]);
+      let item = fillItem(res['items'][res['history'][i]['item'] - 1]);
       order.appendChild(item);
       container.appendChild(order);
     }
@@ -182,9 +167,11 @@
   function fillItems(res) {
     let container = document.getElementById('items-container');
     container.innerHTML = '';
-    for (let i = 0; i < res.items.length; i++) {
-      let item = fillItem(res.items[i]);
-      container.appendChild(item);
+    for (let i = 0; i < res['items'].length; i++) {
+      if (res['items'][i].count > 0) {
+        let item = fillItem(res['items'][i]);
+        container.appendChild(item);
+      }
     }
   }
 
@@ -200,14 +187,21 @@
     heading3.textContent = 'Filters';
     container.appendChild(heading3);
 
-    let types = fillFilterDiv('types', 'Type', res.filters);
+    let types = fillFilterDiv('type', 'Type', res['filters']);
     container.appendChild(types);
-    let franchises = fillFilterDiv('franchises', 'Franchise', res.filters);
+    let franchises = fillFilterDiv('franchise', 'Franchise', res['filters']);
     container.appendChild(franchises);
-    let prices = fillFilterDiv('prices', 'Price', res.filters);
+    let prices = fillFilterDiv('price', 'Price', res['filters']);
     container.appendChild(prices);
   }
 
+  /**
+   * Populates a div DOM element with formatted data for a category of filters.
+   * @param {string} id - the id of the filter category.
+   * @param {string} name - the name of the filter category.
+   * @param {JSON} filters - the data for all the filters.
+   * @returns {HTMLDivElement} the formatted filter category.
+   */
   function fillFilterDiv(id, name, filters) {
     let div = document.createElement('div');
     div.id = 'filters-' + id + '-container';
@@ -225,18 +219,18 @@
    * Heidi Wang
    * Populates a div DOM element with formatted data for a singular given filter.
    * @param {JSON} filter - the data from the API call for the given filter.
-   * @returns the formatted div DOM element.
+   * @returns {HTMLDivElement} the formatted div DOM element.
    */
   function fillFilter(filter) {
     let div = document.createElement('div');
     let input = document.createElement('input');
     input.type = 'checkbox';
-    input.id = filter.id;
-    input.name = filter.id;
+    input.id = filter['id'];
+    input.name = filter['id'];
     div.appendChild(input);
     let label = document.createElement('label');
-    label.for = filter.id;
-    label.textContent = filter.name;
+    label.htmlFor = filter['id'];
+    label.textContent = filter['name'];
     div.appendChild(label);
     return div;
   }
@@ -245,18 +239,18 @@
    * Heidi Wang
    * Populates an article DOM element with formatted data for a singular given item.
    * @param {JSON} item - the data from the API call for the given item.
-   * @returns the formatted article DOM element.
+   * @returns {HTMLElement} the formatted article DOM element.
    */
   function fillItem(item) {
     let container = document.createElement('article');
-    container.classList.add(item.filters.type);
-    container.classList.add(item.filters.franchise);
-    container.classList.add(item.filters.price);
+    for (const filter in item['filters']) {
+      container.classList.add(item['filters'][filter]);
+    }
     let imgDiv = document.createElement('div');
     imgDiv.classList.add('img');
     let img = document.createElement('img');
     img.src = item['img-src'];
-    img.alt = item.name;
+    img.alt = item['name'];
     imgDiv.appendChild(img);
     container.appendChild(imgDiv);
     let text = document.createElement('div');
@@ -265,14 +259,14 @@
     let link = document.createElement('a');
     link.classList.add('listing-link');
     link.href = 'index.html#product';
-    link.textContent = item.name;
+    link.textContent = item['name'];
     name.appendChild(link);
     text.appendChild(name);
     let price = document.createElement('p');
-    price.textContent = '$' + item.price;
+    price.textContent = '$' + item['price'];
     text.appendChild(price);
     let rating = document.createElement('p');
-    rating.textContent = item.rating + ' stars';
+    rating.textContent = item['rating'] + ' stars';
     text.appendChild(rating);
     container.appendChild(text);
     return container;
@@ -358,17 +352,6 @@
       throw new Error(await res.text());
     }
     return res;
-  }
-
-  /**
-   * Updates the DOM to display the message in the given error.
-   * @param {exception} err - the contents of the error.
-   * @param {HTMLElement} container - the DOM element within which to display the error message.
-   */
-  function handleError(err, container) {
-    let errMsg = document.createElement('p');
-    errMsg.textContent = err.message;
-    container.appendChild(errMsg);
   }
 
   /**

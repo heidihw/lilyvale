@@ -56,11 +56,6 @@ nav div {
   width: 50%;
 }
 
-nav h1 {
-  display: inline;
-  margin: 0;
-}
-
 nav input {
   width: 50%;
   height: 40px;
@@ -69,12 +64,17 @@ nav input {
   border: none;
 }
 
-nav div > a {
-  padding: 0 2%;
+nav h1, nav p {
+  cursor: pointer;
 }
 
-nav a:link, nav a:visited {
-  color: #ede8f5;
+nav h1 {
+  display: inline;
+  margin: 0;
+}
+
+nav p {
+  padding: 0 2%;
 }
 
 /* footer */
@@ -88,7 +88,6 @@ footer {
   padding: 30px;
   text-align: right;
 }
-
 
 /*
   Daria Manguling
@@ -142,7 +141,6 @@ section#index #secondary img {
   width: 300px;
 }
 
-
 /*
   Daria Manguling
   product
@@ -166,7 +164,6 @@ section#product #write-review {
   flex-direction: column;
   align-items: baseline;
 }
-
 
 /*
   Heidi Wang
@@ -204,7 +201,6 @@ section#cart img {
 section#cart div.text {
   margin-left: 25px;
 }
-
 
 /*
   Heidi Wang
@@ -259,7 +255,6 @@ section#history div.text {
   margin-left: 25px;
 }
 
-
 /*
   Heidi Wang
   items
@@ -291,7 +286,7 @@ section#items section#filters-container {
 }
 
 section#items section#items-container {
-  justify-content: space-between;
+  justify-content: start;
   flex-wrap: wrap;
   width: 82%;
 }
@@ -328,12 +323,6 @@ section#items div.text {
   flex-direction: column;
   justify-content: end;
   height: 80px;
-}
-
-section#items div.line {
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* flex-wrap: wrap; */
   width: 150px;
 }
 
@@ -346,9 +335,9 @@ section#items p {
   margin: 0;
 }
 
-/* items specific list-view */
+/* items specific list-layout */
 
-section#items section#items-container.list-view article {
+section#items section#items-container.list-layout article {
   flex-direction: row;
   justify-content: flex-start;
   align-items: end;
@@ -358,6 +347,6 @@ section#items section#items-container.list-view article {
   height: 150px;
 }
 
-section#items section#items-container.list-view div.text {
+section#items section#items-container.list-layout div.text {
   margin-left: 25px;
 }

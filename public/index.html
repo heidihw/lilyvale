@@ -14,23 +14,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="index.js"></script>
-    <title>SITE NAME</title>
+    <title>LILYVALE</title>
   </head>
   <body>
     <header>
       <nav>
         <div>
-          <h1><a href="index.html">SITE NAME</a></h1>
+          <h1>LILYVALE</h1>
           <input type="text" placeholder="Search" id="search">
         </div>
         <div>
-          <a href="index.html">Home</a>
-          <a href="login.html">Log In</a>
-          <a href="index.html#items">Items</a>
-          <a href="index.html#product">Product</a>
-          <a href="index.html#cart">Cart</a>
-          <a href="index.html#purchase">Purchase</a>
-          <a href="index.html#history">History</a>
+          <p id="nav-index">Home</p>
+          <p id="nav-login.html">Log In</p>
+          <p id="nav-items">Items</p>
+          <p id="nav-product">Product</p>
+          <p id="nav-cart">Cart</p>
+          <p id="nav-purchase">Purchase</p>
+          <p id="nav-history">History</p>
         </div>
       </nav>
     </header>
@@ -93,10 +93,11 @@
             </form>
             <h2>Description</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporincididunt
-              ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-              laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-              voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+              temporincididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+              nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+              aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur.
             </p>
           </section>
         </section>
@@ -139,7 +140,7 @@
           </article> -->
         </section>
         <section>
-          <a href="index.html#purchase">Proceed to payment</a>
+          <a href="index.html#purchase" id="confirm-transaction">Proceed to payment</a>
           <!-- to submit transaction -->
         </section>
       </section>
@@ -187,7 +188,7 @@
         <h2>All Items</h2>
         <div>
           <label for="view">View:</label>
-          <select name="view" id="view">
+          <select name="layout" id="layout">
             <option value="grid">Grid</option>
             <option value="list">List</option>
           </select>
