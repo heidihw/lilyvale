@@ -141,9 +141,9 @@ Logged in.
 **Error Handling:**
 
 - Possible 400 (invalid request) errors (all plain text):
-  - If user is not logged in, returns error with `User not logged in.`
   - If item is out of stock, returns error with `Item out of stock.`
   - If item id is invalid, returns error with `Item does not exist.`
+  - If user is not logged in, returns error with `User not logged in.`
   - If any of the required parameters is missing, responds in plain text with the message `Missing required params.`
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`

@@ -54,6 +54,7 @@ app.get('/items', async function(req, res) {
       query += ' ORDER BY rating';
     }
     query += ';';
+    let data;
     if (search) {
       data = await db.all(query, ['%' + search + '%']);
     } else {
@@ -74,9 +75,8 @@ app.get('/items', async function(req, res) {
  * POST parameters: username, password
  */
 app.post('/login', async function(req, res) {
-  let id = req.body.id;
-  if (/** db contains id */) {
-    currUser = id;
+  if (/** db contains both */) {
+    currUser = res['uid'];
   } else {
     // fail;
   }
@@ -92,13 +92,43 @@ app.get('/item/:id', async function(req, res) {
 });
 
 /**
- * TODO
- * Daria Manguling
+ * Heidi Wang
  * Endpoint 4: Make a transaction
+ * Makes a transaction. Returns the information for the transaction.
  * POST parameters: id
  */
 app.post('/purchase', async function(req, res) {
-  if (currUser)
+  try {
+    let id = req.body.id;
+    if (id) {
+      if (currUser) {
+        let db = await getDBConnection();
+        let data1 = await db.all('SELECT * FROM items WHERE id = ?', [id]);
+        if (data1.length === 1) {
+          if (data1[0]['quantity'] > 0) {
+            await db.exec('UPDATE items SET quantity = quantity - 1 WHERE id = ?;', [id]);
+            let query3 = 'INSERT INTO purchases(id, uid) VALUES (?, ?);';
+            let data3 = await db.exec(query3, [id, currUser]);
+            await db.close();
+            res.type('json').send(data3);
+          } else {
+            await db.close();
+            res.type('text').status(400).send('Item out of stock.');
+          }
+        } else {
+          await db.close();
+          res.type('text').status(400).send('Item does not exist.');
+        }
+      } else {
+        res.type('text').status(400).send('User not logged in.');
+      }
+    } else {
+      res.type('text').status(400).send('Missing required params.');
+    }
+  } catch (err) {
+    res.type('text').status(500)
+      .send('Something went wrong. Please try again later.');
+  }
 });
 
 /**
@@ -112,7 +142,7 @@ app.get('/history', async function(req, res) {
     if (currUser) {
       let db = await getDBConnection();
       let query = 'SELECT * FROM purchases WHERE uid = ?';
-      data = await db.all(query, [currUser]);
+      let data = await db.all(query, [currUser]);
       await db.close();
       res.type('json').send(data);
     } else {
