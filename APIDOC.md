@@ -4,20 +4,20 @@ This API is for an anime ecommerce site. It allows the client to get data on all
 
 ## Endpoint 1: Get item information
 
-**Request Format:** `/items?name={name}&type={type}&franchise={franchise}&price={price}&order={order}`
+**Request Format:** `/items?search={search}&order={order}`
 
 **Request Type:** GET
 
 **Returned Data Format**: JSON
 
 **Description:** Gets information for the relevant items. Returns an array where each item in the array is information for an item, including item id, name, price, rating, tags, description, and quantity (capacity).
-- If no query parameters are included, gets information for all the items.
-- If search query parameters are included, searches all items for those that match the search criteria and returns the information for those items.
+- If no query parameters are included, returns information for all the items.
+- If search query parameters are included, returns information for those items that match the search criteria.
 - Possible search criteria include the item name and values of the tags, including type, franchise, and price.
-- If no items match the search criteria, returns an empty JSON array.
+- If no items match the search criteria, returns an empty array.
 - It is also possible to specify the order in which to return the items, with the query parameter `order` with possible values of `price`, `name`, `rating`, and `featured`.
 
-**Example Request:** `/items?franchise=re-zero`
+**Example Request:** `/items?search=Re:Zero`
 
 **Example Response:**
 
@@ -41,7 +41,7 @@ This API is for an anime ecommerce site. It allows the client to get data on all
 - Possible 400 (invalid request) errors (all plain text):
   - None
 - Possible 500 errors (all plain text):
-  - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
+  - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
 ## Endpoint 2: Login with credentials
 
@@ -66,7 +66,7 @@ Logged in.
 - Possible 400 (invalid request) errors (all plain text):
   - If the provided credentials do not match an entry in the database, returns error with `Invalid username or password.`
 - Possible 500 errors (all plain text):
-  - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
+  - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
 ## Endpoint 3: Get detailed information on an item
 
@@ -111,7 +111,7 @@ Logged in.
 - Possible 400 (invalid request) errors (all plain text):
   - If item id is invalid, returns error with `Item does not exist.`
 - Possible 500 errors (all plain text):
-  - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
+  - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
 ## Endpoint 4: Make a transaction
 
@@ -144,7 +144,7 @@ Logged in.
   - If item is out of stock, returns error with `Item out of stock.`
   - If item id is invalid, returns error with `Item does not exist.`
 - Possible 500 errors (all plain text):
-  - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
+  - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
 ## Endpoint 5: Get transaction history
 
@@ -178,7 +178,7 @@ Logged in.
 - Possible 400 (invalid request) errors (all plain text):
   - If user is not logged in, returns error with `User not logged in.`
 - Possible 500 errors (all plain text):
-  - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
+  - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
 ## Endpoint 6: Give feedback
 
@@ -214,7 +214,7 @@ Logged in.
   - If user has not purchased the item before, returns error with `User has not purchased this item before.`
   - If user is not logged in, returns error with `User not logged in.`
 - Possible 500 errors (all plain text):
-  - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
+  - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
 ## Endpoint 7: Create a user
 
@@ -240,4 +240,4 @@ User successfully created.
   - If user with given username already exists, returns error with `User already exists.`
   - If user with given email already exists, returns error with `Email already in use.`
 - Possible 500 errors (all plain text):
-  - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
+  - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`

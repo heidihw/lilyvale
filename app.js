@@ -8,21 +8,15 @@
 
 'use strict';
 
-const ITEMS_URL = 'data/items.json';
-const ITEM_DETAILED_URL = 'data/item-detailed.json';
-const CART_URL = 'data/cart.json';
-const FILTERS_URL = 'data/filters.json';
-const HISTORY_URL = 'data/history.json';
-
-// const CLIENT_ERR_STATUS = 400;
-const SERVER_ERR_STATUS = 500;
-const LOCAL_PORT = 8000;
+let currUser;
 
 const express = require('express');
 const app = express();
 
-const fs = require("fs").promises; // node module to interact with filesystem for file i/o
-const multer = require("multer");
+const multer = require('multer');
+
+const sqlite3 = require('sqlite3');
+const sqlite = require('sqlite');
 
 // for application/x-www-form-urlencoded
 app.use(express.urlencoded({extended: true})); // built-in middleware
@@ -31,85 +25,109 @@ app.use(express.urlencoded({extended: true})); // built-in middleware
 app.use(express.json()); // built-in middleware
 
 // for multipart/form-data (required with FormData)
-app.use(multer().none()); // requires the "multer" module
+app.use(multer().none()); // requires the 'multer' module
 
-// Heidi Wang
+/**
+ * Heidi Wang
+ * Endpoint 1: Get item information
+ * Gets information for the relevant items. Returns an array of information for each item.
+ * If no query parameters are included, returns information for all the items.
+ * If search query parameters are included, returns information for those items that match the
+ * search criteria.
+ * query parameters: search order
+ */
 app.get('/items', async function(req, res) {
   try {
-    let data = await fs.readFile(ITEMS_URL, 'utf8');
-    data = JSON.parse(data);
+    let search = req.query.search;
+    let order = req.query.order;
+    let db = await getDBConnection();
+    let query = 'SELECT * FROM items WHERE';
+    if (search) {
+      query += ' name LIKE $search OR desc LIKE $search OR tags LIKE $search AND';
+    }
+    query += ' quantity > 0';
+    if (order === 'price') {
+      query += ' ORDER BY price';
+    } else if (order === 'name') {
+      query += ' ORDER BY name';
+    } else if (order === 'rating') {
+      query += ' ORDER BY rating';
+    }
+    query += ';';
+    if (search) {
+      data = await db.all(query, ['%' + search + '%']);
+    } else {
+      data = await db.all(query);
+    }
+    await db.close();
     res.type('json').send(data);
   } catch (err) {
-    handleError(err, res);
+    res.type('text').status(500)
+      .send('Something went wrong. Please try again later.');
   }
 });
 
 /**
  * TODO
+ * Daria Manguling
+ * Endpoint 2: Login with credentials
  * POST parameters: username, password
  */
 app.post('/login', async function(req, res) {
-});
-
-/**
- * TODO
- * query parameters: id
- * should use query parameter or path parameter?
- */
-app.get('/item', async function(req, res) {
-  try {
-    let data = await fs.readFile(ITEM_DETAILED_URL, 'utf8');
-    data = JSON.parse(data);
-    res.type('json').send(data);
-  } catch (err) {
-    handleError(err, res);
+  let id = req.body.id;
+  if (/** db contains id */) {
+    currUser = id;
+  } else {
+    // fail;
   }
 });
 
 /**
  * TODO
+ * Daria Manguling
+ * Endpoint 3: Get detailed information on an item
+ */
+app.get('/item/:id', async function(req, res) {
+  let id = req.params.id;
+});
+
+/**
+ * TODO
+ * Daria Manguling
+ * Endpoint 4: Make a transaction
  * POST parameters: id
  */
-app.get('/purchase', async function(req, res) {
-  try {
-    let data = await fs.readFile(CART_URL, 'utf8');
-    data = JSON.parse(data);
-    res.type('json').send(data);
-  } catch (err) {
-    handleError(err, res);
-  }
+app.post('/purchase', async function(req, res) {
+  if (currUser)
 });
 
 /**
- * TODO
- * query parameters: name type franchise price order
- */
-app.get('/search', async function(req, res) {
-  try {
-    let data = await fs.readFile(FILTERS_URL, 'utf8');
-    data = JSON.parse(data);
-    res.type('json').send(data);
-  } catch (err) {
-    handleError(err, res);
-  }
-});
-
-/**
- * TODO
- * POST parameters: username
+ * Heidi Wang
+ * Endpoint 5: Get transaction history
+ * Gets information for all items in the transaction history for the user.
+ * Returns an array of information for each transaction.
  */
 app.get('/history', async function(req, res) {
   try {
-    let data = await fs.readFile(HISTORY_URL, 'utf8');
-    data = JSON.parse(data);
-    res.type('json').send(data);
+    if (currUser) {
+      let db = await getDBConnection();
+      let query = 'SELECT * FROM purchases WHERE uid = ?';
+      data = await db.all(query, [currUser]);
+      await db.close();
+      res.type('json').send(data);
+    } else {
+      res.type('text').status(400).send('User not logged in.');
+    }
   } catch (err) {
-    handleError(err, res);
+    res.type('text').status(500)
+      .send('Something went wrong. Please try again later.');
   }
 });
 
 /**
  * TODO
+ * Daria Manguling
+ * Endpoint 6: Give feedback
  * POST parameters: title, stars, description
  */
 app.post('/feedback', async function(req, res) {
@@ -117,6 +135,8 @@ app.post('/feedback', async function(req, res) {
 
 /**
  * TODO
+ * Daria Manguling
+ * Endpoint 7: Create a user
  * POST parameters: username, password, email
  */
 app.post('/create-user', async function(req, res) {
@@ -129,19 +149,32 @@ app.post('/create-user', async function(req, res) {
  */
 function handleError(err, res) {
   if (err.code === 'ENOENT') {
-    res.type('text').status(SERVER_ERR_STATUS)
+    res.type('text').status(500)
       .send('File not found on the server');
   } else {
-    res.type('text').status(SERVER_ERR_STATUS)
+    res.type('text').status(500)
       .send('Something went wrong on the server');
   }
+}
+
+/**
+ * Establishes a database connection to the database and returns the database object.
+ * Any errors that occur should be caught in the function that calls this one.
+ * @returns {Object} - The database object for the connection.
+ */
+async function getDBConnection() {
+  const db = await sqlite.open({
+    filename: 'app.db',
+    driver: sqlite3.Database
+  });
+  return db;
 }
 
 // tells the code to serve static files in a directory called 'public'
 app.use(express.static('public'));
 
 // specify the port to listen on
-const PORT = process.env.PORT || LOCAL_PORT;
+const PORT = process.env.PORT || 8000;
 
 // tells the application to run on the specified port
 app.listen(PORT);
