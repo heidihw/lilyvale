@@ -65,6 +65,7 @@ Logged in.
 
 - Possible 400 (invalid request) errors (all plain text):
   - If the provided credentials do not match an entry in the database, returns error with `Invalid username or password.`
+  - If any of the required parameters is missing, responds in plain text with the message `Missing required params.`
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
@@ -143,6 +144,7 @@ Logged in.
   - If user is not logged in, returns error with `User not logged in.`
   - If item is out of stock, returns error with `Item out of stock.`
   - If item id is invalid, returns error with `Item does not exist.`
+  - If any of the required parameters is missing, responds in plain text with the message `Missing required params.`
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
@@ -213,6 +215,7 @@ Logged in.
 - Possible 400 (invalid request) errors (all plain text):
   - If user has not purchased the item before, returns error with `User has not purchased this item before.`
   - If user is not logged in, returns error with `User not logged in.`
+  - If any of the required parameters is missing, responds in plain text with the message `Missing required params.`
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
@@ -239,5 +242,6 @@ User successfully created.
 - Possible 400 (invalid request) errors (all plain text):
   - If user with given username already exists, returns error with `User already exists.`
   - If user with given email already exists, returns error with `Email already in use.`
+  - If any of the required parameters is missing, responds in plain text with the message `Missing required params.`
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`

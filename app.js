@@ -134,12 +134,12 @@ app.post('/feedback', async function(req, res) {
 });
 
 /**
- * TODO
- * Daria Manguling
+ * Heidi Wang
  * Endpoint 7: Create a user
  * POST parameters: username, password, email
  */
 app.post('/create-user', async function(req, res) {
+
 });
 
 /**
