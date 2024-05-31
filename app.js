@@ -1,6 +1,6 @@
 /**
- * Name:    Daria Manguling, Heidi Wang
- * Date:    2024 05 05 Sun
+ * Name:    Heidi Wang
+ * Date:    2024 05 31 Fri
  * Section: CSE 154 AG, Allison and Marina
  *
  * This is the index.html for all pages of the anime shopping site.
@@ -57,6 +57,7 @@ app.get('/items', async function(req, res) {
 });
 
 /**
+ * Heidi Wang
  * Builds a query to get items from the database.
  * @param {string} search - the search query parameter provided with the API call.
  * @param {string} order - the order query parameter provided with the API call.
