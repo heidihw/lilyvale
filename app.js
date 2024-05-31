@@ -69,16 +69,32 @@ app.get('/items', async function(req, res) {
 });
 
 /**
- * TODO
- * Daria Manguling
+ * Heidi Wang
  * Endpoint 2: Login with credentials
+ * Logs in to a user. Returns a confirmation message.
  * POST parameters: username, password
  */
 app.post('/login', async function(req, res) {
-  if (/** db contains both */) {
-    currUser = res['uid'];
-  } else {
-    // fail;
+  try {
+    let username = req.body.username;
+    let password = req.body.password;
+    if (username && password) {
+      let db = await getDBConnection();
+      let query = 'SELECT * FROM users WHERE username = ? AND password = ?;';
+      let data = await db.all(query, [username, password]);
+      await db.close();
+      if (data.length === 1) {
+        currUser = res[0]['uid'];
+        res.type('text').send('Logged in.');
+      } else {
+        res.type('text').status(400).send('Invalid username or password.');
+      }
+    } else {
+      res.type('text').status(400).send('Missing required params.');
+    }
+  } catch (err) {
+    res.type('text').status(500)
+      .send('Something went wrong. Please try again later.');
   }
 });
 
@@ -166,10 +182,38 @@ app.post('/feedback', async function(req, res) {
 /**
  * Heidi Wang
  * Endpoint 7: Create a user
+ * Creates a new user. Returns a confirmation message.
  * POST parameters: username, password, email
  */
 app.post('/create-user', async function(req, res) {
-
+  try {
+    let username = req.body.username;
+    let password = req.body.password;
+    let email = req.body.email;
+    if (username && password) {
+      let db = await getDBConnection();
+      let data1 = await db.all('SELECT * FROM users WHERE username = ?;', [username]);
+      if (data1.length === 1) {
+        await db.close();
+        res.type('text').status(400).send('User already exists.');
+      } else {
+        let data2 = await db.all('SELECT * FROM users WHERE email = ?;', [email]);
+        await db.close();
+        if (data2.length === 1) {
+          res.type('text').status(400).send('Email already in use.');
+        } else {
+          let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
+          await db.exec(query3, [username, password, email]);
+          res.type('text').send('User successfully created.');
+        }
+      }
+    } else {
+      res.type('text').status(400).send('Missing required params.');
+    }
+  } catch (err) {
+    res.type('text').status(500)
+      .send('Something went wrong. Please try again later.');
+  }
 });
 
 /**
