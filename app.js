@@ -95,7 +95,7 @@ app.post('/login', async function(req, res) {
       let data = await db.all(query, [username, password]);
       await db.close();
       if (data.length === 1) {
-        currUser = res[0]['uid'];
+        currUser = data[0]['uid'];
         res.type('text').send('Logged in.');
       } else {
         res.type('text').status(400)
@@ -211,21 +211,22 @@ app.post('/create-user', async function(req, res) {
     if (username && password) {
       let db = await getDBConnection();
       let data1 = await db.all('SELECT * FROM users WHERE username = ?;', [username]);
-      if (data1.length === 1) {
+      if (data1.length != 1) {
+        let data2 = await db.all('SELECT * FROM users WHERE email = ?;', [email]);
+        if (data2.length != 1) {
+          let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
+          await db.exec(query3, [username, password, email]);
+          await db.close();
+          res.type('text').send('User successfully created.');
+        } else {
+          await db.close();
+          res.type('text').status(400)
+            .send('Email already in use.');
+        }
+      } else {
         await db.close();
         res.type('text').status(400)
           .send('User already exists.');
-      } else {
-        let data2 = await db.all('SELECT * FROM users WHERE email = ?;', [email]);
-        await db.close();
-        if (data2.length === 1) {
-          res.type('text').status(400)
-            .send('Email already in use.');
-        } else {
-          let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
-          await db.exec(query3, [username, password, email]);
-          res.type('text').send('User successfully created.');
-        }
       }
     } else {
       res.type('text').status(400)
