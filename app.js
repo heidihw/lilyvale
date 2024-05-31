@@ -211,9 +211,9 @@ app.post('/create-user', async function(req, res) {
     if (username && password) {
       let db = await getDBConnection();
       let data1 = await db.all('SELECT * FROM users WHERE username = ?;', [username]);
-      if (data1.length != 1) {
+      if (data1.length !== 1) {
         let data2 = await db.all('SELECT * FROM users WHERE email = ?;', [email]);
-        if (data2.length != 1) {
+        if (data2.length !== 1) {
           let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
           await db.exec(query3, [username, password, email]);
           await db.close();
