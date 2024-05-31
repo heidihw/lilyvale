@@ -2,17 +2,22 @@
 
 This API is for an anime ecommerce site. It allows the client to get data on all items for sale, log in to a user, get detailed information for a specific item including ratings, purchase an item, search and filter for a selection of all of the items, see past purchases, write a rating, and create a new user.
 
-## Get all items
+## Endpoint 1: Get item information
 
-**Request Format:** `/items`
+**Request Format:** `/items?name={name}&type={type}&franchise={franchise}&price={price}&order={order}`
 
 **Request Type:** GET
 
 **Returned Data Format**: JSON
 
-**Description:** Gets general information on all the items for sale.
+**Description:** Gets information for the relevant items. Returns an array where each item in the array is information for an item, including item id, name, price, rating, tags, description, and quantity (capacity).
+- If no query parameters are included, gets information for all the items.
+- If search query parameters are included, searches all items for those that match the search criteria and returns the information for those items.
+- Possible search criteria include the item name and values of the tags, including type, franchise, and price.
+- If no items match the search criteria, returns an empty JSON array.
+- It is also possible to specify the order in which to return the items, with the query parameter `order` with possible values of `price`, `name`, `rating`, and `featured`.
 
-**Example Request:** `/items`
+**Example Request:** `/items?franchise=re-zero`
 
 **Example Response:**
 
@@ -23,13 +28,9 @@ This API is for an anime ecommerce site. It allows the client to get data on all
     "name": "Toradora Taiga Plush",
     "price": 25,
     "rating": 5,
-    "img-src": "imgs/xie-lian-nendoroid.jpeg",
-    "filters": {
-      "type": "plush",
-      "franchise": "toradora",
-      "price": "n20-n"
-    },
-    "count": 3
+    "tags": "plush toradora n20-n",
+    "desc": "Toradora plushie released by ANIPLEX!",
+    "quantity": 3
   }
   // ...
 ]
@@ -42,7 +43,7 @@ This API is for an anime ecommerce site. It allows the client to get data on all
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-## Login with credentials
+## Endpoint 2: Login with credentials
 
 **Request Format:** `/login` endpoint with POST parameters of `username` and `password`
 
@@ -50,9 +51,9 @@ This API is for an anime ecommerce site. It allows the client to get data on all
 
 **Returned Data Format**: Plain Text
 
-**Description:** Logs in a user. Checks whether the username and password match an entry in the database.
+**Description:** Logs in to a user. Checks whether the username and password match an entry in the database. Returns a confirmation message.
 
-**Example Request:** POST parameters of `username=john` and `password=abc123`
+**Example Request:** POST request with parameters of `username=john` and `password=abc123`
 
 **Example Response:**
 
@@ -67,47 +68,41 @@ Logged in.
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-## Get detailed information on an item
+## Endpoint 3: Get detailed information on an item
 
-**Request Format:** `/item?id={id}`
+**Request Format:** `/item/:id`
 
 **Request Type:** GET
 
 **Returned Data Format**: JSON
 
-**Description:** Returns more detailed information on an individual item, including name, image, overall rating, price, description, and detailed ratings.
+**Description:** Gets detailed information on an individual item. Returns an array where the first item in the array is the information for the item, including item id, name, price, rating, tags, description, and quantity. All additional following items in the array are information for ratings for the item, including review id, item id, user id, title, rating, and description.
 
-**Example Request:** `/item?id=1`
+**Example Request:** `/item/1`
 
 **Example Response:**
 
 ```json
-{
-  "id": 1,
-  "name": "Toradora Taiga Plush",
-  "price": 25,
-  "rating": 5,
-  "img-src": "imgs/xie-lian-nendoroid.jpeg",
-  "filters": {
-    "type": "plush",
-    "franchise": "toradora",
-    "price": "n20-n"
-  },
-  "count": 3,
-  "description": "Toradora plushie released by ANIPLEX!",
-  "reviews": [
-    {
-      "title": "Cool!",
-      "stars": 5,
-      "description": "Omg! I love itttt!"
-    },
-    {
-      "title": "Woahhhhh",
-      "stars": 5,
-      "description": "This nendoroid is so adorable! I'm so glad I bought it"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "name": "Toradora Taiga Plush",
+    "price": 25,
+    "rating": 5,
+    "tags": "plush toradora n20-n",
+    "desc": "Toradora plushie released by ANIPLEX!",
+    "quantity": 3
+  }
+  {
+    "rid": 1,
+    "id": 1,
+    "uid": 1,
+    "title": "Cool!",
+    "rating": 5,
+    "desc": "Omg! I love itttt!"
+  }
+  // ...
+]
 ```
 
 **Error Handling:**
@@ -117,22 +112,28 @@ Logged in.
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-## Make a transaction
+## Endpoint 4: Make a transaction
 
-**Request Format:** `/purchase` endpoint with POST parameters of `id`
+**Request Format:** `/purchase` endpoint with POST parameter of `id`
 
 **Request Type:** POST
 
-**Returned Data Format**: Plain Text
+**Returned Data Format**: JSON
 
-**Description:** Checks whether a transaction is successful, and if so, returns the confirmation code for the succcessful transaction. The user must be logged in.
+**Description:** Makes a transaction. Returns the information for the transaction, including purchase id (confirmation code), item id, user id, and time of the transaction.
+- The user must be logged in.
 
-**Example Request:** POST parameters of `id=1`
+**Example Request:** POST request with parameter of `id=1`
 
 **Example Response:**
 
-```
-1726598321
+```json
+{
+  "pid": 1,
+  "id": 1,
+  "uid": 1,
+  "time": "2024/03/12 Fri 16:39 pm",
+}
 ```
 
 **Error Handling:**
@@ -144,71 +145,30 @@ Logged in.
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-## Search all items
+## Endpoint 5: Get transaction history
 
-**Request Format:** `/search?name={name}&type={type}&franchise={franchise}&price={price}&order={order}`
+**Request Format:** `/history`
 
 **Request Type:** GET
 
 **Returned Data Format**: JSON
 
-**Description:** Searches the database and returns all items that match the search criteria.
+**Description:** Gets information for all items in the transaction history for the user. Returns an array where each item in the array is the information for each transaction, including purchase id, item id, user id, and time.
+- The user must be logged in.
 
-**Example Request:** `/search?franchise=re-zero`
-
-**Example Response:**
-
-```json
-[
-  {
-    "id": 2,
-    "name": "Re:Zero Emilia Pin",
-    "price": 10,
-    "rating": 5,
-    "img-src": "imgs/rezero-rem-figurine.jpeg",
-    "filters": {
-      "type": "pin",
-      "franchise": "re-zero",
-      "price": "n10-20"
-    },
-    "count": 0
-  }
-]
-```
-
-**Error Handling:**
-
-- Possible 400 (invalid request) errors (all plain text):
-  - None
-- Possible 500 errors (all plain text):
-  - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
-
-## Get transaction history
-
-**Request Format:** `/history` endpoint with POST parameter of `username`
-
-**Request Type:** POST
-
-**Returned Data Format**: JSON
-
-**Description:** Returns the transaction history for the user. The user must be logged in.
-
-**Example Request:** POST parameter of `username=john`
+**Example Request:** `/history`
 
 **Example Response:**
 
 ```json
 [
   {
-    "id": 1726598321,
+    "pid": 1,
+    "id": 1,
+    "uid": 1,
     "time": "2024/03/12 Fri 16:39 pm",
-    "item": 1
-  },
-  {
-    "id": 1726598578,
-    "time": "2024/03/12 Fri 18:23 pm",
-    "item": 2
   }
+  // ...
 ]
 ```
 
@@ -219,7 +179,7 @@ Logged in.
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-## Give feedback
+## Endpoint 6: Give feedback
 
 **Request Format:** `/feedback` endpoint with POST parameters of `title`, `stars`, and `description`
 
@@ -227,17 +187,20 @@ Logged in.
 
 **Returned Data Format**: JSON
 
-**Description:** Writes a new review with the given title, stars, and description.
+**Description:** Writes a new review with the given title, rating, and description. Returns the information for the posted review, including the review id, item id, and user id, as well as the provided title, rating, and description.
 
-**Example Request:** POST parameters of `title=Cool!`, `stars=5`, and `description=Omg! I love itttt!`
+**Example Request:** POST request with parameters of `title=Cool!`, `stars=5`, and `description=Omg! I love itttt!`
 
 **Example Response:**
 
 ```json
 {
+  "rid": 1,
+  "id": 1,
+  "uid": 1,
   "title": "Cool!",
-  "stars": 5,
-  "description": "Omg! I love itttt!"
+  "rating": 5,
+  "desc": "Omg! I love itttt!"
 }
 ```
 
@@ -248,7 +211,7 @@ Logged in.
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
 
-## Create a user
+## Endpoint 7: Create a user
 
 **Request Format:** `/create-user` endpoint with POST parameters of `username`, `password`, and `email`
 
@@ -256,14 +219,14 @@ Logged in.
 
 **Returned Data Format**: Plain Text
 
-**Description:** Creates a new user with the provided username, password, and email.
+**Description:** Creates a new user with the provided username, password, and email. Returns a confirmation message.
 
-**Example Request:** POST parameters of `username=john`, `password=abc123`, and `email=example@email.com`
+**Example Request:** POST request with parameters of `username=john`, `password=abc123`, and `email=example@email.com`
 
 **Example Response:**
 
 ```
-User john successfully created.
+User successfully created.
 ```
 
 **Error Handling:**
