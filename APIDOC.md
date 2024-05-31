@@ -77,7 +77,7 @@ Logged in.
 
 **Returned Data Format**: JSON
 
-**Description:** Gets detailed information on an individual item. Returns an array where the first item in the array is the information for the item, including item id, name, price, rating, tags, description, and quantity. All additional following items in the array are information for ratings for the item, including review id, item id, user id, title, rating, and description.
+**Description:** Gets detailed information on an individual item. Returns an array where the first item in the array is the information for the item, including item id, name, price, rating, tags, description, and quantity. The second item in the array is an where each item in the array is information for ratings for the item, including review id, item id, user id, title, rating, and description.
 
 **Example Request:** `/item/1`
 
@@ -93,17 +93,19 @@ Logged in.
     "tags": "plush toradora n20-n",
     "desc": "Toradora plushie released by ANIPLEX!",
     "quantity": 3
-  }
-  {
-    "rid": 1,
-    "id": 1,
-    "uid": 1,
-    "pid": 1,
-    "title": "Cool!",
-    "rating": 5,
-    "desc": "Omg! I love itttt!"
-  }
-  // ...
+  },
+  [
+    {
+      "rid": 1,
+      "id": 1,
+      "uid": 1,
+      "pid": 1,
+      "title": "Cool!",
+      "rating": 5,
+      "desc": "Omg! I love itttt!"
+    }
+    // ...
+  ]
 ]
 ```
 
@@ -165,13 +167,27 @@ Logged in.
 
 ```json
 [
-  {
-    "pid": 1,
-    "id": 1,
-    "uid": 1,
-    "time": "2024-03-12 16:39:02",
-  }
-  // ...
+  [
+    {
+      "pid": 1,
+      "id": 1,
+      "uid": 1,
+      "time": "2024-03-12 16:39:02",
+    }
+    // ...
+  ],
+  [
+    {
+      "id": 1,
+      "name": "Toradora Taiga Plush",
+      "price": 25,
+      "rating": 5,
+      "tags": "plush toradora n20-n",
+      "desc": "Toradora plushie released by ANIPLEX!",
+      "quantity": 3
+    }
+    // ...
+  ]
 ]
 ```
 

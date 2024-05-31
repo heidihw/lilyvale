@@ -174,10 +174,16 @@ app.get('/history', async function(req, res) {
   try {
     if (currUser) {
       let db = await getDBConnection();
-      let query = 'SELECT * FROM purchases WHERE uid = ?';
-      let data = await db.all(query, [currUser]);
+      let data = await db.all('SELECT * FROM purchases WHERE uid = ?', [currUser]);
+      let items = [];
+      for (let i = 0; i < data.length; i++) {
+        let id = data[i]['id'];
+        let data2 = await db.get('SELECT * FROM items WHERE id = ?', [id]);
+        items.push(data2);
+      }
+      let history = [data, items];
       await db.close();
-      res.type('json').send(data);
+      res.type('json').send(history);
     } else {
       res.type('text').status(400)
         .send('User not logged in.');
