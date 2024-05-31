@@ -87,10 +87,12 @@ app.post('/login', async function(req, res) {
         currUser = res[0]['uid'];
         res.type('text').send('Logged in.');
       } else {
-        res.type('text').status(400).send('Invalid username or password.');
+        res.type('text').status(400)
+          .send('Invalid username or password.');
       }
     } else {
-      res.type('text').status(400).send('Missing required params.');
+      res.type('text').status(400)
+        .send('Missing required params.');
     }
   } catch (err) {
     res.type('text').status(500)
@@ -129,17 +131,21 @@ app.post('/purchase', async function(req, res) {
             res.type('json').send(data3);
           } else {
             await db.close();
-            res.type('text').status(400).send('Item out of stock.');
+            res.type('text').status(400)
+              .send('Item out of stock.');
           }
         } else {
           await db.close();
-          res.type('text').status(400).send('Item does not exist.');
+          res.type('text').status(400)
+            .send('Item does not exist.');
         }
       } else {
-        res.type('text').status(400).send('User not logged in.');
+        res.type('text').status(400)
+          .send('User not logged in.');
       }
     } else {
-      res.type('text').status(400).send('Missing required params.');
+      res.type('text').status(400)
+        .send('Missing required params.');
     }
   } catch (err) {
     res.type('text').status(500)
@@ -162,7 +168,8 @@ app.get('/history', async function(req, res) {
       await db.close();
       res.type('json').send(data);
     } else {
-      res.type('text').status(400).send('User not logged in.');
+      res.type('text').status(400)
+        .send('User not logged in.');
     }
   } catch (err) {
     res.type('text').status(500)
@@ -195,12 +202,14 @@ app.post('/create-user', async function(req, res) {
       let data1 = await db.all('SELECT * FROM users WHERE username = ?;', [username]);
       if (data1.length === 1) {
         await db.close();
-        res.type('text').status(400).send('User already exists.');
+        res.type('text').status(400)
+          .send('User already exists.');
       } else {
         let data2 = await db.all('SELECT * FROM users WHERE email = ?;', [email]);
         await db.close();
         if (data2.length === 1) {
-          res.type('text').status(400).send('Email already in use.');
+          res.type('text').status(400)
+            .send('Email already in use.');
         } else {
           let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
           await db.exec(query3, [username, password, email]);
@@ -208,7 +217,8 @@ app.post('/create-user', async function(req, res) {
         }
       }
     } else {
-      res.type('text').status(400).send('Missing required params.');
+      res.type('text').status(400)
+        .send('Missing required params.');
     }
   } catch (err) {
     res.type('text').status(500)
