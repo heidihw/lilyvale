@@ -227,21 +227,6 @@ app.post('/create-user', async function(req, res) {
 });
 
 /**
- * Sends the appropriate error message for the situation with the status code for a server error.
- * @param {exception} err - the contents of the error.
- * @param {Promise} res - the response Promise with which to send the error.
- */
-function handleError(err, res) {
-  if (err.code === 'ENOENT') {
-    res.type('text').status(500)
-      .send('File not found on the server');
-  } else {
-    res.type('text').status(500)
-      .send('Something went wrong on the server');
-  }
-}
-
-/**
  * Establishes a database connection to the database and returns the database object.
  * Any errors that occur should be caught in the function that calls this one.
  * @returns {Object} - The database object for the connection.
