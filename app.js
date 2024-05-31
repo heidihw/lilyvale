@@ -41,19 +41,7 @@ app.get('/items', async function(req, res) {
     let search = req.query.search;
     let order = req.query.order;
     let db = await getDBConnection();
-    let query = 'SELECT * FROM items WHERE';
-    if (search) {
-      query += ' name LIKE $search OR desc LIKE $search OR tags LIKE $search AND';
-    }
-    query += ' quantity > 0';
-    if (order === 'price') {
-      query += ' ORDER BY price';
-    } else if (order === 'name') {
-      query += ' ORDER BY name';
-    } else if (order === 'rating') {
-      query += ' ORDER BY rating';
-    }
-    query += ';';
+    let query = buildQueryItems(search, order);
     let data;
     if (search) {
       data = await db.all(query, ['%' + search + '%']);
@@ -67,6 +55,29 @@ app.get('/items', async function(req, res) {
       .send('Something went wrong. Please try again later.');
   }
 });
+
+/**
+ * Builds a query to get items from the database.
+ * @param {string} search - the search query parameter provided with the API call.
+ * @param {string} order - the order query parameter provided with the API call.
+ * @returns {string} the query that was built.
+ */
+function buildQueryItems(search, order) {
+  let query = 'SELECT * FROM items WHERE';
+  if (search) {
+    query += ' name LIKE $search OR desc LIKE $search OR tags LIKE $search AND';
+  }
+  query += ' quantity > 0';
+  if (order === 'price') {
+    query += ' ORDER BY price';
+  } else if (order === 'name') {
+    query += ' ORDER BY name';
+  } else if (order === 'rating') {
+    query += ' ORDER BY rating';
+  }
+  query += ';';
+  return query;
+}
 
 /**
  * Heidi Wang
