@@ -97,6 +97,7 @@ Logged in.
     "rid": 1,
     "id": 1,
     "uid": 1,
+    "pid": 1,
     "title": "Cool!",
     "rating": 5,
     "desc": "Omg! I love itttt!"
@@ -132,7 +133,7 @@ Logged in.
   "pid": 1,
   "id": 1,
   "uid": 1,
-  "time": "2024/03/12 Fri 16:39 pm",
+  "time": "2024-03-12 16:39:02",
 }
 ```
 
@@ -166,7 +167,7 @@ Logged in.
     "pid": 1,
     "id": 1,
     "uid": 1,
-    "time": "2024/03/12 Fri 16:39 pm",
+    "time": "2024-03-12 16:39:02",
   }
   // ...
 ]
@@ -188,6 +189,8 @@ Logged in.
 **Returned Data Format**: JSON
 
 **Description:** Writes a new review with the given title, rating, and description. Returns the information for the posted review, including the review id, item id, and user id, as well as the provided title, rating, and description.
+- The user must have purchased the item before.
+- The user must be logged in.
 
 **Example Request:** POST request with parameters of `title=Cool!`, `stars=5`, and `description=Omg! I love itttt!`
 
@@ -198,6 +201,7 @@ Logged in.
   "rid": 1,
   "id": 1,
   "uid": 1,
+  "pid": 1,
   "title": "Cool!",
   "rating": 5,
   "desc": "Omg! I love itttt!"
@@ -207,6 +211,7 @@ Logged in.
 **Error Handling:**
 
 - Possible 400 (invalid request) errors (all plain text):
+  - If user has not purchased the item before, returns error with `User has not purchased this item before.`
   - If user is not logged in, returns error with `User not logged in.`
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong; please try again.`
