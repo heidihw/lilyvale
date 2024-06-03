@@ -145,13 +145,12 @@ app.post('/login', async function(req, res) {
  */
 app.post('/purchase', async function(req, res) {
   try {
-    let id = req.body.id;
-    if (id) {
+    if (req.body.id) {
       if (currUser) {
-        let data1 = await dbSelectId(id);
+        let data1 = await dbSelectId(req.body.id);
         if (data1) {
           if (data1['quantity'] > 0) {
-            let data4 = await purchaseItem(id);
+            let data4 = await purchaseItem(req.body.id);
             res.type('json').send(data4);
           } else {
             res.type('text').status(400)
