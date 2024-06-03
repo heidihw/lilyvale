@@ -217,8 +217,9 @@ section#cart p, section#history p, section#items p {
   peach with black text aesthetic.
 */
 
-section#index section > img {
-  position: relative;
+#banner {
+  background-image: url('imgs/xie-lian-nendoroid.jpeg');
+  height: 500px;
 }
 
 section#index figure {
@@ -231,13 +232,12 @@ section#index figcaption {
   padding-top: 10px;
 }
 
-section#index section button {
-  position: absolute;
-  bottom: 50%;
-  left: 20%;
+#banner button {
+  left: 70px;
   border: none;
   padding: 10px 30px 10px 30px;
-  cursor: pointer;
+  margin-top: 100px;
+  margin-left: 125px;
 }
 
 section#index figcaption, section#index section button {
