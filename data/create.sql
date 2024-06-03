@@ -43,8 +43,8 @@ CREATE TABLE reviews (
 
 -- INSERT INTO
 
--- TODO: Daria: make INSERT statements to replace placeholder data with real data
--- TODO: Daria: rename image files with the name of the item
+-- TODO Daria: make INSERT statements to replace placeholder data with real data
+-- TODO Daria: rename image files with the name of the item
 
 
 INSERT INTO items(name, price, rating, tags, desc, quantity) VALUES (

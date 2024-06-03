@@ -8,8 +8,6 @@
 
 'use strict';
 
-let currUser;
-
 const express = require('express');
 const app = express();
 
@@ -17,6 +15,9 @@ const multer = require('multer');
 
 const sqlite3 = require('sqlite3');
 const sqlite = require('sqlite');
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 // for application/x-www-form-urlencoded
 app.use(express.urlencoded({extended: true})); // built-in middleware
@@ -121,7 +122,7 @@ app.post('/login', async function(req, res) {
       let data = await db.get(query, [username, password]);
       await db.close();
       if (data) {
-        currUser = data['uid'];
+        res.cookie('uid', data['uid']);
         res.type('text').send('Logged in.');
       } else {
         res.type('text').status(400)
@@ -146,11 +147,11 @@ app.post('/login', async function(req, res) {
 app.post('/purchase', async function(req, res) {
   try {
     if (req.body.id) {
-      if (currUser) {
+      if (req.cookies['uid']) {
         let data1 = await dbSelectItemWithId(req.body.id);
         if (data1) {
           if (data1['quantity'] > 0) {
-            let data4 = await purchaseItem(req.body.id);
+            let data4 = await purchaseItem(req.body.id, req.cookies['uid']);
             res.type('json').send(data4);
           } else {
             res.type('text').status(400)
@@ -199,14 +200,15 @@ async function dbSelectItemWithId(id) {
  * Inserts a new purchase with the given item id and the user id of the current user.
  * Selects the purchase with the item id from the insertion to return it.
  * @param {int} id - the id to use in the database query.
+ * @param {string} uid - the uid to use in the database query.
  * @returns {JSON} - the result of the database query.
  */
-async function purchaseItem(id) {
+async function purchaseItem(id, uid) {
   try {
     let db = await getDBConnection();
     await db.exec('UPDATE items SET quantity = quantity - 1 WHERE id = ?;', [id]); // query2
     let query3 = 'INSERT INTO purchases(id, uid) VALUES (?, ?);';
-    let data3 = await db.run(query3, [id, currUser]);
+    let data3 = await db.run(query3, [id, uid]);
     let data4 = await db.get('SELECT * FROM purchases WHERE pid = ?;', [data3.lastID]);
     await db.close();
     return data4;
@@ -223,9 +225,9 @@ async function purchaseItem(id) {
  */
 app.get('/history', async function(req, res) {
   try {
-    if (currUser) {
+    if (req.cookies['uid']) {
       let db = await getDBConnection();
-      let data1 = await db.all('SELECT * FROM purchases WHERE uid = ?;', [currUser]);
+      let data1 = await db.all('SELECT * FROM purchases WHERE uid = ?;', [req.cookies['uid']]);
       let items = [];
       for (let i = 0; i < data1.length; i++) {
         let id = data1[i]['id'];
@@ -257,13 +259,14 @@ app.post('/feedback', async function(req, res) {
     let title = req.body.title;
     let rating = req.body.rating;
     let description = req.body.description;
+    let uid = req.cookies['uid'];
     if (id && title && rating && description) {
-      if (currUser) {
+      if (uid) {
         if (await dbSelectItemWithId(id)) {
-          let data2 = await dbSelectPurchaseWithIdUid(id);
+          let data2 = await dbSelectPurchaseWithIdUid(id, uid);
           if (data2) {
             if (!await dbSelectReviewWithPid(data2['pid'])) {
-              let data9 = await addReview(id, data2['pid'], title, rating, description);
+              let data9 = await addReview(id, uid, data2['pid'], title, rating, description);
               res.type('json').send(data9);
             } else {
               res.type('text').status(400)
@@ -296,12 +299,13 @@ app.post('/feedback', async function(req, res) {
  * Helper function for Endpoint 6 feedback
  * Selects the purchase with the given item id and the user id of the current user.
  * @param {int} id - the id to use in the database query.
+ * @param {int} uid - the uid to use in the database query.
  * @returns {JSON} - the result of the database query.
  */
-async function dbSelectPurchaseWithIdUid(id) {
+async function dbSelectPurchaseWithIdUid(id, uid) {
   try {
     let db = await getDBConnection();
-    let data2 = await db.get('SELECT * FROM purchases WHERE id = ? AND uid = ?;', [id, currUser]);
+    let data2 = await db.get('SELECT * FROM purchases WHERE id = ? AND uid = ?;', [id, uid]);
     await db.close();
     return data2;
   } catch (err) {
@@ -334,18 +338,19 @@ async function dbSelectReviewWithPid(pid) {
  * Updates the overall rating for the item with the given item id.
  * Selects the review with the item id from the insertion to return it.
  * @param {int} id - the id to use in the database query.
+ * @param {int} uid - the uid to use in the database query.
  * @param {int} pid - the id of the purchase resulting from the query in the parent function.
  * @param {string} title - the title to use in the database query.
  * @param {int} rating - the rating to use in the database query.
  * @param {string} desc - the desc to use in the database query.
  * @returns {JSON} - the result of the database query.
  */
-async function addReview(id, pid, title, rating, desc) {
+async function addReview(id, uid, pid, title, rating, desc) {
   try {
     let db = await getDBConnection();
     let query4 = 'INSERT INTO reviews(id, uid, pid, title, rating, desc)';
     query4 += 'VALUES (?, ?, ?, ?, ?, ?);';
-    let data4 = await db.run(query4, [id, currUser, pid, title, rating, desc]);
+    let data4 = await db.run(query4, [id, uid, pid, title, rating, desc]);
 
     let data5 = await db.all('SELECT * FROM reviews WHERE id = ?;', [id]);
     let data6 = await dbSelectItemWithId(id);

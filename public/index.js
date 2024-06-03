@@ -22,7 +22,7 @@
    * Daria Manguling
    * Initializes button to be able to write a review.
    */
-  function init() {
+  async function init() {
     /** Heidi */
 
     // Initializes the nav bar to switch between views.
@@ -34,13 +34,13 @@
 
     // Fills the page on load with the initial data from the API.
     /**
-     * TODO: Daria: write functions to init the other 5 views as needed and call them here
+     * TODO Daria: write functions to init the other 5 views as needed and call them here
      * index login register purchase product
      * (the first 3 probably don't need it so probably just the latter 2)
      */
-    initCart();
-    document.getElementById('login-form').addEventListener('submit', initHistory);
-    initItems();
+    await initCart();
+    await initHistory();
+    await initItems();
 
     // Initializes the toggle between grid and list layout in the items view.
     document.getElementById('layout').addEventListener('change', () => {
@@ -113,6 +113,8 @@
    * @param {Event} evt - the form submission event. automatically passed with the function call.
    */
   async function initHistory(evt) {
+    if ()
+    document.getElementById('login-form').addEventListener('submit', await initHistory);
     evt.preventDefault();
     let container = document.getElementById('history-container');
     container.innerHTML = '';
