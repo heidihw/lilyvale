@@ -1,6 +1,6 @@
 /**
  * Name:    Heidi Wang
- * Date:    2024 05 31 Fri
+ * Date:    2024 06 02 Sun
  * Section: CSE 154 AG, Allison and Marina
  *
  * This is the index.html for all pages of the anime shopping site.

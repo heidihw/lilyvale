@@ -1,10 +1,10 @@
-# Heidi Wang API Documentation
-
 <!--
   Name:    Heidi Wang
-  Date:    2024 05 19 Sun
+  Date:    2024 06 02 Sun
   Section: CSE 154 AG, Allison and Marina
  -->
+
+# Heidi Wang API Documentation
 
 This API is for an anime ecommerce site. It allows the client to get data on all items for sale, log in to a user, get detailed information for a specific item including ratings, purchase an item, search and filter for a selection of all of the items, see past purchases, write a rating, and create a new user.
 

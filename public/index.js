@@ -33,8 +33,9 @@
 
     // Fills the page on load with the initial data in the API.
     /**
-     * TODO: init the other 5 views as needed:
-     * index login register purchase product (the first 3 probably don't need it)
+     * TODO: Daria: init the other 5 views as needed:
+     * index login register purchase product
+     * (the first 3 probably don't need it so probably just the latter 2)
      */
     initCart();
     document.getElementById('login-form').addEventListener('submit', initHistory);

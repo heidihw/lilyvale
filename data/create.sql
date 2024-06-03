@@ -1,5 +1,5 @@
 -- Name:    Heidi Wang
--- Date:    2024 05 30 Thu
+-- Date:    2024 06 02 Sun
 -- Section: CSE 154 AG, Allison and Marina
 
 -- CREATE TABLE and INSERT statements to initialize the database.
@@ -43,7 +43,7 @@ CREATE TABLE reviews (
 
 -- INSERT INTO
 
--- TODO: replace placeholder data with real data
+-- TODO: Daria: replace placeholder data with real data
 
 
 INSERT INTO items(name, price, rating, tags, desc, quantity) VALUES (
