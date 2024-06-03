@@ -441,7 +441,7 @@ async function dbSelectUserWithEmail(email) {
 async function dbInsertUser(username, password, email) {
   let db = await getDBConnection();
   let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
-  await db.exec(query3, [username, password, email]); // query4
+  await db.run(query3, [username, password, email]); // query4
   await db.close();
 }
 

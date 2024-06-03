@@ -53,6 +53,7 @@
     /** Daria */
     id('index-items-btn').addEventListener('click', indexToItems);
     id('new-user-form').addEventListener('submit', makeNewUser);
+    id('login-form').addEventListener('submit', loginUser)
   }
 
   function indexToItems() {
@@ -75,6 +76,17 @@
     } catch (err) {
       console.log(err);
     }
+  }
+
+  function loginUser(evt) {
+    evt.preventDefault();
+
+    // let userData = new FormData(id('login-form'));
+    // try {
+
+    // } catch (err) {
+
+    // }
   }
 
   /**
