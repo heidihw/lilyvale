@@ -209,17 +209,18 @@ Logged in.
 
 ## Endpoint 6: Give feedback
 
-**Request Format:** `/feedback` endpoint with POST parameters of `title`, `stars`, and `description`
+**Request Format:** `/feedback` endpoint with POST parameters of `id`, `title`, `rating`, and `description`
 
 **Request Type:** POST
 
 **Returned Data Format**: JSON
 
-**Description:** Writes a new review with the given title, rating, and description. Returns the information for the posted review, including the review id, item id, and user id, as well as the provided title, rating, and description.
+**Description:** Writes a new review with the given title, rating, and description for the item with the given id. Returns the information for the posted review, including the review id, item id, and user id, as well as the provided title, rating, and description.
+- The user can only review an item once.
 - The user must have purchased the item before.
 - The user must be logged in.
 
-**Example Request:** POST request with parameters of `title=Cool!`, `stars=5`, and `description=Omg! I love itttt!`
+**Example Request:** POST request with parameters of `id=1`, `title=Cool!`, `rating=5`, and `description=Omg! I love itttt!`
 
 **Example Response:**
 
@@ -238,7 +239,9 @@ Logged in.
 **Error Handling:**
 
 - Possible 400 (invalid request) errors (all plain text):
+  - If user has already reviewed this item, returns error with `User has already reviewed this item.`
   - If user has not purchased the item before, returns error with `User has not purchased this item before.`
+  - If item id is invalid, returns error with `Item does not exist.`
   - If user is not logged in, returns error with `User not logged in.`
   - If any of the required parameters is missing, responds in plain text with the message `Missing required params.`
 - Possible 500 errors (all plain text):

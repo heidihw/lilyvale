@@ -116,16 +116,16 @@ app.post('/login', async function(req, res) {
 /**
  * Heidi Wang
  * Endpoint 3: Get detailed information on an item
- * Gets detailed information on an individual item including item info and reviews.
+ * Gets detailed information on an individual item. Returns the info and reviews for the item.
  */
 app.get('/items/:id', async function(req, res) {
   try {
     let id = req.params.id;
     let db = await getDBConnection();
-    let data = await db.get('SELECT * FROM items WHERE id = ?', [id]);
-    if (data) {
+    let data1 = await db.get('SELECT * FROM items WHERE id = ?', [id]);
+    if (data1) {
       let data2 = await db.get('SELECT * FROM reviews WHERE id = ?', [id]);
-      res.type('json').send([data, data2]);
+      res.type('json').send([data1, data2]);
     } else {
       await db.close();
       res.type('text').status(400)
@@ -191,14 +191,14 @@ app.get('/history', async function(req, res) {
   try {
     if (currUser) {
       let db = await getDBConnection();
-      let data = await db.all('SELECT * FROM purchases WHERE uid = ?', [currUser]);
+      let data1 = await db.all('SELECT * FROM purchases WHERE uid = ?', [currUser]);
       let items = [];
-      for (let i = 0; i < data.length; i++) {
-        let id = data[i]['id'];
+      for (let i = 0; i < data1.length; i++) {
+        let id = data1[i]['id'];
         let data2 = await db.get('SELECT * FROM items WHERE id = ?', [id]);
         items.push(data2);
       }
-      let history = [data, items];
+      let history = [data1, items];
       await db.close();
       res.type('json').send(history);
     } else {
@@ -212,12 +212,60 @@ app.get('/history', async function(req, res) {
 });
 
 /**
- * TODO
- * Daria Manguling
+ * Heidi Wang
  * Endpoint 6: Give feedback
- * POST parameters: title, stars, description
+ * Writes a new review. Returns the information for the posted review.
+ * POST parameters: title, rating, description
  */
 app.post('/feedback', async function(req, res) {
+  try {
+    let id = req.body.id;
+    let title = req.body.title;
+    let rating = req.body.rating;
+    let desc = req.body.description;
+    if (id && title && rating && desc) {
+      if (currUser) {
+        let db = await getDBConnection();
+        let data1 = await db.get('SELECT * FROM items WHERE id = ?;', [id]);
+        if (data1) {
+          let query2 = 'SELECT * FROM purchases WHERE id = ? AND uid = ?;'
+          let data2 = await db.get(query2, [id, currUser]);
+          if (data2) {
+            let data3 = await db.get('SELECT * FROM reviews WHERE pid = ?;', [data2['pid']]);
+            if (!data3) {
+              let query4 = 'INSERT INTO reviews(id, uid, pid, title, rating, desc)';
+              query4 += 'VALUES (?, ?, ?, ?, ?, ?);';
+              let data4 = await db.run(query4, [id, currUser, data2['pid'], title, rating, desc]);
+              let data5 = await db.get('SELECT * FROM reviews WHERE rid = ?', [data4.lastID]);
+              await db.close();
+              res.type('text').send(data5);
+            } else {
+              await db.close();
+              res.type('text').status(400)
+                .send('User has already reviewed this item.');
+            }
+          } else {
+            await db.close();
+            res.type('text').status(400)
+              .send('User has not purchased this item before.');
+          }
+        } else {
+          await db.close();
+          res.type('text').status(400)
+            .send('Item does not exist.');
+        }
+      } else {
+        res.type('text').status(400)
+          .send('User not logged in.');
+      }
+    } else {
+      res.type('text').status(400)
+        .send('Missing required params.');
+    }
+  } catch (err) {
+    res.type('text').status(500)
+      .send('Something went wrong. Please try again later.');
+  }
 });
 
 /**
@@ -231,7 +279,7 @@ app.post('/create-user', async function(req, res) {
     let username = req.body.username;
     let password = req.body.password;
     let email = req.body.email;
-    if (username && password) {
+    if (username && password && email) {
       let db = await getDBConnection();
       let data1 = await db.all('SELECT * FROM users WHERE username = ?;', [username]);
       if (data1.length !== 1) {
@@ -268,7 +316,7 @@ app.post('/create-user', async function(req, res) {
  */
 async function getDBConnection() {
   const db = await sqlite.open({
-    filename: 'app.db',
+    filename: 'data/app.db',
     driver: sqlite3.Database
   });
   return db;
