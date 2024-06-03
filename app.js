@@ -253,8 +253,10 @@ app.get('/history', async function(req, res) {
  */
 app.post('/feedback', async function(req, res) {
   try {
-    let id = req.body.id, title = req.body.title, rating = req.body.rating,
-      description = req.body.description;
+    let id = req.body.id;
+    let title = req.body.title;
+    let rating = req.body.rating;
+    let description = req.body.description;
     if (id && title && rating && description) {
       if (currUser) {
         if (await dbSelectItemWithId(req.body.id)) {
