@@ -172,7 +172,7 @@
 
       <section id="index">
         <div id="banner">
-          <button>Shop Now!</button>
+          <button id="index-items-btn">Shop Now!</button>
         </div>
         <section id="secondary">
           <figure>
@@ -217,7 +217,21 @@
 
       <section class="hidden" id="register">
         <h2>Register</h2>
-        <a href="index.html">Home</a>
+        <form id="new-user-form">
+          <div>
+            <label for="new-email">Enter Email:</label>
+            <input type="email" id="new-email" name="email" required>
+          </div>
+          <div>
+            <label for="new-username">Enter Username:</label>
+            <input type="text" id="new-username" name="username" required>
+          </div>
+          <div>
+            <label for="new-password">Enter Password:</label>
+            <input type="text" id="new-password" name="password" required>
+          </div>
+          <button id="new-user-btn">Create new user</button>
+        </form>
       </section>
 
       <!--

@@ -51,7 +51,30 @@
     document.getElementById('add-to-cart-btn').addEventListener('click', fillCart);
 
     /** Daria */
-    makeButton();
+    id('index-items-btn').addEventListener('click', indexToItems);
+    id('new-user-form').addEventListener('submit', makeNewUser);
+  }
+
+  function indexToItems() {
+    id('index').classList.toggle('hidden');
+    id('items').classList.toggle('hidden');
+  }
+
+  async function makeNewUser(evt) {
+    evt.preventDefault();
+    let newUserData = new FormData(id('new-user-form'));
+    try {
+      let newUserDataForm = await fetch('create-user', {method: 'POST', body: newUserData});
+      await statusCheck(newUserDataForm);
+      await newUserDataForm.text();
+      id('new-email').value = '';
+      id('new-username').value = '';
+      id('new-password').value = '';
+      id('register').classList.toggle('hidden');
+      id('login').classList.toggle('hidden');
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   /**
