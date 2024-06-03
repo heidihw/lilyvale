@@ -51,7 +51,96 @@
     document.getElementById('add-to-cart-btn').addEventListener('click', fillCart);
 
     /** Daria */
-    makeButton();
+    id('index-items-btn').addEventListener('click', indexToItems);
+    id('new-user-form').addEventListener('submit', makeNewUser);
+    id('login-form').addEventListener('submit', loginUser);
+    id('nav-logout').addEventListener('click', loggingOut);
+    if (sessionStorage.getItem('username')) {
+      loginView();
+    } else {
+      loggedOutView();
+    }
+  }
+
+  function indexToItems() {
+    id('index').classList.toggle('hidden');
+    id('items').classList.toggle('hidden');
+  }
+
+  async function makeNewUser(evt) {
+    evt.preventDefault();
+    let newUserData = new FormData(id('new-user-form'));
+    try {
+      if (id('register-err-message')) {
+        id('register-err-message').remove();
+      }
+      let newUserDataForm = await fetch('create-user', {method: 'POST', body: newUserData});
+      await statusCheck(newUserDataForm);
+      await newUserDataForm.text();
+      id('new-email').value = '';
+      id('new-username').value = '';
+      id('new-password').value = '';
+      id('register').classList.toggle('hidden');
+      id('login').classList.toggle('hidden');
+    } catch (err) {
+      let errMessage = gen('p');
+      errMessage.id = 'register-err-message';
+      errMessage.textContent = err;
+      id('register').appendChild(errMessage);
+    }
+  }
+
+  async function loginUser(evt) {
+    evt.preventDefault();
+
+    let userData = new FormData(id('login-form'));
+    try {
+      if (id('login-err-message')) {
+        id('login-err-message').remove();
+      }
+      let userDataForm = await fetch('login', {method: 'POST', body: userData});
+      await statusCheck(userDataForm);
+      await userDataForm.text();
+      sessionStorage.setItem('username', id('username-input').value);
+      id('username-input').value = '';
+      id('password-input').value = '';
+      loginView();
+    } catch (err) {
+      let errMessage = gen('p');
+      errMessage.id = 'login-err-message';
+      errMessage.textContent = err;
+      id('login').appendChild(errMessage);
+    }
+  }
+  function loginView() {
+    id('nav-logout').classList.remove('hidden');
+    id('nav-register').classList.add('hidden');
+    id('nav-login').classList.add('hidden');
+    id('nav-cart').classList.remove('hidden');
+    id('nav-history').classList.remove('hidden');
+    id('nav-purchase').classList.remove('hidden');
+    if (id('index').classList.contains('hidden')) {
+      id('index').classList.remove('hidden');
+    }
+  }
+
+  function loggingOut() {
+    sessionStorage.removeItem('username');
+    loggedOutView();
+  }
+
+  function loggedOutView() {
+    id('nav-logout').classList.add('hidden');
+    id('nav-register').classList.remove('hidden');
+    id('nav-login').classList.remove('hidden');
+    id('nav-cart').classList.add('hidden');
+    id('nav-history').classList.add('hidden');
+    id('nav-purchase').classList.add('hidden');
+    if (id('index').classList.contains('hidden')) {
+      id('index').classList.remove('hidden');
+    }
+    // i dont think we need product
+    // why does it hides everything???
   }
 
   /**

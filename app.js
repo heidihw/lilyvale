@@ -401,6 +401,7 @@ app.post('/create-user', async function(req, res) {
         .send('Missing required params.');
     }
   } catch (err) {
+    console.log(err);
     res.type('text').status(500)
       .send('Something went wrong. Please try again later.');
   }
@@ -414,14 +415,10 @@ app.post('/create-user', async function(req, res) {
  * @returns {JSON} - the result of the database query.
  */
 async function dbSelectUserWithUsername(username) {
-  try {
-    let db = await getDBConnection();
-    let data1 = await db.get('SELECT * FROM users WHERE username = ?;', [username]);
-    await db.close();
-    return data1;
-  } catch (err) {
-    return null;
-  }
+  let db = await getDBConnection();
+  let data1 = await db.get('SELECT * FROM users WHERE username = ?;', [username]);
+  await db.close();
+  return data1;
 }
 
 /**
@@ -432,14 +429,10 @@ async function dbSelectUserWithUsername(username) {
  * @returns {JSON} - the result of the database query.
  */
 async function dbSelectUserWithEmail(email) {
-  try {
-    let db = await getDBConnection();
-    let data2 = await db.get('SELECT * FROM users WHERE email = ?;', [email]);
-    await db.close();
-    return data2;
-  } catch (err) {
-    return null;
-  }
+  let db = await getDBConnection();
+  let data2 = await db.get('SELECT * FROM users WHERE email = ?;', [email]);
+  await db.close();
+  return data2;
 }
 
 /**
@@ -451,14 +444,10 @@ async function dbSelectUserWithEmail(email) {
  * @param {string} email - the email to use in the database query.
  */
 async function dbInsertUser(username, password, email) {
-  try {
-    let db = await getDBConnection();
-    let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
-    await db.exec(query3, [username, password, email]); // query4
-    await db.close();
-  } catch (err) {
-    return null;
-  }
+  let db = await getDBConnection();
+  let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
+  await db.run(query3, [username, password, email]); // query4
+  await db.close();
 }
 
 /**
