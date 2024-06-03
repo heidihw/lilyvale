@@ -271,12 +271,13 @@ app.post('/feedback', async function(req, res) {
  * Heidi Wang
  * Helper function for app.post('/feedback')
  * Inserts the new review. Updates the overall rating of the item.
+ * Selects the new review to return it.
  * @param {int} id - the id POST parameter provided with the API call.
  * @param {int} pid - the id of the purchase resulting from the query in the parent function.
  * @param {string} title - the title POST parameter provided with the API call.
  * @param {int} rating - the rating POST parameter provided with the API call.
  * @param {string} desc - the desc POST parameter provided with the API call.
- * @returns {JSON} - the information for the posted review.
+ * @returns {JSON} - the result of the database query.
  */
 async function addReview(id, pid, title, rating, desc) {
   try {
@@ -316,22 +317,17 @@ app.post('/create-user', async function(req, res) {
     let password = req.body.password;
     let email = req.body.email;
     if (username && password && email) {
-      let db = await getDBConnection();
-      let data1 = await db.get('SELECT * FROM users WHERE username = ?;', [username]);
+      let data1 = await selectUsername(username);
       if (data1) {
-        let data2 = await db.get('SELECT * FROM users WHERE email = ?;', [email]);
+        let data2 = await selectEmail(email);
         if (data2) {
-          let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
-          await db.exec(query3, [username, password, email]);
-          await db.close();
+          await insertUser(username, password, email);
           res.type('text').send('User successfully created.');
         } else {
-          await db.close();
           res.type('text').status(400)
             .send('Email already in use.');
         }
       } else {
-        await db.close();
         res.type('text').status(400)
           .send('User already exists.');
       }
@@ -344,6 +340,49 @@ app.post('/create-user', async function(req, res) {
       .send('Something went wrong. Please try again later.');
   }
 });
+
+/**
+ * Heidi Wang
+ * Helper function for app.post('/create-user')
+ * Selects users that have the given username.
+ * @param {string} username - the username POST parameter provided with the API call.
+ * @returns {JSON} - the result of the database query.
+ */
+async function selectUsername(username) {
+  let db = await getDBConnection();
+  let data1 = await db.get('SELECT * FROM users WHERE username = ?;', [username]);
+  await db.close();
+  return data1;
+}
+
+/**
+ * Heidi Wang
+ * Helper function for app.post('/create-user')
+ * Selects users that have the given email.
+ * @param {string} email - the email POST parameter provided with the API call.
+ * @returns {JSON} - the result of the database query.
+ */
+async function selectEmail(email) {
+  let db = await getDBConnection();
+  let data2 = await db.get('SELECT * FROM users WHERE email = ?;', [email]);
+  await db.close();
+  return data2;
+}
+
+/**
+ * Heidi Wang
+ * Helper function for app.post('/create-user')
+ * Inserts the new user.
+ * @param {string} username - the username POST parameter provided with the API call.
+ * @param {string} password - the password POST parameter provided with the API call.
+ * @param {string} email - the email POST parameter provided with the API call.
+ */
+async function insertUser(username, password, email) {
+  let db = await getDBConnection();
+  let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
+  await db.exec(query3, [username, password, email]);
+  await db.close();
+}
 
 /**
  * Establishes a database connection to the database and returns the database object.
