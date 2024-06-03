@@ -114,12 +114,27 @@ app.post('/login', async function(req, res) {
 });
 
 /**
- * TODO
- * Daria Manguling
+ * Heidi Wang
  * Endpoint 3: Get detailed information on an item
+ * Gets detailed information on an individual item including item info and reviews.
  */
-app.get('/item/:id', async function(req, res) {
-  let id = req.params.id;
+app.get('/items/:id', async function(req, res) {
+  try {
+    let id = req.params.id;
+    let db = await getDBConnection();
+    let data = await db.get('SELECT * FROM items WHERE id = ?', [id]);
+    if (data) {
+      let data2 = await db.get('SELECT * FROM reviews WHERE id = ?', [id]);
+      res.type('json').send([data, data2]);
+    } else {
+      await db.close();
+      res.type('text').status(400)
+        .send('Item does not exist.');
+    }
+  } catch (err) {
+    res.type('text').status(500)
+      .send('Something went wrong. Please try again later.');
+  }
 });
 
 /**

@@ -77,15 +77,18 @@ Logged in.
 
 ## Endpoint 3: Get detailed information on an item
 
-**Request Format:** `/item/:id`
+**Request Format:** `/items/:id`
 
 **Request Type:** GET
 
 **Returned Data Format**: JSON
 
-**Description:** Gets detailed information on an individual item. Returns an array where the first item in the array is the information for the item, including item id, name, price, rating, tags, description, and quantity. The second item in the array is an where each item in the array is information for ratings for the item, including review id, item id, user id, title, rating, and description.
+**Description:** Gets detailed information on an individual item.
+- Returns an array where the first item in the array is the information for the item, including item id, name, price, rating, tags, description, and quantity.
+- The second item in the array is an where each item in the array is information for ratings for the item, including review id, item id, user id, title, rating, and description.
+  - The second item in the array may be an empty array.
 
-**Example Request:** `/item/1`
+**Example Request:** `/items/1`
 
 **Example Response:**
 

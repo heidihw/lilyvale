@@ -67,7 +67,7 @@ INSERT INTO items(name, price, rating, tags, desc, quantity) VALUES (
 INSERT INTO items(name, price, rating, tags, desc, quantity) VALUES (
   "JUJUTSU KAISEN - Satoru Gojo Nendoroid (Suit Ver.)", 45, 5,
   "nendoroid jujutsu-kaisen n20-n",
-  "Toradora plushie released by ANIPLEX!", 3);
+  "Lorem ipsum dolor sit amet.", 3);
 
 
 
