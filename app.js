@@ -259,8 +259,8 @@ app.post('/feedback', async function(req, res) {
     let description = req.body.description;
     if (id && title && rating && description) {
       if (currUser) {
-        if (await dbSelectItemWithId(req.body.id)) {
-          let data2 = await dbSelectPurchaseWithIdUid(req.body.id);
+        if (await dbSelectItemWithId(id)) {
+          let data2 = await dbSelectPurchaseWithIdUid(id);
           if (data2) {
             if (!await dbSelectReviewWithPid(data2['pid'])) {
               let data9 = await addReview(id, data2['pid'], title, rating, description);
