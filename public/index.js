@@ -289,11 +289,8 @@
     let text = document.createElement('div');
     text.classList.add('text');
     let name = document.createElement('p');
-    let link = document.createElement('a');
-    link.classList.add('listing-link');
-    link.href = 'index.html#product';
-    link.textContent = res['name'];
-    name.appendChild(link);
+    name.classList.add('listing-link');
+    name.textContent = res['name'];
     text.appendChild(name);
     let price = document.createElement('p');
     price.textContent = '$' + res['price'];

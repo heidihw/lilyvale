@@ -183,14 +183,10 @@ app.post('/purchase', async function(req, res) {
  * @returns {JSON} - the result of the database query.
  */
 async function dbSelectItemWithId(id) {
-  try {
-    let db = await getDBConnection();
-    let data1 = await db.get('SELECT * FROM items WHERE id = ?;', [id]);
-    await db.close();
-    return data1;
-  } catch (err) {
-    return null;
-  }
+  let db = await getDBConnection();
+  let data1 = await db.get('SELECT * FROM items WHERE id = ?;', [id]);
+  await db.close();
+  return data1;
 }
 
 /**
@@ -204,17 +200,13 @@ async function dbSelectItemWithId(id) {
  * @returns {JSON} - the result of the database query.
  */
 async function purchaseItem(id, uid) {
-  try {
-    let db = await getDBConnection();
-    await db.exec('UPDATE items SET quantity = quantity - 1 WHERE id = ?;', [id]); // query2
-    let query3 = 'INSERT INTO purchases(id, uid) VALUES (?, ?);';
-    let data3 = await db.run(query3, [id, uid]);
-    let data4 = await db.get('SELECT * FROM purchases WHERE pid = ?;', [data3.lastID]);
-    await db.close();
-    return data4;
-  } catch (err) {
-    return null;
-  }
+  let db = await getDBConnection();
+  await db.exec('UPDATE items SET quantity = quantity - 1 WHERE id = ?;', [id]); // query2
+  let query3 = 'INSERT INTO purchases(id, uid) VALUES (?, ?);';
+  let data3 = await db.run(query3, [id, uid]);
+  let data4 = await db.get('SELECT * FROM purchases WHERE pid = ?;', [data3.lastID]);
+  await db.close();
+  return data4;
 }
 
 /**
@@ -303,14 +295,10 @@ app.post('/feedback', async function(req, res) {
  * @returns {JSON} - the result of the database query.
  */
 async function dbSelectPurchaseWithIdUid(id, uid) {
-  try {
-    let db = await getDBConnection();
-    let data2 = await db.get('SELECT * FROM purchases WHERE id = ? AND uid = ?;', [id, uid]);
-    await db.close();
-    return data2;
-  } catch (err) {
-    return null;
-  }
+  let db = await getDBConnection();
+  let data2 = await db.get('SELECT * FROM purchases WHERE id = ? AND uid = ?;', [id, uid]);
+  await db.close();
+  return data2;
 }
 
 /**
@@ -321,14 +309,10 @@ async function dbSelectPurchaseWithIdUid(id, uid) {
  * @returns {JSON} - the result of the database query.
  */
 async function dbSelectReviewWithPid(pid) {
-  try {
-    let db = await getDBConnection();
-    let data3 = await db.get('SELECT * FROM reviews WHERE pid = ?;', [pid]);
-    await db.close();
-    return data3;
-  } catch (err) {
-    return null;
-  }
+  let db = await getDBConnection();
+  let data3 = await db.get('SELECT * FROM reviews WHERE pid = ?;', [pid]);
+  await db.close();
+  return data3;
 }
 
 /**
@@ -346,28 +330,24 @@ async function dbSelectReviewWithPid(pid) {
  * @returns {JSON} - the result of the database query.
  */
 async function addReview(id, uid, pid, title, rating, desc) {
-  try {
-    let db = await getDBConnection();
-    let query4 = 'INSERT INTO reviews(id, uid, pid, title, rating, desc)';
-    query4 += 'VALUES (?, ?, ?, ?, ?, ?);';
-    let data4 = await db.run(query4, [id, uid, pid, title, rating, desc]);
+  let db = await getDBConnection();
+  let query4 = 'INSERT INTO reviews(id, uid, pid, title, rating, desc)';
+  query4 += 'VALUES (?, ?, ?, ?, ?, ?);';
+  let data4 = await db.run(query4, [id, uid, pid, title, rating, desc]);
 
-    let data5 = await db.all('SELECT * FROM reviews WHERE id = ?;', [id]);
-    let data6 = await dbSelectItemWithId(id);
-    let query7 = 'UPDATE items SET rating = ? WHERE id = ?;';
-    if (data6['rating']) {
-      let overall = (data6['rating'] * (data5.length - 1) + rating) / data5.length;
-      await db.exec(query7, [overall, id]); // query8
-    } else {
-      await db.exec(query7, [rating, id]); // query8
-    }
-
-    let data9 = await db.get('SELECT * FROM reviews WHERE rid = ?;', [data4.lastID]);
-    await db.close();
-    return data9;
-  } catch (err) {
-    return null;
+  let data5 = await db.all('SELECT * FROM reviews WHERE id = ?;', [id]);
+  let data6 = await dbSelectItemWithId(id);
+  let query7 = 'UPDATE items SET rating = ? WHERE id = ?;';
+  if (data6['rating']) {
+    let overall = (data6['rating'] * (data5.length - 1) + rating) / data5.length;
+    await db.exec(query7, [overall, id]); // query8
+  } else {
+    await db.exec(query7, [rating, id]); // query8
   }
+
+  let data9 = await db.get('SELECT * FROM reviews WHERE rid = ?;', [data4.lastID]);
+  await db.close();
+  return data9;
 }
 
 /**
