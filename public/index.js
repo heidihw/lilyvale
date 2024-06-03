@@ -121,6 +121,10 @@
       await statusCheck(res);
       res = await res.json();
 
+      let items = await fetch('/items');
+      await statusCheck(items);
+      items = await items.json();
+
       let count = document.querySelector('section#history > div p span');
       count.textContent = res.length;
       for (let i = 0; i < res.length; i++) {

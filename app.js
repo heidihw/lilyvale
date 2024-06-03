@@ -58,7 +58,7 @@ app.get('/items', async function(req, res) {
 
 /**
  * Heidi Wang
- * Helper function for app.get('/items')
+ * Helper function for Endpoint 1 items
  * Builds a query to get items from the database.
  * @param {string} search - the search query parameter provided with the API call.
  * @param {string} order - the order query parameter provided with the API call.
@@ -269,7 +269,7 @@ app.post('/feedback', async function(req, res) {
 
 /**
  * Heidi Wang
- * Helper function for app.post('/feedback')
+ * Helper function for Endpoint 6 feedback
  * Inserts the new review. Updates the overall rating of the item.
  * Selects the new review to return it.
  * @param {int} id - the id POST parameter provided with the API call.
@@ -300,8 +300,7 @@ async function addReview(id, pid, title, rating, desc) {
     await db.close();
     return dataOut;
   } catch (err) {
-    res.type('text').status(500)
-      .send('Something went wrong. Please try again later.');
+    return null;
   }
 }
 
@@ -343,45 +342,57 @@ app.post('/create-user', async function(req, res) {
 
 /**
  * Heidi Wang
- * Helper function for app.post('/create-user')
+ * Helper function for Endpoint 7 create-user
  * Selects users that have the given username.
  * @param {string} username - the username POST parameter provided with the API call.
  * @returns {JSON} - the result of the database query.
  */
 async function selectUsername(username) {
-  let db = await getDBConnection();
-  let data1 = await db.get('SELECT * FROM users WHERE username = ?;', [username]);
-  await db.close();
-  return data1;
+  try {
+    let db = await getDBConnection();
+    let data1 = await db.get('SELECT * FROM users WHERE username = ?;', [username]);
+    await db.close();
+    return data1;
+  } catch (err) {
+    return null;
+  }
 }
 
 /**
  * Heidi Wang
- * Helper function for app.post('/create-user')
+ * Helper function for Endpoint 7 create-user
  * Selects users that have the given email.
  * @param {string} email - the email POST parameter provided with the API call.
  * @returns {JSON} - the result of the database query.
  */
 async function selectEmail(email) {
-  let db = await getDBConnection();
-  let data2 = await db.get('SELECT * FROM users WHERE email = ?;', [email]);
-  await db.close();
-  return data2;
+  try {
+    let db = await getDBConnection();
+    let data2 = await db.get('SELECT * FROM users WHERE email = ?;', [email]);
+    await db.close();
+    return data2;
+  } catch (err) {
+    return null;
+  }
 }
 
 /**
  * Heidi Wang
- * Helper function for app.post('/create-user')
- * Inserts the new user.
+ * Helper function for Endpoint 7 create-user
+ * Inserts the given data for a new user.
  * @param {string} username - the username POST parameter provided with the API call.
  * @param {string} password - the password POST parameter provided with the API call.
  * @param {string} email - the email POST parameter provided with the API call.
  */
 async function insertUser(username, password, email) {
-  let db = await getDBConnection();
-  let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
-  await db.exec(query3, [username, password, email]);
-  await db.close();
+  try {
+    let db = await getDBConnection();
+    let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
+    await db.exec(query3, [username, password, email]);
+    await db.close();
+  } catch (err) {
+    return null;
+  }
 }
 
 /**
