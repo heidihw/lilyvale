@@ -197,12 +197,13 @@
   }
 
   /**
+   * TODO Heidi: fix
    * Heidi Wang
    * Populates the purchase history with the items purchased.
    * @param {Event} evt - the form submission event. automatically passed with the function call.
    */
   async function initHistory(evt) {
-    if ()
+    // if ()
     document.getElementById('login-form').addEventListener('submit', await initHistory);
     evt.preventDefault();
     let container = document.getElementById('history-container');
