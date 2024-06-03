@@ -43,6 +43,8 @@ CREATE TABLE reviews (
 
 -- INSERT INTO
 
+-- TODO: replace placeholder data with real data
+
 
 INSERT INTO items(name, price, rating, tags, desc, quantity) VALUES (
   "Toradora Taiga Plush", 25, 5, "plush toradora n20-n",
