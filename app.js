@@ -148,23 +148,16 @@ app.post('/purchase', async function(req, res) {
     let id = req.body.id;
     if (id) {
       if (currUser) {
-        let db = await getDBConnection();
-        let data1 = await db.get('SELECT * FROM items WHERE id = ?;', [id]);
+        let data1 = await dbSelectId(id);
         if (data1) {
           if (data1['quantity'] > 0) {
-            await db.exec('UPDATE items SET quantity = quantity - 1 WHERE id = ?;', [id]);
-            let query3 = 'INSERT INTO purchases(id, uid) VALUES (?, ?);';
-            let data3 = await db.run(query3, [id, currUser]);
-            let data4 = await db.get('SELECT * FROM purchases WHERE pid = ?;', [data3.lastID]);
-            await db.close();
+            let data4 = await purchaseItem(id);
             res.type('json').send(data4);
           } else {
-            await db.close();
             res.type('text').status(400)
               .send('Item out of stock.');
           }
         } else {
-          await db.close();
           res.type('text').status(400)
             .send('Item does not exist.');
         }
@@ -181,6 +174,47 @@ app.post('/purchase', async function(req, res) {
       .send('Something went wrong. Please try again later.');
   }
 });
+
+/**
+ * Heidi Wang
+ * Helper function for Endpoint 4 purchase
+ * Selects the item with the given id.
+ * @param {int} id - the id POST parameter provided with the API call.
+ * @returns {JSON} - the result of the database query.
+ */
+async function dbSelectId(id) {
+  try {
+    let db = await getDBConnection();
+    let data1 = await db.get('SELECT * FROM items WHERE id = ?;', [id]);
+    await db.close();
+    return data1;
+  } catch (err) {
+    return null;
+  }
+}
+
+/**
+ * Heidi Wang
+ * Helper function for Endpoint 4 purchase
+ * Updates the quantity of available stock for the item.
+ * Inserts the given data for a new purchase.
+ * Selects the purchase with the id from the insertion to return it.
+ * @param {int} id - the id POST parameter provided with the API call.
+ * @returns {JSON} - the result of the database query.
+ */
+async function purchaseItem(id) {
+  try {
+    let db = await getDBConnection();
+    await db.exec('UPDATE items SET quantity = quantity - 1 WHERE id = ?;', [id]); // query2
+    let query3 = 'INSERT INTO purchases(id, uid) VALUES (?, ?);';
+    let data3 = await db.run(query3, [id, currUser]);
+    let data4 = await db.get('SELECT * FROM purchases WHERE pid = ?;', [data3.lastID]);
+    await db.close();
+    return data4;
+  } catch (err) {
+    return null;
+  }
+}
 
 /**
  * Heidi Wang
@@ -215,8 +249,7 @@ app.get('/history', async function(req, res) {
 /**
  * Heidi Wang
  * Endpoint 6: Give feedback
- * Writes a new review. Updates the overall rating of the item.
- * Returns the information for the posted review.
+ * Writes a new review. Returns the information for the posted review.
  * POST parameters: title, rating, description
  */
 app.post('/feedback', async function(req, res) {
@@ -235,9 +268,9 @@ app.post('/feedback', async function(req, res) {
           if (data2) {
             let data3 = await db.get('SELECT * FROM reviews WHERE pid = ?;', [data2['pid']]);
             if (!data3) {
-              let dataOut = await addReview(id, data2['pid'], title, rating, desc);
+              let data9 = await addReview(id, data2['pid'], title, rating, desc);
               await db.close();
-              res.type('text').send(dataOut);
+              res.type('text').send(data9);
             } else {
               await db.close();
               res.type('text').status(400)
@@ -270,8 +303,9 @@ app.post('/feedback', async function(req, res) {
 /**
  * Heidi Wang
  * Helper function for Endpoint 6 feedback
- * Inserts the new review. Updates the overall rating of the item.
- * Selects the new review to return it.
+ * Inserts the given data for a new review.
+ * Updates the overall rating for the item.
+ * Selects the review with the id from the insertion to return it.
  * @param {int} id - the id POST parameter provided with the API call.
  * @param {int} pid - the id of the purchase resulting from the query in the parent function.
  * @param {string} title - the title POST parameter provided with the API call.
@@ -291,14 +325,14 @@ async function addReview(id, pid, title, rating, desc) {
     let query7 = 'UPDATE items SET rating = ? WHERE id = ?;';
     if (data6['rating']) {
       let overall = (data6['rating'] * (data5.length - 1) + rating) / data5.length;
-      await db.exec(query7, [overall, id]);
+      await db.exec(query7, [overall, id]); // query8
     } else {
-      await db.exec(query7, [rating, id]);
+      await db.exec(query7, [rating, id]); // query8
     }
 
-    let dataOut = await db.get('SELECT * FROM reviews WHERE rid = ?;', [data4.lastID]);
+    let data9 = await db.get('SELECT * FROM reviews WHERE rid = ?;', [data4.lastID]);
     await db.close();
-    return dataOut;
+    return data9;
   } catch (err) {
     return null;
   }
@@ -316,11 +350,11 @@ app.post('/create-user', async function(req, res) {
     let password = req.body.password;
     let email = req.body.email;
     if (username && password && email) {
-      let data1 = await selectUsername(username);
+      let data1 = await dbSelectUsername(username);
       if (data1) {
-        let data2 = await selectEmail(email);
+        let data2 = await dbSelectEmail(email);
         if (data2) {
-          await insertUser(username, password, email);
+          await dbInsertUser(username, password, email);
           res.type('text').send('User successfully created.');
         } else {
           res.type('text').status(400)
@@ -343,11 +377,11 @@ app.post('/create-user', async function(req, res) {
 /**
  * Heidi Wang
  * Helper function for Endpoint 7 create-user
- * Selects users that have the given username.
+ * Selects the user with the given username.
  * @param {string} username - the username POST parameter provided with the API call.
  * @returns {JSON} - the result of the database query.
  */
-async function selectUsername(username) {
+async function dbSelectUsername(username) {
   try {
     let db = await getDBConnection();
     let data1 = await db.get('SELECT * FROM users WHERE username = ?;', [username]);
@@ -361,11 +395,11 @@ async function selectUsername(username) {
 /**
  * Heidi Wang
  * Helper function for Endpoint 7 create-user
- * Selects users that have the given email.
+ * Selects the user with the given email.
  * @param {string} email - the email POST parameter provided with the API call.
  * @returns {JSON} - the result of the database query.
  */
-async function selectEmail(email) {
+async function dbSelectEmail(email) {
   try {
     let db = await getDBConnection();
     let data2 = await db.get('SELECT * FROM users WHERE email = ?;', [email]);
@@ -384,11 +418,11 @@ async function selectEmail(email) {
  * @param {string} password - the password POST parameter provided with the API call.
  * @param {string} email - the email POST parameter provided with the API call.
  */
-async function insertUser(username, password, email) {
+async function dbInsertUser(username, password, email) {
   try {
     let db = await getDBConnection();
     let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
-    await db.exec(query3, [username, password, email]);
+    await db.exec(query3, [username, password, email]); // query4
     await db.close();
   } catch (err) {
     return null;
