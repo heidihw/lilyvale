@@ -253,25 +253,39 @@ app.get('/history', async function(req, res) {
  */
 app.post('/feedback', async function(req, res) {
   try {
-    if (req.body.id && req.body.title && req.body.rating && req.body.description) {
-      if (currUser) { let data1 = await dbSelectItemWithId(req.body.id);
-        if (data1) { let data2 = await dbSelectPurchaseWithIdUid(req.body.id);
-          if (data2) { let data3 = await dbSelectReviewWithPid(data2['pid']);
-            if (!data3) { let data9 = await addReview(req.body.id, data2['pid'], req.body.title,
-                req.body.rating, req.body.description);
-              res.type('text').send(data9);
-            } else { res.type('text').status(400).send('User has already reviewed this item.');
+    let id = req.body.id, title = req.body.title, rating = req.body.rating,
+      description = req.body.description;
+    if (id && title && rating && description) {
+      if (currUser) {
+        if (await dbSelectItemWithId(req.body.id)) {
+          let data2 = await dbSelectPurchaseWithIdUid(req.body.id);
+          if (data2) {
+            if (!await dbSelectReviewWithPid(data2['pid'])) {
+              let data9 = await addReview(id, data2['pid'], title, rating, description);
+              res.type('json').send(data9);
+            } else {
+              res.type('text').status(400)
+                .send('User has already reviewed this item.');
             }
-          } else { res.type('text').status(400).send('User has not purchased this item before.');
+          } else {
+            res.type('text').status(400)
+              .send('User has not purchased this item before.');
           }
-        } else { res.type('text').status(400).send('Item does not exist.');
+        } else {
+          res.type('text').status(400)
+            .send('Item does not exist.');
         }
-      } else { res.type('text').status(400).send('User not logged in.');
+      } else {
+        res.type('text').status(400)
+          .send('User not logged in.');
       }
-    } else { res.type('text').status(400).send('Missing required params.');
+    } else {
+      res.type('text').status(400)
+        .send('Missing required params.');
     }
   } catch (err) {
-    res.type('text').status(500).send('Something went wrong. Please try again later.');
+    res.type('text').status(500)
+      .send('Something went wrong. Please try again later.');
   }
 });
 
