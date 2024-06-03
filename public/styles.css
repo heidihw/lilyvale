@@ -133,6 +133,10 @@ section#items > section > section#filters-container {
   width: 18%;
 }
 
+section#filters-container > div {
+  margin-bottom: 10px;
+}
+
 section#items > section > section#items-container {
   display: flex;
   flex-wrap: wrap;

@@ -98,32 +98,6 @@ VALUES (6, 2, 4, "Woahhhhh", 5, "This nendoroid is so adorable! I'm so glad I bo
 
 
 
-
-
--- internal use only
-
-CREATE TABLE tags (
-  tid TEXT PRIMARY KEY,
-  tname TEXT,
-  category TEXT
-);
-
-INSERT INTO tags VALUES('plush', 'Plush', 'type');
-INSERT INTO tags VALUES('pin', 'Pin', 'type');
-INSERT INTO tags VALUES('keychain', 'Keychain', 'type');
-INSERT INTO tags VALUES('poster', 'Poster', 'type');
-INSERT INTO tags VALUES('standee', 'Standee', 'type');
-INSERT INTO tags VALUES('toradora', 'Toradora', 'franchise');
-INSERT INTO tags VALUES('re-zero', 'Re:Zero', 'franchise');
-INSERT INTO tags VALUES('fate-stay-night', 'Fate/Stay Night', 'franchise');
-INSERT INTO tags VALUES('n0-10', 'Under $10', 'price');
-INSERT INTO tags VALUES('n10-20', '$10 to $20', 'price');
-INSERT INTO tags VALUES('n20-n', 'Over $20', 'price');
-
-
-
-
-
 -- drop tables for if needing to restart
 
 DROP TABLE tags;

@@ -381,7 +381,6 @@ app.post('/create-user', async function(req, res) {
         .send('Missing required params.');
     }
   } catch (err) {
-    console.log(err);
     res.type('text').status(500)
       .send('Something went wrong. Please try again later.');
   }
