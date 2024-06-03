@@ -83,7 +83,31 @@ function buildQueryItems(search, order) {
 
 /**
  * Heidi Wang
- * Endpoint 2: Login with credentials
+ * Endpoint 2: Get detailed information on an item
+ * Gets detailed information on an individual item. Returns the info and reviews for the item.
+ */
+app.get('/items/:id', async function(req, res) {
+  try {
+    let id = req.params.id;
+    let db = await getDBConnection();
+    let data1 = await db.get('SELECT * FROM items WHERE id = ?', [id]);
+    if (data1) {
+      let data2 = await db.get('SELECT * FROM reviews WHERE id = ?', [id]);
+      res.type('json').send([data1, data2]);
+    } else {
+      await db.close();
+      res.type('text').status(400)
+        .send('Item does not exist.');
+    }
+  } catch (err) {
+    res.type('text').status(500)
+      .send('Something went wrong. Please try again later.');
+  }
+});
+
+/**
+ * Heidi Wang
+ * Endpoint 3: Login with credentials
  * Logs in to a user. Returns a confirmation message.
  * POST parameters: username, password
  */
@@ -106,30 +130,6 @@ app.post('/login', async function(req, res) {
     } else {
       res.type('text').status(400)
         .send('Missing required params.');
-    }
-  } catch (err) {
-    res.type('text').status(500)
-      .send('Something went wrong. Please try again later.');
-  }
-});
-
-/**
- * Heidi Wang
- * Endpoint 3: Get detailed information on an item
- * Gets detailed information on an individual item. Returns the info and reviews for the item.
- */
-app.get('/items/:id', async function(req, res) {
-  try {
-    let id = req.params.id;
-    let db = await getDBConnection();
-    let data1 = await db.get('SELECT * FROM items WHERE id = ?', [id]);
-    if (data1) {
-      let data2 = await db.get('SELECT * FROM reviews WHERE id = ?', [id]);
-      res.type('json').send([data1, data2]);
-    } else {
-      await db.close();
-      res.type('text').status(400)
-        .send('Item does not exist.');
     }
   } catch (err) {
     res.type('text').status(500)
@@ -228,7 +228,7 @@ app.post('/feedback', async function(req, res) {
         let db = await getDBConnection();
         let data1 = await db.get('SELECT * FROM items WHERE id = ?;', [id]);
         if (data1) {
-          let query2 = 'SELECT * FROM purchases WHERE id = ? AND uid = ?;'
+          let query2 = 'SELECT * FROM purchases WHERE id = ? AND uid = ?;';
           let data2 = await db.get(query2, [id, currUser]);
           if (data2) {
             let data3 = await db.get('SELECT * FROM reviews WHERE pid = ?;', [data2['pid']]);

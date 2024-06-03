@@ -9,6 +9,7 @@
 This API is for an anime ecommerce site. It allows the client to get data on all items for sale, log in to a user, get detailed information for a specific item including ratings, purchase an item, search and filter for a selection of all of the items, see past purchases, write a rating, and create a new user.
 
 ## Endpoint 1: Get item information
+Feature 1, Feature 5
 
 **Request Format:** `/items?search={search}&order={order}`
 
@@ -49,33 +50,8 @@ This API is for an anime ecommerce site. It allows the client to get data on all
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
-## Endpoint 2: Login with credentials
-
-**Request Format:** `/login` endpoint with POST parameters of `username` and `password`
-
-**Request Type:** POST
-
-**Returned Data Format**: Plain Text
-
-**Description:** Logs in to a user. Checks whether the username and password match an entry in the database. Returns a confirmation message.
-
-**Example Request:** POST request with parameters of `username=john` and `password=abc123`
-
-**Example Response:**
-
-```
-Logged in.
-```
-
-**Error Handling:**
-
-- Possible 400 (invalid request) errors (all plain text):
-  - If the provided credentials do not match an entry in the database, returns error with `Invalid username or password.`
-  - If any of the required parameters is missing, responds in plain text with the message `Missing required params.`
-- Possible 500 errors (all plain text):
-  - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
-
-## Endpoint 3: Get detailed information on an item
+## Endpoint 2: Get detailed information on an item
+Feature 3
 
 **Request Format:** `/items/:id`
 
@@ -125,7 +101,35 @@ Logged in.
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
+## Endpoint 3: Login with credentials
+Feature 2
+
+**Request Format:** `/login` endpoint with POST parameters of `username` and `password`
+
+**Request Type:** POST
+
+**Returned Data Format**: Plain Text
+
+**Description:** Logs in to a user. Checks whether the username and password match an entry in the database. Returns a confirmation message.
+
+**Example Request:** POST request with parameters of `username=john` and `password=abc123`
+
+**Example Response:**
+
+```
+Logged in.
+```
+
+**Error Handling:**
+
+- Possible 400 (invalid request) errors (all plain text):
+  - If the provided credentials do not match an entry in the database, returns error with `Invalid username or password.`
+  - If any of the required parameters is missing, responds in plain text with the message `Missing required params.`
+- Possible 500 errors (all plain text):
+  - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
+
 ## Endpoint 4: Make a transaction
+Feature 4
 
 **Request Format:** `/purchase` endpoint with POST parameter of `id`
 
@@ -160,6 +164,7 @@ Logged in.
   - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
 ## Endpoint 5: Get transaction history
+Feature 6
 
 **Request Format:** `/history`
 
@@ -208,6 +213,7 @@ Logged in.
   - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
 ## Endpoint 6: Give feedback
+Additional Feature 1
 
 **Request Format:** `/feedback` endpoint with POST parameters of `id`, `title`, `rating`, and `description`
 
@@ -248,6 +254,7 @@ Logged in.
   - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
 
 ## Endpoint 7: Create a user
+Additional Feature 4
 
 **Request Format:** `/create-user` endpoint with POST parameters of `username`, `password`, and `email`
 

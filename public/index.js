@@ -32,7 +32,10 @@
     }
 
     // Fills the page on load with the initial data in the API.
-    // TODO: fill the other 5 views: index login register purchase product
+    /**
+     * TODO: init the other 5 views as needed:
+     * index login register purchase product (the first 3 probably don't need it)
+     */
     initCart();
     document.getElementById('login-form').addEventListener('submit', initHistory);
     initItems();
@@ -87,7 +90,7 @@
     document.getElementById('cart').classList.remove('hidden');
     let container = document.getElementById('cart-container');
     container.innerHTML = '';
-    let id = this.parentElement.querySelector('h1').id;
+    let id = this.parentElement.querySelector('h1').id.split('-')[1];
     try {
       let res = await fetch('/items/' + id);
       await statusCheck(res);
@@ -105,6 +108,7 @@
   /**
    * Heidi Wang
    * Populates the purchase history with the items purchased.
+   * @param {Event} evt - the form submission event. automatically passed with the function call.
    */
   async function initHistory(evt) {
     evt.preventDefault();
