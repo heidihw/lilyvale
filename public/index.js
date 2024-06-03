@@ -62,11 +62,18 @@
     }
   }
 
+  /**
+   * Switches from main index view to item view when button is clicked.
+   */
   function indexToItems() {
     id('index').classList.toggle('hidden');
     id('items').classList.toggle('hidden');
   }
 
+  /**
+   * Creates a new user on the website.
+   * @param {object} evt - event object
+   */
   async function makeNewUser(evt) {
     evt.preventDefault();
     let newUserData = new FormData(id('new-user-form'));
@@ -90,6 +97,10 @@
     }
   }
 
+  /**
+   * Logs a user into the website.
+   * @param {object} evt
+   */
   async function loginUser(evt) {
     evt.preventDefault();
 
@@ -112,6 +123,10 @@
       id('login').appendChild(errMessage);
     }
   }
+
+  /**
+   * What features the user see when they are logged in
+   */
   function loginView() {
     id('nav-logout').classList.remove('hidden');
     id('nav-register').classList.add('hidden');
@@ -124,11 +139,17 @@
     }
   }
 
+  /**
+   * Logs a user out of the website
+   */
   function loggingOut() {
     sessionStorage.removeItem('username');
     loggedOutView();
   }
 
+  /**
+   * What features the user sees if they are not logged into the website.
+   */
   function loggedOutView() {
     id('nav-logout').classList.add('hidden');
     id('nav-register').classList.remove('hidden');
