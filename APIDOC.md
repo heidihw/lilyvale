@@ -222,6 +222,7 @@ Additional Feature 1
 **Returned Data Format**: JSON
 
 **Description:** Writes a new review with the given title, rating, and description for the item with the given id. Returns the information for the posted review, including the review id, item id, and user id, as well as the provided title, rating, and description.
+- Updates the overall rating of the item.
 - The user can only review an item once.
 - The user must have purchased the item before.
 - The user must be logged in.

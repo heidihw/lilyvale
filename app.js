@@ -58,11 +58,11 @@ app.get('/items', async function(req, res) {
 
 /**
  * Heidi Wang
- * Helper function for .get('/items')
+ * Helper function for app.get('/items')
  * Builds a query to get items from the database.
  * @param {string} search - the search query parameter provided with the API call.
  * @param {string} order - the order query parameter provided with the API call.
- * @returns {string} the query that was built.
+ * @returns {string} - the query that was built.
  */
 function buildQueryItems(search, order) {
   let query = 'SELECT * FROM items WHERE';
@@ -90,9 +90,9 @@ app.get('/items/:id', async function(req, res) {
   try {
     let id = req.params.id;
     let db = await getDBConnection();
-    let data1 = await db.get('SELECT * FROM items WHERE id = ?', [id]);
+    let data1 = await db.get('SELECT * FROM items WHERE id = ?;', [id]);
     if (data1) {
-      let data2 = await db.get('SELECT * FROM reviews WHERE id = ?', [id]);
+      let data2 = await db.get('SELECT * FROM reviews WHERE id = ?;', [id]);
       res.type('json').send([data1, data2]);
     } else {
       await db.close();
@@ -118,10 +118,10 @@ app.post('/login', async function(req, res) {
     if (username && password) {
       let db = await getDBConnection();
       let query = 'SELECT * FROM users WHERE username = ? AND password = ?;';
-      let data = await db.all(query, [username, password]);
+      let data = await db.get(query, [username, password]);
       await db.close();
-      if (data.length === 1) {
-        currUser = data[0]['uid'];
+      if (data) {
+        currUser = data['uid'];
         res.type('text').send('Logged in.');
       } else {
         res.type('text').status(400)
@@ -149,14 +149,15 @@ app.post('/purchase', async function(req, res) {
     if (id) {
       if (currUser) {
         let db = await getDBConnection();
-        let data1 = await db.all('SELECT * FROM items WHERE id = ?', [id]);
-        if (data1.length === 1) {
-          if (data1[0]['quantity'] > 0) {
+        let data1 = await db.get('SELECT * FROM items WHERE id = ?;', [id]);
+        if (data1) {
+          if (data1['quantity'] > 0) {
             await db.exec('UPDATE items SET quantity = quantity - 1 WHERE id = ?;', [id]);
             let query3 = 'INSERT INTO purchases(id, uid) VALUES (?, ?);';
-            let data3 = await db.exec(query3, [id, currUser]);
+            let data3 = await db.run(query3, [id, currUser]);
+            let data4 = await db.get('SELECT * FROM purchases WHERE pid = ?;', [data3.lastID]);
             await db.close();
-            res.type('json').send(data3);
+            res.type('json').send(data4);
           } else {
             await db.close();
             res.type('text').status(400)
@@ -191,11 +192,11 @@ app.get('/history', async function(req, res) {
   try {
     if (currUser) {
       let db = await getDBConnection();
-      let data1 = await db.all('SELECT * FROM purchases WHERE uid = ?', [currUser]);
+      let data1 = await db.all('SELECT * FROM purchases WHERE uid = ?;', [currUser]);
       let items = [];
       for (let i = 0; i < data1.length; i++) {
         let id = data1[i]['id'];
-        let data2 = await db.get('SELECT * FROM items WHERE id = ?', [id]);
+        let data2 = await db.get('SELECT * FROM items WHERE id = ?;', [id]);
         items.push(data2);
       }
       let history = [data1, items];
@@ -214,7 +215,8 @@ app.get('/history', async function(req, res) {
 /**
  * Heidi Wang
  * Endpoint 6: Give feedback
- * Writes a new review. Returns the information for the posted review.
+ * Writes a new review. Updates the overall rating of the item.
+ * Returns the information for the posted review.
  * POST parameters: title, rating, description
  */
 app.post('/feedback', async function(req, res) {
@@ -233,12 +235,9 @@ app.post('/feedback', async function(req, res) {
           if (data2) {
             let data3 = await db.get('SELECT * FROM reviews WHERE pid = ?;', [data2['pid']]);
             if (!data3) {
-              let query4 = 'INSERT INTO reviews(id, uid, pid, title, rating, desc)';
-              query4 += 'VALUES (?, ?, ?, ?, ?, ?);';
-              let data4 = await db.run(query4, [id, currUser, data2['pid'], title, rating, desc]);
-              let data5 = await db.get('SELECT * FROM reviews WHERE rid = ?', [data4.lastID]);
+              let dataOut = await addReview(id, data2['pid'], title, rating, desc);
               await db.close();
-              res.type('text').send(data5);
+              res.type('text').send(dataOut);
             } else {
               await db.close();
               res.type('text').status(400)
@@ -270,6 +269,43 @@ app.post('/feedback', async function(req, res) {
 
 /**
  * Heidi Wang
+ * Helper function for app.post('/feedback')
+ * Inserts the new review. Updates the overall rating of the item.
+ * @param {int} id - the id POST parameter provided with the API call.
+ * @param {int} pid - the id of the purchase resulting from the query in the parent function.
+ * @param {string} title - the title POST parameter provided with the API call.
+ * @param {int} rating - the rating POST parameter provided with the API call.
+ * @param {string} desc - the desc POST parameter provided with the API call.
+ * @returns {JSON} - the information for the posted review.
+ */
+async function addReview(id, pid, title, rating, desc) {
+  try {
+    let db = await getDBConnection();
+    let query4 = 'INSERT INTO reviews(id, uid, pid, title, rating, desc)';
+    query4 += 'VALUES (?, ?, ?, ?, ?, ?);';
+    let data4 = await db.run(query4, [id, currUser, pid, title, rating, desc]);
+
+    let data5 = await db.all('SELECT * FROM reviews WHERE id = ?;', [id]);
+    let data6 = await db.get('SELECT * FROM items WHERE id = ?;', [id]);
+    let query7 = 'UPDATE items SET rating = ? WHERE id = ?;';
+    if (data6['rating']) {
+      let overall = (data6['rating'] * (data5.length - 1) + rating) / data5.length;
+      await db.exec(query7, [overall, id]);
+    } else {
+      await db.exec(query7, [rating, id]);
+    }
+
+    let dataOut = await db.get('SELECT * FROM reviews WHERE rid = ?;', [data4.lastID]);
+    await db.close();
+    return dataOut;
+  } catch (err) {
+    res.type('text').status(500)
+      .send('Something went wrong. Please try again later.');
+  }
+}
+
+/**
+ * Heidi Wang
  * Endpoint 7: Create a user
  * Creates a new user. Returns a confirmation message.
  * POST parameters: username, password, email
@@ -281,10 +317,10 @@ app.post('/create-user', async function(req, res) {
     let email = req.body.email;
     if (username && password && email) {
       let db = await getDBConnection();
-      let data1 = await db.all('SELECT * FROM users WHERE username = ?;', [username]);
-      if (data1.length !== 1) {
-        let data2 = await db.all('SELECT * FROM users WHERE email = ?;', [email]);
-        if (data2.length !== 1) {
+      let data1 = await db.get('SELECT * FROM users WHERE username = ?;', [username]);
+      if (data1) {
+        let data2 = await db.get('SELECT * FROM users WHERE email = ?;', [email]);
+        if (data2) {
           let query3 = 'INSERT INTO users(username, password, email) VALUES (?, ?, ?);';
           await db.exec(query3, [username, password, email]);
           await db.close();

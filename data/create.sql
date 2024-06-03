@@ -43,7 +43,8 @@ CREATE TABLE reviews (
 
 -- INSERT INTO
 
--- TODO: Daria: replace placeholder data with real data
+-- TODO: Daria: make INSERT statements to replace placeholder data with real data
+-- TODO: Daria: rename image files with the name of the item
 
 
 INSERT INTO items(name, price, rating, tags, desc, quantity) VALUES (
@@ -123,7 +124,7 @@ INSERT INTO tags VALUES('n20-n', 'Over $20', 'price');
 
 
 
--- drop tables
+-- drop tables for if needing to restart
 
 DROP TABLE tags;
 DROP TABLE reviews;

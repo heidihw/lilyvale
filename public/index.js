@@ -15,6 +15,7 @@
 
   /**
    * Heidi Wang
+   * Fills the page on load with the initial data from the API.
    * Initializes the nav bar to switch between views.
    * Initializes the toggle between grid and list layout in the items view.
    *
@@ -24,16 +25,16 @@
   function init() {
     /** Heidi */
 
-    // nav bar
+    // Initializes the nav bar to switch between views.
     document.getElementById('title-index').addEventListener('click', toggleScreens);
     const links = document.querySelectorAll('nav p');
     for (let i = 0; i < links.length; i++) {
       links[i].addEventListener('click', toggleScreens);
     }
 
-    // Fills the page on load with the initial data in the API.
+    // Fills the page on load with the initial data from the API.
     /**
-     * TODO: Daria: init the other 5 views as needed:
+     * TODO: Daria: write functions to init the other 5 views as needed and call them here
      * index login register purchase product
      * (the first 3 probably don't need it so probably just the latter 2)
      */
@@ -41,7 +42,7 @@
     document.getElementById('login-form').addEventListener('submit', initHistory);
     initItems();
 
-    // switch grid and list layout
+    // Initializes the toggle between grid and list layout in the items view.
     document.getElementById('layout').addEventListener('change', () => {
       document.getElementById('items-container').classList.toggle('grid-layout');
     });
@@ -91,7 +92,7 @@
     document.getElementById('cart').classList.remove('hidden');
     let container = document.getElementById('cart-container');
     container.innerHTML = '';
-    let id = this.parentElement.querySelector('h1').id.split('-')[1];
+    let id = this.parentElement.parentElement.querySelector('img').id.split('-')[1];
     try {
       let res = await fetch('/items/' + id);
       await statusCheck(res);
@@ -119,10 +120,6 @@
       let res = await fetch('/history');
       await statusCheck(res);
       res = await res.json();
-
-      let items = await fetch('/items');
-      await statusCheck(items);
-      items = await items.json();
 
       let count = document.querySelector('section#history > div p span');
       count.textContent = res.length;
