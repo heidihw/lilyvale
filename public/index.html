@@ -190,6 +190,38 @@
 
       <!--
         Daria Manguling
+        login
+        This is the login view.
+      -->
+
+      <section class="hidden" id="login">
+        <h2>Log In</h2>
+        <form id="login-form">
+          <div>
+            <label for="username-input">Username</label>
+            <input id="username-input" name="username" required type="text">
+          </div>
+          <div>
+            <label for="password-input">Password</label>
+            <input id="password-input" name="password" required type="text">
+          </div>
+          <button>Log in</button>
+        </form>
+      </section>
+
+      <!--
+        Daria Manguling
+        register
+        This is the register view.
+      -->
+
+      <section class="hidden" id="register">
+        <h2>Register</h2>
+        <a href="index.html">Home</a>
+      </section>
+
+      <!--
+        Daria Manguling
         purchase
         This is the view the user sees when they're ready to make a purchase.
       -->
@@ -211,12 +243,10 @@
         <section id="product-listing">
           <img src="imgs/gojo-nendoroid.jpeg" alt="Gojo Nendoroid Figurine">
           <section id="product-info">
-            <h1>JUJUTSU KAISEN - Satoru Gojo Nendoroid (Suit Ver.)</h1>
+            <h1 id ="1">JUJUTSU KAISEN - Satoru Gojo Nendoroid (Suit Ver.)</h1>
             <p>rating here. Requires database to retrieve info</p>
             <p>$45.00</p>
-            <form action="index.html#cart">
-              <button>Add to cart</button>
-            </form>
+            <button id="add-to-cart-btn">Add to cart</button>
             <h2>Description</h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

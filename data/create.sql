@@ -7,36 +7,36 @@
 -- CREATE TABLE
 
 CREATE TABLE items (
-  id INT PRIMARY KEY AUTOINCREMENT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT,
-  price INT,
+  price INTEGER,
   rating FLOAT,
   tags TEXT,
   desc TEXT,
-  quantity INT
+  quantity INTEGER
 );
 
 CREATE TABLE users (
-  uid INT PRIMARY KEY AUTOINCREMENT,
+  uid INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT,
   password TEXT,
   email TEXT
 );
 
 CREATE TABLE purchases (
-  pid INT PRIMARY KEY AUTOINCREMENT,
-  id INT REFERENCES items(id),
-  uid INT REFERENCES users(uid),
+  pid INTEGER PRIMARY KEY AUTOINCREMENT,
+  id INTEGER REFERENCES items(id),
+  uid INTEGER REFERENCES users(uid),
   time DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE reviews (
-  rid INT PRIMARY KEY AUTOINCREMENT,
-  id INT REFERENCES items(id),
-  uid INT REFERENCES users(uid),
-  pid INT REFERENCES purchases(pid),
+  rid INTEGER PRIMARY KEY AUTOINCREMENT,
+  id INTEGER REFERENCES items(id),
+  uid INTEGER REFERENCES users(uid),
+  pid INTEGER REFERENCES purchases(pid),
   title TEXT,
-  rating INT,
+  rating INTEGER,
   desc TEXT
 );
 
@@ -71,15 +71,15 @@ INSERT INTO items(name, price, rating, tags, desc, quantity) VALUES (
 
 
 
-INSERT INTO users(username, password, email) VALUES (john, abc123, example@email.com);
-INSERT INTO users(username, password, email) VALUES (jill, def456, example2@email.com);
+INSERT INTO users(username, password, email) VALUES ('john', 'abc123', 'example@email.com');
+INSERT INTO users(username, password, email) VALUES ('jill', 'def456', 'example2@email.com');
 
 
 
-INSERT INTO purchases(id, uid, time) VALUES (1, 1, 2024-03-12 16:39:02);
-INSERT INTO purchases(id, uid, time) VALUES (2, 1, 2024-03-12 18:23:47);
-INSERT INTO purchases(id, uid, time) VALUES (6, 1, 2024-03-13 20:00:00);
-INSERT INTO purchases(id, uid, time) VALUES (6, 2, 2024-03-14 20:00:00);
+INSERT INTO purchases(id, uid, time) VALUES (1, 1, '2024-03-12 16:39:02');
+INSERT INTO purchases(id, uid, time) VALUES (2, 1, '2024-03-12 18:23:47');
+INSERT INTO purchases(id, uid, time) VALUES (6, 1, '2024-03-13 20:00:00');
+INSERT INTO purchases(id, uid, time) VALUES (6, 2, '2024-03-14 20:00:00');
 
 
 
@@ -97,13 +97,13 @@ VALUES (6, 2, 4, "Woahhhhh", 5, "This nendoroid is so adorable! I'm so glad I bo
 
 
 
--- internal use only below
+-- internal use only
 
 CREATE TABLE tags (
   tid TEXT PRIMARY KEY,
   tname TEXT,
-  group TEXT
-)
+  category TEXT
+);
 
 INSERT INTO tags VALUES('plush', 'Plush', 'type');
 INSERT INTO tags VALUES('pin', 'Pin', 'type');
@@ -116,3 +116,15 @@ INSERT INTO tags VALUES('fate-stay-night', 'Fate/Stay Night', 'franchise');
 INSERT INTO tags VALUES('n0-10', 'Under $10', 'price');
 INSERT INTO tags VALUES('n10-20', '$10 to $20', 'price');
 INSERT INTO tags VALUES('n20-n', 'Over $20', 'price');
+
+
+
+
+
+-- drop tables
+
+DROP TABLE tags;
+DROP TABLE reviews;
+DROP TABLE purchases;
+DROP TABLE users;
+DROP TABLE items;

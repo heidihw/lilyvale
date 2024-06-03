@@ -23,6 +23,7 @@
    */
   function init() {
     /** Heidi */
+
     // nav bar
     document.getElementById('title-index').addEventListener('click', toggleScreens);
     const links = document.querySelectorAll('nav p');
@@ -30,10 +31,19 @@
       links[i].addEventListener('click', toggleScreens);
     }
 
+    // Fills the page on load with the initial data in the API.
+    // TODO: fill the other 5 views: index login register purchase product
+    initCart();
+    document.getElementById('login-form').addEventListener('submit', initHistory);
+    initItems();
+
     // switch grid and list layout
     document.getElementById('layout').addEventListener('change', () => {
       document.getElementById('items-container').classList.toggle('grid-layout');
     });
+
+    // add item to cart
+    document.getElementById('add-to-cart-btn').addEventListener('click', fillCart);
 
     /** Daria */
     makeButton();
@@ -44,56 +54,49 @@
    * For the nav bar. Toggles between page views.
    */
   function toggleScreens() {
-    if (this.id === 'nav-login') {
-      window.location.href = 'login.html';
-    } else {
-      const pages = document.querySelectorAll('main > section');
-      for (let i = 0; i < pages.length; i++) {
-        if (!pages[i].classList.contains('hidden')) {
-          pages[i].classList.add('hidden');
-        }
-      }
-      const view = this.id.split('-')[1];
-      document.getElementById(view).classList.toggle('hidden');
-      window.scroll(0, 0);
-      if (view === 'cart') {
-        fillCart();
-      } else if (view === 'history') {
-        fillHistory();
-      } else if (view === 'items') {
-        fillItems();
+    const pages = document.querySelectorAll('main > section');
+    for (let i = 0; i < pages.length; i++) {
+      if (!pages[i].classList.contains('hidden')) {
+        pages[i].classList.add('hidden');
       }
     }
+    const view = this.id.split('-')[1];
+    document.getElementById(view).classList.remove('hidden');
+    window.scroll(0, 0);
   }
 
   /**
    * Heidi Wang
-   * Populates the cart with the item in the cart or a message indicating it is empty.
+   * Populates the cart with a message indicating it is empty.
+   */
+  function initCart() {
+    let container = document.getElementById('cart-container');
+    let empty = document.createElement('p');
+    empty.textContent = 'Your cart is empty';
+    container.appendChild(empty);
+    document.querySelector('section#cart > div').classList.add('hidden');
+    document.getElementById('confirm-transaction').classList.add('hidden');
+  }
+
+  /**
+   * Heidi Wang
+   * Populates the cart with the item in the cart.
    */
   async function fillCart() {
+    document.getElementById('product').classList.add('hidden');
+    document.getElementById('cart').classList.remove('hidden');
     let container = document.getElementById('cart-container');
     container.innerHTML = '';
+    let id = this.parentElement.querySelector('h1').id;
     try {
-      let res = await fetch('/purchase');
+      let res = await fetch('/items/' + id);
       await statusCheck(res);
       res = await res.json();
 
-      let items = await fetch('/items');
-      await statusCheck(items);
-      items = await items.json();
-
-      if (res['cart'] > 0) {
-        let item = fillItem(items[res['cart']]);
-        container.appendChild(item);
-        document.querySelector('section#cart > div').classList.remove('hidden');
-        document.getElementById('confirm-transaction').classList.remove('hidden');
-      } else {
-        let empty = document.createElement('p');
-        empty.textContent = 'Your cart is empty';
-        container.appendChild(empty);
-        document.querySelector('section#cart > div').classList.add('hidden');
-        document.getElementById('confirm-transaction').classList.add('hidden');
-      }
+      let item = fillItem(res[0]);
+      container.appendChild(item);
+      document.querySelector('section#cart > div').classList.remove('hidden');
+      document.getElementById('confirm-transaction').classList.remove('hidden');
     } catch (err) {
       console.error(err);
     }
@@ -103,7 +106,8 @@
    * Heidi Wang
    * Populates the purchase history with the items purchased.
    */
-  async function fillHistory() {
+  async function initHistory(evt) {
+    evt.preventDefault();
     let container = document.getElementById('history-container');
     container.innerHTML = '';
     try {
@@ -138,7 +142,7 @@
    * Populates the filters to filter the items for sale.
    * Initializes the filters to display only the items that are in the selected categories.
    */
-  async function fillItems() {
+  async function initItems() {
     let container = document.getElementById('items-container');
     container.innerHTML = '';
     try {

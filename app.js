@@ -58,6 +58,7 @@ app.get('/items', async function(req, res) {
 
 /**
  * Heidi Wang
+ * Helper function for .get('/items')
  * Builds a query to get items from the database.
  * @param {string} search - the search query parameter provided with the API call.
  * @param {string} order - the order query parameter provided with the API call.
