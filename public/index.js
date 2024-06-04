@@ -142,7 +142,7 @@
    */
   function viewAllItems() {
     toggleScreens.call(document.getElementById('nav-items'));
-    resetItemsView();
+    resetFilters();
     filterItems();
   }
 
@@ -314,7 +314,8 @@
     const view = this.id.split('-')[1];
     document.getElementById(view).classList.remove('hidden');
     if (view === 'items') {
-      resetItemsView();
+      resetFilters();
+      filterItems();
     }
     window.scroll(0, 0);
   }
@@ -504,7 +505,7 @@
    * Heidi Wang
    * Resets the filters on the items view to be all unchecked.
    */
-  function resetItemsView() {
+  function resetFilters() {
     let filters = document.querySelectorAll('section#filters-container input');
     for (let i = 0; i < filters.length; i++) {
       filters[i].checked = false;
@@ -516,7 +517,7 @@
    * Initializes the figurines button on the index view.
    */
   function viewFigurines() {
-    resetItemsView();
+    resetFilters();
     document.getElementById('standee').checked = true;
     filterItems();
   }
@@ -526,7 +527,7 @@
    * Initializes the plushies button on the index view.
    */
   function viewPlushies() {
-    resetItemsView();
+    resetFilters();
     document.getElementById('plush').checked = true;
     filterItems();
   }
