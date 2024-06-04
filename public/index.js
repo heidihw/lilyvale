@@ -137,7 +137,7 @@
       console.log(document.cookie);
       id('username-input').value = '';
       id('password-input').value = '';
-
+      id('login').classList.add('hidden');
       loginView();
       fillHistory();
     } catch (err) {
