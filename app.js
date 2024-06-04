@@ -93,7 +93,9 @@ app.get('/items/:id', async function(req, res) {
     let db = await getDBConnection();
     let data1 = await dbSelectItemWithId(id);
     if (data1) {
-      let data2 = await db.get('SELECT * FROM reviews WHERE id = ?;', [id]);
+      let query = 'SELECT p.rid, p.id, p.uid, p.pid, p.title, p.rating, p.desc, u.username ' +
+      'FROM reviews AS p, users AS u WHERE p.id = ? AND p.uid = u.uid;'
+      let data2 = await db.all(query, [id]);
       res.type('json').send([data1, data2]);
     } else {
       await db.close();

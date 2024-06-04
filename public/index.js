@@ -93,6 +93,7 @@
       await statusCheck(fetchProdData);
       let prodData = await fetchProdData.json();
       await makeProdCard(prodData);
+      displayReviews(prodData);
     } catch (err) {
       let errMessage = gen('p');
       errMessage.id = 'view-prod-err';
@@ -165,6 +166,45 @@
     arrayProdInfoNodes.push(descTitle);
     arrayProdInfoNodes.push(desc);
     return arrayProdInfoNodes;
+  }
+
+  function displayReviews(prodData) {
+    if (id('review-container')) {
+      id('review-container').remove();
+    }
+    let reviewContainer = gen('article');
+    reviewContainer.id = 'review-container';
+    let reviewHeading = gen('h2');
+    reviewHeading.textContent = 'Ratings';
+    reviewContainer.appendChild(reviewHeading);
+    let reviews = gen('section');
+    reviews.id = 'review-list';
+    for (let i = 0; i < prodData[1].length; i++) {
+      let reviewCard = makeReviewCard(prodData[1][i]);
+      reviews.appendChild(reviewCard);
+    }
+    reviewContainer.appendChild(reviews);
+    id('product').appendChild(reviewContainer);
+  }
+
+  function makeReviewCard(reviewInfo) {
+    let reviewCard = gen('section');
+    let title = gen('h3');
+    title.textContent = reviewInfo['title'];
+    let starRating;
+    if (reviewInfo['rating'] === 1) {
+      starRating = '1 star';
+    } else {
+      starRating = reviewInfo['rating'] + ' stars';
+    }
+    let ratingUser = gen('h4');
+    ratingUser.textContent = starRating + ' from ' + reviewInfo['username'];
+    let desc = gen('p');
+    desc.textContent = reviewInfo['desc'];
+    reviewCard.appendChild(title);
+    reviewCard.appendChild(ratingUser);
+    reviewCard.appendChild(desc);
+    return reviewCard;
   }
 
   /**
