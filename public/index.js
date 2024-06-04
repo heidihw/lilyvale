@@ -72,6 +72,7 @@
    */
   function viewProduct() {
     toggleScreens.call(document.getElementById('nav-product'));
+    let id = this.parentElement.parentElement.id.split('-')[1];
   }
 
   /**
@@ -393,7 +394,7 @@
    */
   async function fillCart() {
     try {
-      let id = this.parentElement.parentElement.querySelector('img').id.split('-')[1];
+      let id = this.parentElement.parentElement.id.split('-')[1];
       let res = await fetch('/items/' + id);
       await statusCheck(res);
       res = await res.json();
