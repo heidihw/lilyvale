@@ -81,16 +81,22 @@
    */
   async function viewProduct() {
     toggleScreens.call(document.getElementById('nav-product'));
-    let id = this.parentElement.parentElement.id.split('-')[1];
+    let prodId = this.parentElement.parentElement.id.split('-')[1];
     try {
-      let fetchProdData = await fetch('items/' + id);
+      if (id('view-prod-err')) {
+        id('view-prod-err').remove();
+      }
+      let fetchProdData = await fetch('items/' + prodId);
       await statusCheck(fetchProdData);
       let prodData = await fetchProdData.json();
       await makeProdCard(prodData);
     } catch (err) {
-      console.log(err)
+      let errMessage = gen('p');
+      errMessage.id = 'view-prod-err';
+      errMessage.textContent = 'Oh no! Try again later!';
+      document.getElementById('product').appendChild(errMessage);
+      id('view-prod-err').appendChild(errMessage);
     }
-
   }
 
   async function makeProdCard(prodData) {
