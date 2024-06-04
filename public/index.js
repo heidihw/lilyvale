@@ -94,6 +94,7 @@
       let prodData = await fetchProdData.json();
       await makeProdCard(prodData);
       displayReviews(prodData);
+      makeReviewForm();
     } catch (err) {
       let errMessage = gen('p');
       errMessage.id = 'view-prod-err';
@@ -303,32 +304,44 @@
     toggleScreens.call(document.getElementById('nav-index'));
   }
 
-  /**
-   * Displays button that allows user to write a review on a product.
-   */
-  function makeButton() {
-    let reviewButton = gen('button');
-    reviewButton.textContent = 'Write a Review';
-    id('reviews').appendChild(reviewButton);
-    qs('#reviews button').addEventListener('click', writeReview);
-  }
-
-  /**
-   * Displays form for the user to write a review for a product.
-   */
-  function writeReview() {
-    qs('#reviews button').parentNode.removeChild(qs('#reviews button'));
-    let reviewContainer = gen('section');
-    reviewContainer.id = 'write-review';
-    id('reviews').appendChild(reviewContainer);
+  function makeReviewForm() {
+    let reviewFormContainer = gen('form');
+    reviewFormContainer.id = 'write-review';
+    id('review-container').appendChild(reviewFormContainer);
     createLabelInput('Title', 'title');
     createLabelInput('How many stars? Max 5', 'rating');
-    createLabelInput('Describe your experience.', 'description');
+    createLabelInput('Describe your experience.', 'desc');
     let completeReview = gen('button');
     completeReview.textContent = 'Post Review';
     id('write-review').appendChild(completeReview);
-    completeReview.addEventListener('click', postReview);
   }
+
+  // /**
+  //  * Displays button that allows user to write a review on a product.
+  //  */
+  // function makeButton() {
+  //   let reviewButton = gen('button');
+  //   reviewButton.textContent = 'Write a Review';
+  //   id('reviews').appendChild(reviewButton);
+  //   qs('#reviews button').addEventListener('click', writeReview);
+  // }
+
+  // /**
+  //  * Displays form for the user to write a review for a product.
+  //  */
+  // function writeReview() {
+  //   qs('#reviews button').parentNode.removeChild(qs('#reviews button'));
+  //   let reviewContainer = gen('section');
+  //   reviewContainer.id = 'write-review';
+  //   id('reviews').appendChild(reviewContainer);
+  //   createLabelInput('Title', 'title');
+  //   createLabelInput('How many stars? Max 5', 'rating');
+  //   createLabelInput('Describe your experience.', 'description');
+  //   let completeReview = gen('button');
+  //   completeReview.textContent = 'Post Review';
+  //   id('write-review').appendChild(completeReview);
+  //   completeReview.addEventListener('click', postReview);
+  // }
 
   /**
    * Creates a portion of what will be part of the form to write a review.
@@ -346,28 +359,28 @@
     id('write-review').appendChild(formInput);
   }
 
-  /**
-   * Taking in user input from the write-a-review form, posts the user's review among the
-   * list of reviews for the product they reviewed.
-   */
-  function postReview() {
-    let container = gen('article');
-    let ratingValue = id('rating').value;
-    let descriptionText = id('description').value;
-    let headerTitle = id('title').value;
-    let header = gen('h3');
-    header.textContent = headerTitle;
-    let rating = gen('h4');
-    rating.textContent = ratingValue + ' Star(s)';
-    let description = gen('p');
-    description.textContent = descriptionText;
-    container.appendChild(header);
-    container.appendChild(rating);
-    container.appendChild(description);
-    id('reviews').appendChild(container);
-    id('write-review').parentNode.removeChild(id('write-review'));
-    makeButton();
-  }
+  // /**
+  //  * Taking in user input from the write-a-review form, posts the user's review among the
+  //  * list of reviews for the product they reviewed.
+  //  */
+  // function postReview() {
+  //   let container = gen('article');
+  //   let ratingValue = id('rating').value;
+  //   let descriptionText = id('description').value;
+  //   let headerTitle = id('title').value;
+  //   let header = gen('h3');
+  //   header.textContent = headerTitle;
+  //   let rating = gen('h4');
+  //   rating.textContent = ratingValue + ' Star(s)';
+  //   let description = gen('p');
+  //   description.textContent = descriptionText;
+  //   container.appendChild(header);
+  //   container.appendChild(rating);
+  //   container.appendChild(description);
+  //   id('reviews').appendChild(container);
+  //   id('write-review').parentNode.removeChild(id('write-review'));
+  //   makeButton();
+  // }
 
   /**
    * Heidi Wang
