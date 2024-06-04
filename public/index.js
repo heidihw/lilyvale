@@ -347,7 +347,7 @@
     let imgDiv = document.createElement('div');
     imgDiv.classList.add('img');
     let img = document.createElement('img');
-    img.src = 'imgs/' + res['id'] + '.jpeg';
+    img.src = 'imgs/' + res['src'];
     img.alt = res['name'];
     imgDiv.appendChild(img);
     container.appendChild(imgDiv);
