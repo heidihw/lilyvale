@@ -201,7 +201,7 @@ async function dbSelectItemWithId(id) {
  */
 async function purchaseItem(id, uid) {
   let db = await getDBConnection();
-  await db.exec('UPDATE items SET quantity = quantity - 1 WHERE id = ?;', [id]); // query2
+  await db.run('UPDATE items SET quantity = quantity - 1 WHERE id = ?;', [id]); // query2
   let query3 = 'INSERT INTO purchases(id, uid) VALUES (?, ?);';
   let data3 = await db.run(query3, [id, uid]);
   let data4 = await db.get('SELECT * FROM purchases WHERE pid = ?;', [data3.lastID]);
@@ -331,9 +331,9 @@ async function addReview(id, uid, pid, title, rating, desc) {
   let query7 = 'UPDATE items SET rating = ? WHERE id = ?;';
   if (data6['rating']) {
     let overall = (data6['rating'] * (data5.length - 1) + rating) / data5.length;
-    await db.exec(query7, [overall, id]); // query8
+    await db.run(query7, [overall, id]); // query8
   } else {
-    await db.exec(query7, [rating, id]); // query8
+    await db.run(query7, [rating, id]); // query8
   }
 
   let data9 = await db.get('SELECT * FROM reviews WHERE rid = ?;', [data4.lastID]);
