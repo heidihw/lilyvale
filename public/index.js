@@ -16,6 +16,7 @@
   /**
    * Heidi Wang
    * Initializes the nav bar to switch between views.
+   * Initializes the search feature in the nav bar.
    * Initializes the items view with the data for the items.
    * Initializes the toggle between grid and list layout in the items view.
    * Initializes the toggles to sort and filter in the items view.
@@ -31,6 +32,10 @@
     for (let i = 0; i < links.length; i++) {
       links[i].addEventListener('click', toggleScreens);
     }
+
+    // Heidi: Initializes the search feature in the nav bar.
+    document.getElementById('search-term').addEventListener('input', enableSearch);
+    document.getElementById('search-btn').addEventListener('click', makeSearch);
 
     // Heidi: Initializes the items view with the data for the items.
     await initItems();
@@ -250,55 +255,25 @@
 
   /**
    * Heidi Wang
-   * Populates the cart with the item in the cart.
+   * Enables and disables the search button based on the search term input value in the search bar.
+   * Leading and trailing whitespace is not considered as valid search input.
    */
-  async function fillCart() {
-    try {
-      let id = this.parentElement.parentElement.querySelector('img').id.split('-')[1];
-      let res = await fetch('/items/' + id);
-      await statusCheck(res);
-      res = await res.json();
-
-      document.getElementById('product').classList.add('hidden');
-      document.getElementById('cart').classList.remove('hidden');
-      let container = document.getElementById('cart-container');
-      container.innerHTML = '';
-      let item = fillItem(res[0]);
-      container.appendChild(item);
-      document.querySelector('section#cart > div').classList.remove('hidden');
-      document.getElementById('confirm-transaction').classList.remove('hidden');
-    } catch (err) {
-      console.error(err);
+  function enableSearch() {
+    if (this.value.trim().length > 0) {
+      document.getElementById('search-btn').disabled = false;
+    } else {
+      document.getElementById('search-btn').disabled = true;
     }
   }
 
   /**
    * Heidi Wang
-   * Populates the purchase history with the items purchased.
+   * Searches the items for the given search term. Displays only the matching items.
    */
-  async function fillHistory() {
-    try {
-      let res = await fetch('/history');
-      await statusCheck(res);
-      res = await res.json();
-
-      let container = document.getElementById('history-container');
-      container.innerHTML = '';
-      let count = document.querySelector('section#history > div p span');
-      count.textContent = res[0].length;
-      for (let i = 0; i < res[0].length; i++) {
-        let item = fillItem(res[1][i]);
-        let time = document.createElement('p');
-        time.textContent = 'Time: ' + res[0][i]['time'];
-        let id = document.createElement('p');
-        id.textContent = 'Confirmation number: ' + res[0][i]['pid'];
-        item.querySelector('div.text').appendChild(time);
-        item.querySelector('div.text').appendChild(id);
-        container.appendChild(item);
-      }
-    } catch (err) {
-      console.error(err);
-    }
+  async function makeSearch() {
+    toggleScreens.call(document.getElementById('nav-items'));
+    let searchTerm = document.getElementById('search-term').value.trim();
+    fillFilteredItems(searchTerm, '');
   }
 
   /**
@@ -399,6 +374,59 @@
       itemsContainer.innerHTML = '';
       for (let i = 0; i < res.length; i++) {
         itemsContainer.appendChild(fillItem(res[i]));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  /**
+   * Heidi Wang
+   * Populates the cart with the item in the cart.
+   */
+  async function fillCart() {
+    try {
+      let id = this.parentElement.parentElement.querySelector('img').id.split('-')[1];
+      let res = await fetch('/items/' + id);
+      await statusCheck(res);
+      res = await res.json();
+
+      document.getElementById('product').classList.add('hidden');
+      document.getElementById('cart').classList.remove('hidden');
+      let container = document.getElementById('cart-container');
+      container.innerHTML = '';
+      let item = fillItem(res[0]);
+      container.appendChild(item);
+      document.querySelector('section#cart > div').classList.remove('hidden');
+      document.getElementById('confirm-transaction').classList.remove('hidden');
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  /**
+   * Heidi Wang
+   * Populates the purchase history with the items purchased.
+   */
+  async function fillHistory() {
+    try {
+      let res = await fetch('/history');
+      await statusCheck(res);
+      res = await res.json();
+
+      let container = document.getElementById('history-container');
+      container.innerHTML = '';
+      let count = document.querySelector('section#history > div p span');
+      count.textContent = res[0].length;
+      for (let i = 0; i < res[0].length; i++) {
+        let item = fillItem(res[1][i]);
+        let time = document.createElement('p');
+        time.textContent = 'Time: ' + res[0][i]['time'];
+        let id = document.createElement('p');
+        id.textContent = 'Confirmation number: ' + res[0][i]['pid'];
+        item.querySelector('div.text').appendChild(time);
+        item.querySelector('div.text').appendChild(id);
+        container.appendChild(item);
       }
     } catch (err) {
       console.error(err);
