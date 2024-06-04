@@ -232,7 +232,7 @@
   /**
    * Creates cards for an individual review.
    * @param {object} reviewInfo - object containing data about a specific review.
-   * @returns {HTMLNode} section node containing parts of a review including title, rating,
+   * @returns {HTMLElement} section node containing parts of a review including title, rating,
    *                     name of user writing the review, and description.
    */
   function makeReviewCard(reviewInfo) {
@@ -448,8 +448,8 @@
    * Creates labels for the review form.
    * @param {string} text - header for the specific portion of the review form.
    * @param {string} content - signifies what part of the form a user is writing in.
+   * @returns {HTMLElement} label element for a part of the review form
    */
-
   function createLabel(text, content) {
     let label = gen('label');
     label.textContent = text;
@@ -723,12 +723,4 @@
     return document.createElement(tag);
   }
 
-  /**
-   * Returns first element matching selector.
-   * @param {string} selector - CSS query selector.
-   * @returns {object} - DOM object associated selector.
-   */
-  function qs(selector) {
-    return document.querySelector(selector);
-  }
 })();
