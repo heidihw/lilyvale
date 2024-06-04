@@ -114,12 +114,13 @@
       if (id('login-err-message')) {
         id('login-err-message').remove();
       }
-      let userDataForm = await fetch('login', {method: 'POST', body: userData});
+      let userDataForm = await fetch('/login', {method: 'POST', body: userData});
       await statusCheck(userDataForm);
       await userDataForm.text();
-      sessionStorage.setItem('username', id('username-input').value);
+      console.log(document.cookie);
       id('username-input').value = '';
       id('password-input').value = '';
+
       loginView();
       fillHistory();
     } catch (err) {
@@ -166,9 +167,7 @@
     if (id('index').classList.contains('hidden')) {
       id('index').classList.remove('hidden');
     }
-    // i dont think we need product
     document.getElementById('nav-product').classList.add('hidden');
-    // why does it hides everything???
   }
 
   /**
