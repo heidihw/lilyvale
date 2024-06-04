@@ -50,11 +50,6 @@
     // Heidi: Initializes the button to add an item to the cart.
     document.getElementById('add-to-cart-btn').addEventListener('click', fillCart);
 
-    /**
-     * TODO Daria: as needed, write functions to init the other 5 views and call them here
-     * index login register purchase product
-     * (the first 3 probably don't need it so probably just the latter 2)
-     */
     /** Daria */
     id('index-items-btn').addEventListener('click', indexToItems);
     id('new-user-form').addEventListener('submit', makeNewUser);
