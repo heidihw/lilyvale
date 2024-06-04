@@ -517,8 +517,9 @@
    * Initializes the figurines button on the index view.
    */
   function viewFigurines() {
+    toggleScreens.call(document.getElementById('nav-items'));
     resetFilters();
-    document.getElementById('standee').checked = true;
+    document.getElementById('figurine').checked = true;
     filterItems();
   }
 
@@ -527,6 +528,7 @@
    * Initializes the plushies button on the index view.
    */
   function viewPlushies() {
+    toggleScreens.call(document.getElementById('nav-items'));
     resetFilters();
     document.getElementById('plush').checked = true;
     filterItems();
