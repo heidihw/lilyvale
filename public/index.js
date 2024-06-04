@@ -52,10 +52,11 @@
       filters[i].addEventListener('change', await filterItems);
     }
 
-    /** Daria */
-    id('index-items-btn').addEventListener('click', () => {
-      toggleScreens.call(document.getElementById('nav-items'));
-    });
+    id('index-items-btn').addEventListener('click', viewAllItems);
+    // Heidi: Initializes the figurines button on the index view.
+    document.getElementById('index-figurines-btn').addEventListener('click', viewFigurines);
+    // Heidi: Initializes the plushies button on the index view.
+    document.getElementById('index-plushies-btn').addEventListener('click', viewPlushies);
     id('new-user-form').addEventListener('submit', makeNewUser);
     id('login-form').addEventListener('submit', loginUser);
     id('nav-logout').addEventListener('click', loggingOut);
@@ -134,6 +135,15 @@
     prodSection.appendChild(descTitle);
     prodSection.appendChild(desc);
     return prodSection;
+  }
+
+  /**
+   * Switches from main index view to item view when button is clicked.
+   */
+  function viewAllItems() {
+    toggleScreens.call(document.getElementById('nav-items'));
+    resetItemsView();
+    filterItems();
   }
 
   /**
@@ -303,6 +313,9 @@
     }
     const view = this.id.split('-')[1];
     document.getElementById(view).classList.remove('hidden');
+    if (view === 'items') {
+      resetItemsView();
+    }
     window.scroll(0, 0);
   }
 
@@ -485,6 +498,37 @@
     } catch (err) {
       console.error(err);
     }
+  }
+
+  /**
+   * Heidi Wang
+   * Resets the filters on the items view to be all unchecked.
+   */
+  function resetItemsView() {
+    let filters = document.querySelectorAll('section#filters-container input');
+    for (let i = 0; i < filters.length; i++) {
+      filters[i].checked = false;
+    }
+  }
+
+  /**
+   * Heidi Wang
+   * Initializes the figurines button on the index view.
+   */
+  function viewFigurines() {
+    resetItemsView();
+    document.getElementById('standee').checked = true;
+    filterItems();
+  }
+
+  /**
+   * Heidi Wang
+   * Initializes the plushies button on the index view.
+   */
+  function viewPlushies() {
+    resetItemsView();
+    document.getElementById('plush').checked = true;
+    filterItems();
   }
 
   // standard functions
