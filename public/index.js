@@ -52,9 +52,6 @@
       filters[i].addEventListener('change', await filterItems);
     }
 
-    // Heidi: Initializes the button to add an item to the cart.
-    document.getElementById('add-to-cart-btn').addEventListener('click', await fillCart);
-
     /** Daria */
     id('index-items-btn').addEventListener('click', indexToItems);
     id('new-user-form').addEventListener('submit', makeNewUser);
@@ -86,25 +83,36 @@
       let fetchProdData = await fetch('items/' + id);
       await statusCheck(fetchProdData);
       let prodData = await fetchProdData.json();
-      makeProdCard(prodData);
+      await makeProdCard(prodData);
     } catch (err) {
       console.log(err)
     }
 
   }
 
-  function makeProdCard(prodData) {
+  async function makeProdCard(prodData) {
     console.log(prodData);
-    if (id('prod-info')) {
-      id('prod-info').remove();
+    if (id('prod-listing')) {
+      id('prod-listing').remove();
     }
-    let prodSection = gen('section');
-    prodSection.id = 'product-info';
-    let prodTitle = gen('h1');
-    prodTitle.textContent = prodData['0']['name'];
+    let prodListing = gen('section');
+    prodListing.id = 'prod-listing';
     let prodImg = gen('img');
     prodImg.src = 'imgs/' +prodData['0']['src'];
     prodImg.alt = prodData['0']['name'];
+    prodListing.appendChild(prodImg);
+    let prodSection = makeProdInfo(prodData);
+    prodListing.appendChild(prodSection);
+    console.log(prodSection);
+    id('product').appendChild(prodListing);
+    id('add-to-cart-btn').addEventListener('click', fillCart);
+  }
+
+  function makeProdInfo(prodData) {
+    let prodSection = gen('section');
+    prodSection.id = 'item-' + prodData[0]['id'];
+    let prodTitle = gen('h1');
+    prodTitle.textContent = prodData['0']['name'];
     let rating = gen('p');
     rating.textContent = prodData['0']['rating'] + ' star(s)';
     let price = gen('p');
@@ -112,18 +120,18 @@
     let addToCart = gen('button');
     addToCart.id = 'add-to-cart-btn';
     addToCart.textContent = "Add to Cart";
+    console.log(addToCart);
     let descTitle = gen('h2');
     descTitle.textContent = 'Description:';
     let desc = gen('p');
     desc.textContent = prodData[0]['desc'];
     prodSection.appendChild(prodTitle);
-    prodSection.appendChild(prodImg);
     prodSection.appendChild(rating);
     prodSection.appendChild(price);
     prodSection.appendChild(addToCart);
     prodSection.appendChild(descTitle);
     prodSection.appendChild(desc);
-    id('product').appendChild(prodSection);
+    return prodSection;
   }
 
   /**
@@ -442,7 +450,7 @@
    */
   async function fillCart() {
     try {
-      let id = this.parentElement.parentElement.id.split('-')[1];
+      let id = this.parentElement.id.split('-')[1];
       let res = await fetch('/items/' + id);
       await statusCheck(res);
       res = await res.json();

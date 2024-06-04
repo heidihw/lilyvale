@@ -275,20 +275,30 @@ section#index #secondary img {
   This is the specific styles for the product page.
 */
 
-section#product img {
+#product img {
   width: 450px;
   margin-right: 40px;
 }
 
-section#product #product-listing, section#product #write-review {
+#prod-listing h1 {
+  font-size: 40px;
+}
+
+#prod-listing button {
+  padding: 15px;
+  border: none;
+  background-color: #AFD9F8;
+}
+
+#prod-listing, #product #write-review {
   display: flex;
 }
 
-section#product .hidden {
+#product .hidden {
   display: none;
 }
 
-section#product #write-review {
+#product #write-review {
   flex-direction: column;
   align-items: baseline;
 }
