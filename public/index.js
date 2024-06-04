@@ -46,14 +46,14 @@
     });
 
     // Heidi: Initializes the toggles to sort and filter in the items view.
-    document.getElementById('sort').addEventListener('change', filterItems);
+    document.getElementById('sort').addEventListener('change', await filterItems);
     let filters = document.querySelectorAll('section#filters-container input');
     for (let i = 0; i < filters.length; i++) {
-      filters[i].addEventListener('change', filterItems);
+      filters[i].addEventListener('change', await filterItems);
     }
 
     // Heidi: Initializes the button to add an item to the cart.
-    document.getElementById('add-to-cart-btn').addEventListener('click', fillCart);
+    document.getElementById('add-to-cart-btn').addEventListener('click', await fillCart);
 
     /** Daria */
     id('index-items-btn').addEventListener('click', indexToItems);
@@ -139,7 +139,7 @@
       id('password-input').value = '';
       id('login').classList.add('hidden');
       loginView();
-      fillHistory();
+      await fillHistory();
     } catch (err) {
       let errMessage = gen('p');
       errMessage.id = 'login-err-message';
@@ -283,7 +283,7 @@
    * Heidi Wang
    * Searches the items for the given search term. Displays only the matching items.
    */
-  async function makeSearch() {
+  function makeSearch() {
     toggleScreens.call(document.getElementById('nav-items'));
     let searchTerm = document.getElementById('search-term').value.trim();
     fillFilteredItems(searchTerm, '');
