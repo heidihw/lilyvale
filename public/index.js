@@ -86,7 +86,7 @@
     goToItems.textContent = 'Back to items.';
     goToItems.addEventListener('click', () => {
       toggleScreens.call(document.getElementById('nav-items'));
-    })
+    });
     banner.appendChild(goToItems);
     try {
       let params = new FormData();
