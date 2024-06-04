@@ -71,16 +71,47 @@
   }
 
   /**
-   * TODO Daria: implement, making a transaction
+   * When the user confirms purchase, this will display a message whether or not their
+   * transaction was successful.
    */
-  function toPurchaseView() {
+  async function toPurchaseView() {
     toggleScreens.call(document.getElementById('nav-purchase'));
     let prodId = this.parentElement.parentElement.querySelector('article').id.split('-')[1];
-    try {
-
-    } catch (err) {
-
+    if (id('purchase-status')) {
+      id('purchase-status').remove();
     }
+    let banner = gen('section');
+    banner.id = 'purchase-status';
+    let goToItems = gen('button');
+    goToItems.textContent = 'Back to items.';
+    goToItems.addEventListener('click', () => {
+      toggleScreens.call(document.getElementById('nav-items'));
+    })
+    banner.appendChild(goToItems);
+    try {
+      let params = new FormData();
+      params.append('id', prodId);
+      let makePurchase = await fetch('/purchase', {method: 'POST', body: params});
+      await statusCheck(makePurchase);
+      let res = await makePurchase.json();
+      let successMessage = gen('p');
+      successMessage.textContent = 'Your transaction was a success! Your confirmation' +
+        ' number is: ' + res['pid'];
+      banner.prepend(successMessage);
+    } catch (err) {
+      handlePuchaseError(err);
+    }
+    id('purchase').appendChild(banner);
+  }
+
+  /**
+   * Displays an error message when a transaction doesn't go through.
+   * @param {string} err - error message
+   */
+  function handlePuchaseError(err) {
+    let errMessage = gen('p');
+    errMessage.textContent = ':C Oh no! Transaction was NOT successful. ' + err;
+    id('purchase-status').prepend(errMessage);
   }
 
   /**
