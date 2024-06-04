@@ -246,14 +246,18 @@ app.get('/history', async function(req, res) {
  * Endpoint 6: Give feedback
  * Writes a new review. Returns the information for the posted review.
  * Error handling needed to be combined to resolve the linter 30 max-lines-per-function error.
- * POST parameters: title, rating, description
+ * POST parameters: id, title, rating, description
  */
 app.post('/feedback', async function(req, res) {
   try {
     let id = req.body.id;
+    console.log(id);
     let title = req.body.title;
+    console.log(title);
     let rating = req.body.rating;
+    console.log(rating);
     let description = req.body.description;
+    console.log(description);
     let uid = req.cookies['uid'];
     if (id && title && rating && description) {
       if (uid && await dbSelectItemWithId(id)) {

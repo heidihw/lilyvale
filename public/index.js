@@ -306,14 +306,78 @@
 
   function makeReviewForm() {
     let reviewFormContainer = gen('form');
-    reviewFormContainer.id = 'write-review';
+    reviewFormContainer.id = 'review-form';
     id('review-container').appendChild(reviewFormContainer);
-    createLabelInput('Title', 'title');
-    createLabelInput('How many stars? Max 5', 'rating');
-    createLabelInput('Describe your experience.', 'desc');
+    makeTitleInput();
+    makeRatingInput();
+    makeDescInput();
     let completeReview = gen('button');
     completeReview.textContent = 'Post Review';
-    id('write-review').appendChild(completeReview);
+    id('review-form').appendChild(completeReview);
+    reviewFormContainer.addEventListener('submit', postReview);
+  }
+
+  function makeTitleInput() {
+    let divContainer = gen('div');
+    let heading = createLabel('Title', 'title-input');
+    let titleInput = gen('input');
+    titleInput.id = 'title-input';
+    titleInput.name = 'title'
+    titleInput.type = 'text';
+    titleInput.required = true;
+    divContainer.appendChild(heading);
+    divContainer.appendChild(titleInput);
+    id('review-form').appendChild(divContainer);
+  }
+
+  function makeRatingInput() {
+    let divContainer = gen('div');
+    let heading = createLabel('How many stars? Max 5', 'rating-input');
+    let ratingInput = gen('input');
+    ratingInput.id = 'rating-input';
+    ratingInput.name = 'rating';
+    ratingInput.type = 'number';
+    ratingInput.min = 1;
+    ratingInput.max = 5;
+    ratingInput.required;
+    divContainer.appendChild(heading);
+    divContainer.appendChild(ratingInput);
+    id('review-form').appendChild(divContainer);
+  }
+
+  function makeDescInput() {
+    let divContainer = gen('div');
+    let heading = createLabel('Describe your experience.', 'desc-input');
+    let descInput = gen('textarea');
+    descInput.id = 'desc-input';
+    descInput.name = 'description';
+    descInput.required = true;
+    divContainer.appendChild(heading);
+    divContainer.appendChild(descInput);
+    id('review-form').appendChild(divContainer);
+  }
+
+  async function postReview(evt) {
+    evt.preventDefault();
+    let params = new FormData(id('review-form'));
+    let prodId = this.parentElement.parentElement.firstElementChild.lastElementChild.id;
+    prodId = prodId.split('-')[1];
+    params.append('id', prodId);
+    try {
+      if (id('review-form-err')) {
+        id('review-form-err').remove();
+      }
+      let newReview = await fetch('/feedback', {method: 'POST', body: params});
+      await statusCheck(newReview);
+      let res = await newReview.json();
+      let reviewCard = makeReviewCard(res);
+      id('review-list').prepend(reviewCard);
+    } catch (err) {
+      let errMessage = gen('p');
+      errMessage.id = 'review-form-err';
+      errMessage.textContent = err;
+      id('review-container').appendChild(errMessage);
+    }
   }
 
   // /**
@@ -348,15 +412,15 @@
    * @param {string} text - header for the specific portion of the review form.
    * @param {string} content - signifies what part of the form a user is writing in.
    */
-  function createLabelInput(text, content) {
+  function createLabel(text, content) {
     let label = gen('label');
     label.textContent = text;
     label.htmlFor = content;
-    id('write-review').appendChild(label);
-    let formInput = gen('input');
-    formInput.id = content;
-    formInput.type = 'text';
-    id('write-review').appendChild(formInput);
+    return label;
+    // let formInput = gen('input');
+    // formInput.id = content;
+    // formInput.type = 'text';
+    // id('write-review').appendChild(formInput);
   }
 
   // /**
