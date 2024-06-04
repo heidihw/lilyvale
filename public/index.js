@@ -76,6 +76,11 @@
   function toPurchaseView() {
     toggleScreens.call(document.getElementById('nav-purchase'));
     let prodId = this.parentElement.parentElement.querySelector('article').id.split('-')[1];
+    try {
+
+    } catch (err) {
+
+    }
   }
 
   /**
@@ -169,6 +174,11 @@
     return arrayProdInfoNodes;
   }
 
+  /**
+   * Displays all of the reviews for a given product/item.
+   * @param {object} prodData - object containing detailed information about a specific
+   *                             product
+   */
   function displayReviews(prodData) {
     if (id('review-container')) {
       id('review-container').remove();
@@ -188,6 +198,12 @@
     id('product').appendChild(reviewContainer);
   }
 
+  /**
+   *
+   * @param {*} reviewInfo
+   * @returns {HTMLNode} section node containing parts of a review including title, rating,
+   *                     name of user writing the review, and description.
+   */
   function makeReviewCard(reviewInfo) {
     let reviewCard = gen('section');
     let title = gen('h3');
@@ -304,6 +320,9 @@
     toggleScreens.call(document.getElementById('nav-index'));
   }
 
+  /**
+   * Makes the form for being able to write reviews for a given product
+   */
   function makeReviewForm() {
     let reviewFormContainer = gen('form');
     reviewFormContainer.id = 'review-form';
@@ -317,6 +336,9 @@
     reviewFormContainer.addEventListener('submit', postReview);
   }
 
+  /**
+   * Makes the title portion of the review form.
+   */
   function makeTitleInput() {
     let divContainer = gen('div');
     let heading = createLabel('Title', 'title-input');
@@ -330,6 +352,9 @@
     id('review-form').appendChild(divContainer);
   }
 
+  /**
+   *  Makes the numerical rating portion of the review form.
+   */
   function makeRatingInput() {
     let divContainer = gen('div');
     let heading = createLabel('How many stars? Max 5', 'rating-input');
@@ -345,6 +370,9 @@
     id('review-form').appendChild(divContainer);
   }
 
+  /**
+   * Makes the description portion of the review form.
+   */
   function makeDescInput() {
     let divContainer = gen('div');
     let heading = createLabel('Describe your experience.', 'desc-input');
@@ -357,6 +385,11 @@
     id('review-form').appendChild(divContainer);
   }
 
+  /**
+   * When a review is made and meets all of the requirements for posting, it is
+   * added to the database and the specific product/item's page.
+   * @param {object} evt - event listener
+   */
   async function postReview(evt) {
     evt.preventDefault();
     let params = new FormData(id('review-form'));
