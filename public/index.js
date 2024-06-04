@@ -55,7 +55,7 @@
     /** Daria */
     id('index-items-btn').addEventListener('click', () => {
       toggleScreens.call(document.getElementById('nav-items'));
-    }));
+    });
     id('new-user-form').addEventListener('submit', makeNewUser);
     id('login-form').addEventListener('submit', loginUser);
     id('nav-logout').addEventListener('click', loggingOut);
