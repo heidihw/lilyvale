@@ -53,8 +53,10 @@
     }
 
     id('index-items-btn').addEventListener('click', viewAllItems);
+
     // Heidi: Initializes the figurines button on the index view.
     document.getElementById('index-figurines-btn').addEventListener('click', viewFigurines);
+
     // Heidi: Initializes the plushies button on the index view.
     document.getElementById('index-plushies-btn').addEventListener('click', viewPlushies);
     id('new-user-form').addEventListener('submit', makeNewUser);
@@ -107,7 +109,7 @@
     let prodListing = gen('section');
     prodListing.id = 'prod-listing';
     let prodImg = gen('img');
-    prodImg.src = 'imgs/' +prodData['0']['src'];
+    prodImg.src = 'imgs/' + prodData['0']['src'];
     prodImg.alt = prodData['0']['name'];
     prodListing.appendChild(prodImg);
     let prodSection = gen('section');
