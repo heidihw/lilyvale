@@ -70,9 +70,51 @@
   /**
    * TODO Daria: implement viewProduct, dynamic product view
    */
-  function viewProduct() {
+  async function viewProduct() {
     toggleScreens.call(document.getElementById('nav-product'));
     let id = this.parentElement.parentElement.id.split('-')[1];
+    try {
+      let fetchProdData = await fetch('items/' + id);
+      await statusCheck(fetchProdData);
+      let prodData = await fetchProdData.json();
+      makeProdCard(prodData);
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
+
+  function makeProdCard(prodData) {
+    console.log(prodData);
+    if (id('prod-info')) {
+      id('prod-info').remove();
+    }
+    let prodSection = gen('section');
+    prodSection.id = 'product-info';
+    let prodTitle = gen('h1');
+    prodTitle.textContent = prodData['0']['name'];
+    let prodImg = gen('img');
+    prodImg.src = 'imgs/' +prodData['0']['src'];
+    prodImg.alt = prodData['0']['name'];
+    let rating = gen('p');
+    rating.textContent = prodData['0']['rating'] + ' star(s)';
+    let price = gen('p');
+    price.textContent = '$' + prodData[0]['price'];
+    let addToCart = gen('button');
+    addToCart.id = 'add-to-cart-btn';
+    addToCart.textContent = "Add to Cart";
+    let descTitle = gen('h2');
+    descTitle.textContent = 'Description:';
+    let desc = gen('p');
+    desc.textContent = prodData[0]['desc'];
+    prodSection.appendChild(prodTitle);
+    prodSection.appendChild(prodImg);
+    prodSection.appendChild(rating);
+    prodSection.appendChild(price);
+    prodSection.appendChild(addToCart);
+    prodSection.appendChild(descTitle);
+    prodSection.appendChild(desc);
+    id('product').appendChild(prodSection);
   }
 
   /**
