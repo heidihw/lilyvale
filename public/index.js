@@ -53,7 +53,9 @@
     }
 
     /** Daria */
-    id('index-items-btn').addEventListener('click', indexToItems);
+    id('index-items-btn').addEventListener('click', () => {
+      toggleScreens.call(document.getElementById('nav-items'));
+    });
     id('new-user-form').addEventListener('submit', makeNewUser);
     id('login-form').addEventListener('submit', loginUser);
     id('nav-logout').addEventListener('click', loggingOut);
@@ -135,14 +137,6 @@
   }
 
   /**
-   * Switches from main index view to item view when button is clicked.
-   */
-  function indexToItems() {
-    id('index').classList.toggle('hidden');
-    id('items').classList.toggle('hidden');
-  }
-
-  /**
    * Creates a new user on the website.
    * @param {object} evt - event object
    */
@@ -207,9 +201,7 @@
     id('nav-login').classList.add('hidden');
     id('nav-cart').classList.remove('hidden');
     id('nav-history').classList.remove('hidden');
-    if (id('index').classList.contains('hidden')) {
-      id('index').classList.remove('hidden');
-    }
+    toggleScreens.call(document.getElementById('nav-index'));
   }
 
   /**
@@ -229,9 +221,7 @@
     id('nav-login').classList.remove('hidden');
     id('nav-cart').classList.add('hidden');
     id('nav-history').classList.add('hidden');
-    if (id('index').classList.contains('hidden')) {
-      id('index').classList.remove('hidden');
-    }
+    toggleScreens.call(document.getElementById('nav-index'));
   }
 
   /**
