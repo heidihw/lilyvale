@@ -131,9 +131,9 @@
     if (document.cookie.split('=')[1]) {
       id('add-to-cart-btn').addEventListener('click', await fillCart);
     } else {
-      id('add-to-cart-btn').addEventListener('click',  () => {
+      id('add-to-cart-btn').addEventListener('click', () => {
         toggleScreens.call(document.getElementById('nav-login'));
-      })
+      });
     }
   }
 
@@ -154,7 +154,6 @@
     let addToCart = gen('button');
     addToCart.id = 'add-to-cart-btn';
     addToCart.textContent = "Add to Cart";
-    console.log(addToCart);
     let descTitle = gen('h2');
     descTitle.textContent = 'Description:';
     let desc = gen('p');
@@ -164,7 +163,7 @@
     arrayProdInfoNodes.push(price);
     arrayProdInfoNodes.push(addToCart);
     arrayProdInfoNodes.push(descTitle);
-    arrayProdInfoNodes.push(desc)
+    arrayProdInfoNodes.push(desc);
     return arrayProdInfoNodes;
   }
 
@@ -206,7 +205,7 @@
 
   /**
    * Logs a user into the website.
-   * @param {object} evt
+   * @param {object} evt - event object
    */
   async function loginUser(evt) {
     evt.preventDefault();
