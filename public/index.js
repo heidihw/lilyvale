@@ -102,7 +102,6 @@
   }
 
   async function makeProdCard(prodData) {
-    console.log(prodData);
     if (id('prod-listing')) {
       id('prod-listing').remove();
     }
@@ -116,7 +115,6 @@
     prodSection.id = 'item-' + prodData[0]['id'];
     prodListing.appendChild(prodSection);
     let prodNodes = makeProdInfo(prodData);
-    console.log(prodSection);
     prodSection.appendChild(prodNodes[0]);
     prodSection.appendChild(prodNodes[1]);
     prodSection.appendChild(prodNodes[2]);
