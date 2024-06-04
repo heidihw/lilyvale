@@ -251,13 +251,9 @@ app.get('/history', async function(req, res) {
 app.post('/feedback', async function(req, res) {
   try {
     let id = req.body.id;
-    console.log(id);
     let title = req.body.title;
-    console.log(title);
     let rating = req.body.rating;
-    console.log(rating);
     let description = req.body.description;
-    console.log(description);
     let uid = req.cookies['uid'];
     if (id && title && rating && description) {
       if (uid && await dbSelectItemWithId(id)) {
@@ -342,7 +338,8 @@ async function addReview(id, uid, pid, title, rating, desc) {
     await db.run(query7, [rating, id]); // query8
   }
 
-  let data9 = await db.get('SELECT * FROM reviews WHERE rid = ?;', [data4.lastID]);
+  let data9 = await db.get('SELECT p.rid, p.id, p.uid, p.pid, p.title, p.rating, p.desc, ' +
+  'u.username FROM reviews AS p, users AS u WHERE p.rid = ? AND p.uid = u.uid;', [data4.lastID]);
   await db.close();
   return data9;
 }
