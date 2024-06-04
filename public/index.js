@@ -15,9 +15,11 @@
 
   /**
    * Heidi Wang
-   * Fills the page on load with the initial data from the API.
    * Initializes the nav bar to switch between views.
+   * Initializes the items view with the data for the items.
    * Initializes the toggle between grid and list layout in the items view.
+   * Initializes the toggles to sort and filter in the items view.
+   * Initializes the button to add an item to the cart.
    *
    * Daria Manguling
    * Initializes button to be able to write a review.
@@ -30,7 +32,7 @@
       links[i].addEventListener('click', toggleScreens);
     }
 
-    // Heidi: Fills the page on load with the initial data from the API.
+    // Heidi: Initializes the items view with the data for the items.
     await initItems();
 
     // Heidi: Initializes the toggle between grid and list layout in the items view.
@@ -38,15 +40,14 @@
       document.getElementById('items-container').classList.toggle('grid-layout');
     });
 
-    // TODO Heidi: sort
+    // Heidi: Initializes the toggles to sort and filter in the items view.
     document.getElementById('sort').addEventListener('change', filterItems);
-    // TODO Heidi: currently filtering with css classes; should be done through API call instead
     let filters = document.querySelectorAll('section#filters-container input');
     for (let i = 0; i < filters.length; i++) {
       filters[i].addEventListener('change', filterItems);
     }
 
-    // Heidi: add item to cart
+    // Heidi: Initializes the button to add an item to the cart.
     document.getElementById('add-to-cart-btn').addEventListener('click', fillCart);
 
     /**
@@ -238,7 +239,7 @@
 
   /**
    * Heidi Wang
-   * Initializes the nav bar to toggle between page views.
+   * Initializes the nav bar to switch between views.
    */
   function toggleScreens() {
     const pages = document.querySelectorAll('main > section');
@@ -257,16 +258,16 @@
    * Populates the cart with the item in the cart.
    */
   async function fillCart() {
-    document.getElementById('product').classList.add('hidden');
-    document.getElementById('cart').classList.remove('hidden');
-    let container = document.getElementById('cart-container');
-    container.innerHTML = '';
-    let id = this.parentElement.parentElement.querySelector('img').id.split('-')[1];
     try {
+      let id = this.parentElement.parentElement.querySelector('img').id.split('-')[1];
       let res = await fetch('/items/' + id);
       await statusCheck(res);
       res = await res.json();
 
+      document.getElementById('product').classList.add('hidden');
+      document.getElementById('cart').classList.remove('hidden');
+      let container = document.getElementById('cart-container');
+      container.innerHTML = '';
       let item = fillItem(res[0]);
       container.appendChild(item);
       document.querySelector('section#cart > div').classList.remove('hidden');
@@ -279,16 +280,15 @@
   /**
    * Heidi Wang
    * Populates the purchase history with the items purchased.
-   * @param {Event} evt - the form submission event. automatically passed with the function call.
    */
-  async function fillHistory(evt) {
-    let container = document.getElementById('history-container');
-    container.innerHTML = '';
+  async function fillHistory() {
     try {
       let res = await fetch('/history');
       await statusCheck(res);
       res = await res.json();
 
+      let container = document.getElementById('history-container');
+      container.innerHTML = '';
       let count = document.querySelector('section#history > div p span');
       count.textContent = res[0].length;
       for (let i = 0; i < res[0].length; i++) {
@@ -309,17 +309,15 @@
   /**
    * Heidi Wang
    * Populates the items list with the items for sale.
-   * Populates the filters to filter the items for sale.
-   * Initializes the filters to display only the items that are in the selected categories.
    */
   async function initItems() {
-    let container = document.getElementById('items-container');
-    container.innerHTML = '';
     try {
       let res = await fetch('/items');
       await statusCheck(res);
       res = await res.json();
 
+      let container = document.getElementById('items-container');
+      container.innerHTML = '';
       for (let i = 0; i < res.length; i++) {
         if (res[i]['quantity'] > 0) {
           let item = fillItem(res[i]);
@@ -374,56 +372,38 @@
   /**
    * Heidi Wang
    * Filters all the items for the ones that are in the selected categories.
+   * Includes sorting the results in the selected order.
    */
   async function filterItems() {
-    let cleared = true;
     let filters = document.querySelectorAll('input');
-    let selected = [];
+    let search = '';
     for (let i = 0; i < filters.length; i++) {
       if (filters[i].checked) {
-        selected.push(filters[i]);
-        cleared = false;
+        search += filters[i].name + ' ';
       }
     }
-    let search = '';
-    if (!cleared) {
-      for (let i = 0; i < selected.length - 1; i++) {
-        search += selected[i] + ' ';
-      }
-      search += selected[selected.length - 1];
-    }
+    search = search.trim();
     let sort = document.getElementById('sort');
     let order = sort.options[sort.selectedIndex].value;
-    await filterHelper(search, order);
+    await fillFilteredItems(search, order);
   }
 
   /**
-   *
-   * @param {string} search - the string of tags to filter for
+   * Heidi Wang
+   * Makes the API call to filter and sort the selected items.
+   * @param {string} search - the search by which to filter the items
+   * @param {string} order - the order in which to display the items
    */
-  async function filterHelper(search, order) {
+  async function fillFilteredItems(search, order) {
     try {
-      let filterPath = '/items?';
-      if (search) {
-        filterPath += 'search=' + search + '&';
-      }
-      filterPath += 'order=' + order;
-      let res = await fetch(filterPath);
+      let res = await fetch('/items?search=' + search + '&order=' + order);
       await statusCheck(res);
       res = await res.json();
-      console.log(res);
 
-      let items = document.querySelectorAll('section#items-container article');
-      for (let i = 0; i < items.length; i++) {
-        items[i].parentElement.removeChild(items[i]);
-      }
-      for (let j = 0; j < res.length; j++) {
-        for (let i = 0; i < items.length; i++) {
-          if (items[i].id === res[j]['id']) {
-            items[i].parentElement.appendChild(items[i]);
-            console.log(items[i]);
-          }
-        }
+      let itemsContainer = document.getElementById('items-container');
+      itemsContainer.innerHTML = '';
+      for (let i = 0; i < res.length; i++) {
+        itemsContainer.appendChild(fillItem(res[i]));
       }
     } catch (err) {
       console.error(err);

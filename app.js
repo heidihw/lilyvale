@@ -68,13 +68,13 @@ app.get('/items', async function(req, res) {
 function buildQueryItems(search, order) {
   let query = 'SELECT * FROM items WHERE';
   if (search) {
-    query += ' name LIKE $search OR desc LIKE $search OR tags LIKE $search AND';
+    query += ' (name LIKE $search OR desc LIKE $search OR tags LIKE $search) AND';
   }
   query += ' quantity > 0';
-  if (order === 'price') {
-    query += ' ORDER BY price';
-  } else if (order === 'name') {
+  if (order === 'name') {
     query += ' ORDER BY name';
+  } else if (order === 'price') {
+    query += ' ORDER BY price';
   } else if (order === 'rating') {
     query += ' ORDER BY rating';
   }
