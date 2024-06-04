@@ -73,7 +73,7 @@
    */
   function toPurchaseView() {
     toggleScreens.call(document.getElementById('nav-purchase'));
-    let id = this.parentElement.parentElement.querySelector('article').id.split('-')[1];
+    let prodId = this.parentElement.parentElement.querySelector('article').id.split('-')[1];
   }
 
   /**
@@ -110,16 +110,24 @@
     prodImg.src = 'imgs/' +prodData['0']['src'];
     prodImg.alt = prodData['0']['name'];
     prodListing.appendChild(prodImg);
-    let prodSection = makeProdInfo(prodData);
+    // let prodSection = makeProdInfo(prodData);
+    let prodSection = gen('section');
+    prodSection.id = 'item-' + prodData[0]['id'];
     prodListing.appendChild(prodSection);
+    let prodNodes = makeProdInfo(prodData);
     console.log(prodSection);
+    prodSection.appendChild(prodNodes[0]);
+    prodSection.appendChild(prodNodes[1]);
+    prodSection.appendChild(prodNodes[2]);
+    prodSection.appendChild(prodNodes[3]);
+    prodSection.appendChild(prodNodes[4]);
+    prodSection.appendChild(prodNodes[5]);
     id('product').appendChild(prodListing);
-    id('add-to-cart-btn').addEventListener('click', fillCart);
+    id('add-to-cart-btn').addEventListener('click', await fillCart);
   }
 
   function makeProdInfo(prodData) {
-    let prodSection = gen('section');
-    prodSection.id = 'item-' + prodData[0]['id'];
+    let arrayProdInfoNodes = [];
     let prodTitle = gen('h1');
     prodTitle.textContent = prodData['0']['name'];
     let rating = gen('p');
@@ -134,6 +142,13 @@
     descTitle.textContent = 'Description:';
     let desc = gen('p');
     desc.textContent = prodData[0]['desc'];
+    arrayProdInfoNodes.push(prodTitle);
+    arrayProdInfoNodes.push(rating);
+    arrayProdInfoNodes.push(price);
+    arrayProdInfoNodes.push(addToCart);
+    arrayProdInfoNodes.push(descTitle);
+    arrayProdInfoNodes.push(desc)
+    return arrayProdInfoNodes;
     prodSection.appendChild(prodTitle);
     prodSection.appendChild(rating);
     prodSection.appendChild(price);
