@@ -46,14 +46,14 @@
     });
 
     // Heidi: Initializes the toggles to sort and filter in the items view.
-    document.getElementById('sort').addEventListener('change', filterItems);
+    document.getElementById('sort').addEventListener('change', await filterItems);
     let filters = document.querySelectorAll('section#filters-container input');
     for (let i = 0; i < filters.length; i++) {
-      filters[i].addEventListener('change', filterItems);
+      filters[i].addEventListener('change', await filterItems);
     }
 
     // Heidi: Initializes the button to add an item to the cart.
-    document.getElementById('add-to-cart-btn').addEventListener('click', fillCart);
+    document.getElementById('add-to-cart-btn').addEventListener('click', await fillCart);
 
     /** Daria */
     id('index-items-btn').addEventListener('click', indexToItems);
@@ -65,10 +65,19 @@
     } else {
       loggedOutView();
     }
+    document.getElementById('confirm-transaction').addEventListener('click', toPurchaseView);
   }
 
   /**
-   * TODO Daria: implement viewProduct, dynamic product view
+   * TODO Daria: implement, making a transaction
+   */
+  function toPurchaseView() {
+    toggleScreens.call(document.getElementById('nav-purchase'));
+    let id = this.parentElement.parentElement.querySelector('article').id.split('-')[1];
+  }
+
+  /**
+   * TODO Daria: implement, dynamic product view
    */
   async function viewProduct() {
     toggleScreens.call(document.getElementById('nav-product'));
@@ -172,7 +181,7 @@
       id('password-input').value = '';
       id('login').classList.add('hidden');
       loginView();
-      fillHistory();
+      await fillHistory();
     } catch (err) {
       let errMessage = gen('p');
       errMessage.id = 'login-err-message';
@@ -190,7 +199,6 @@
     id('nav-login').classList.add('hidden');
     id('nav-cart').classList.remove('hidden');
     id('nav-history').classList.remove('hidden');
-    id('nav-purchase').classList.remove('hidden');
     if (id('index').classList.contains('hidden')) {
       id('index').classList.remove('hidden');
     }
@@ -213,11 +221,9 @@
     id('nav-login').classList.remove('hidden');
     id('nav-cart').classList.add('hidden');
     id('nav-history').classList.add('hidden');
-    id('nav-purchase').classList.add('hidden');
     if (id('index').classList.contains('hidden')) {
       id('index').classList.remove('hidden');
     }
-    document.getElementById('nav-product').classList.add('hidden');
   }
 
   /**
@@ -319,7 +325,7 @@
    * Heidi Wang
    * Searches the items for the given search term. Displays only the matching items.
    */
-  async function makeSearch() {
+  function makeSearch() {
     toggleScreens.call(document.getElementById('nav-items'));
     let searchTerm = document.getElementById('search-term').value.trim();
     fillFilteredItems(searchTerm, '');

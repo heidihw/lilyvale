@@ -201,7 +201,7 @@ async function dbSelectItemWithId(id) {
  */
 async function purchaseItem(id, uid) {
   let db = await getDBConnection();
-  await db.exec('UPDATE items SET quantity = quantity - 1 WHERE id = ?;', [id]); // query2
+  await db.run('UPDATE items SET quantity = quantity - 1 WHERE id = ?;', [id]); // query2
   let query3 = 'INSERT INTO purchases(id, uid) VALUES (?, ?);';
   let data3 = await db.run(query3, [id, uid]);
   let data4 = await db.get('SELECT * FROM purchases WHERE pid = ?;', [data3.lastID]);
@@ -243,6 +243,7 @@ app.get('/history', async function(req, res) {
  * Heidi Wang
  * Endpoint 6: Give feedback
  * Writes a new review. Returns the information for the posted review.
+ * Error handling needed to be combined to resolve the linter 30 max-lines-per-function error.
  * POST parameters: title, rating, description
  */
 app.post('/feedback', async function(req, res) {
@@ -253,28 +254,18 @@ app.post('/feedback', async function(req, res) {
     let description = req.body.description;
     let uid = req.cookies['uid'];
     if (id && title && rating && description) {
-      if (uid) {
-        if (await dbSelectItemWithId(id)) {
-          let data2 = await dbSelectPurchaseWithIdUid(id, uid);
-          if (data2) {
-            if (!await dbSelectReviewWithPid(data2['pid'])) {
-              let data9 = await addReview(id, uid, data2['pid'], title, rating, description);
-              res.type('json').send(data9);
-            } else {
-              res.type('text').status(400)
-                .send('User has already reviewed this item.');
-            }
-          } else {
-            res.type('text').status(400)
-              .send('User has not purchased this item before.');
-          }
+      if (uid && await dbSelectItemWithId(id)) {
+        let data2 = await dbSelectPurchaseWithIdUid(id, uid);
+        if (data2 && !await dbSelectReviewWithPid(data2['pid'])) {
+          let data9 = await addReview(id, uid, data2['pid'], title, rating, description);
+          res.type('json').send(data9);
         } else {
           res.type('text').status(400)
-            .send('Item does not exist.');
+            .send('User has already reviewed this item or has not purchased this item before.');
         }
       } else {
         res.type('text').status(400)
-          .send('User not logged in.');
+          .send('Item does not exist or user is not logged in.');
       }
     } else {
       res.type('text').status(400)
@@ -340,9 +331,9 @@ async function addReview(id, uid, pid, title, rating, desc) {
   let query7 = 'UPDATE items SET rating = ? WHERE id = ?;';
   if (data6['rating']) {
     let overall = (data6['rating'] * (data5.length - 1) + rating) / data5.length;
-    await db.exec(query7, [overall, id]); // query8
+    await db.run(query7, [overall, id]); // query8
   } else {
-    await db.exec(query7, [rating, id]); // query8
+    await db.run(query7, [rating, id]); // query8
   }
 
   let data9 = await db.get('SELECT * FROM reviews WHERE rid = ?;', [data4.lastID]);
