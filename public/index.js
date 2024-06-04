@@ -79,7 +79,8 @@
   }
 
   /**
-   * TODO Daria: implement, dynamic product view
+   * Allows the user to see detailed information about a specific product as well as its
+   * ratings.
    */
   async function viewProduct() {
     toggleScreens.call(document.getElementById('nav-product'));
@@ -101,6 +102,11 @@
     }
   }
 
+  /**
+   * Creates the card displaying specific product information for the website
+   * @param {object} prodData - object containing detailed information about a specific
+   *                            product
+   */
   async function makeProdCard(prodData) {
     if (id('prod-listing')) {
       id('prod-listing').remove();
@@ -131,6 +137,12 @@
     }
   }
 
+  /**
+   * Creates the nodes needed to display the actual product information.
+   * @param {object} prodData - object containing detailed information about a specific
+   *                            product
+   * @returns {array} Html nodes containing the actual data
+   */
   function makeProdInfo(prodData) {
     let arrayProdInfoNodes = [];
     let prodTitle = gen('h1');
