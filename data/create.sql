@@ -4,6 +4,13 @@
 
 -- CREATE TABLE and INSERT statements to initialize the database.
 
+-- DROP TABLES for if needing to restart
+
+DROP TABLE reviews;
+DROP TABLE purchases;
+DROP TABLE users;
+DROP TABLE items;
+
 -- CREATE TABLE
 
 CREATE TABLE items (
@@ -40,7 +47,6 @@ CREATE TABLE reviews (
   rating INTEGER,
   desc TEXT
 );
-
 
 -- INSERT INTO
 
@@ -246,17 +252,19 @@ INSERT INTO items(name, price, rating, tags, desc, quantity, src) VALUES (
   "gojo-nendoroid.jpeg"
 );
 
+-- users
+
 INSERT INTO users(username, password, email) VALUES ('john', 'abc123', 'example@email.com');
 INSERT INTO users(username, password, email) VALUES ('jill', 'def456', 'example2@email.com');
 
-
+-- purchases
 
 INSERT INTO purchases(id, uid, time) VALUES (1, 1, '2024-03-12 16:39:02');
 INSERT INTO purchases(id, uid, time) VALUES (2, 1, '2024-03-12 18:23:47');
 INSERT INTO purchases(id, uid, time) VALUES (6, 1, '2024-03-13 20:00:00');
 INSERT INTO purchases(id, uid, time) VALUES (6, 2, '2024-03-14 20:00:00');
 
-
+-- reviews
 
 INSERT INTO reviews(id, uid, pid, title, rating, desc)
 VALUES (1, 1, 1, "Cool!", 5, "Omg! I love itttt!");
@@ -266,14 +274,3 @@ VALUES (6, 1, 3, "Cool!", 5, "Omg! I love itttt!");
 
 INSERT INTO reviews(id, uid, pid, title, rating, desc)
 VALUES (6, 2, 4, "Woahhhhh", 5, "This nendoroid is so adorable! I'm so glad I bought it");
-
-
-
-
--- drop tables for if needing to restart
-
-DROP TABLE tags;
-DROP TABLE reviews;
-DROP TABLE purchases;
-DROP TABLE users;
-DROP TABLE items;
