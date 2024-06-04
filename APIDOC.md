@@ -246,10 +246,8 @@ Additional Feature 1
 **Error Handling:**
 
 - Possible 400 (invalid request) errors (all plain text):
-  - If user has already reviewed this item, returns error with `User has already reviewed this item.`
-  - If user has not purchased the item before, returns error with `User has not purchased this item before.`
-  - If item id is invalid, returns error with `Item does not exist.`
-  - If user is not logged in, returns error with `User not logged in.`
+  - If user has already reviewed this item or has not purchased the item before, returns error with `User has already reviewed this item or has not purchased this item before.`
+  - If item id is invalid or user is not logged in, returns error with `Item does not exist or user is not logged in.`
   - If any of the required parameters is missing, responds in plain text with the message `Missing required params.`
 - Possible 500 errors (all plain text):
   - If something goes wrong on the server, returns error with `Something went wrong. Please try again later.`
