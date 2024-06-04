@@ -65,10 +65,19 @@
     } else {
       loggedOutView();
     }
+    document.getElementById('confirm-transaction').addEventListener('click', toPurchaseView);
   }
 
   /**
-   * TODO Daria: implement viewProduct, dynamic product view
+   * TODO Daria: implement, making a transaction
+   */
+  function toPurchaseView() {
+    toggleScreens.call(document.getElementById('nav-purchase'));
+    let id = this.parentElement.parentElement.querySelector('article').id.split('-')[1];
+  }
+
+  /**
+   * TODO Daria: implement, dynamic product view
    */
   function viewProduct() {
     toggleScreens.call(document.getElementById('nav-product'));
@@ -148,7 +157,6 @@
     id('nav-login').classList.add('hidden');
     id('nav-cart').classList.remove('hidden');
     id('nav-history').classList.remove('hidden');
-    id('nav-purchase').classList.remove('hidden');
     if (id('index').classList.contains('hidden')) {
       id('index').classList.remove('hidden');
     }
@@ -171,11 +179,9 @@
     id('nav-login').classList.remove('hidden');
     id('nav-cart').classList.add('hidden');
     id('nav-history').classList.add('hidden');
-    id('nav-purchase').classList.add('hidden');
     if (id('index').classList.contains('hidden')) {
       id('index').classList.remove('hidden');
     }
-    document.getElementById('nav-product').classList.add('hidden');
   }
 
   /**
