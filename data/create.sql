@@ -44,9 +44,6 @@ CREATE TABLE reviews (
 
 -- INSERT INTO
 
--- TODO Daria: make INSERT statements to replace placeholder data with real data
--- TODO Daria: rename image files with the name of the item
-
 INSERT INTO items(name, price, rating, tags, desc, quantity, src) VALUES (
   "Haikyu!! Shoyo Hinata Crow 5 Inch Plush", 8, 0, "plush haikyuu n10-20",
   "Officially licensed Shoyo Hinata Plush! 100% polyester", 5,
