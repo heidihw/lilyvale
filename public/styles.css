@@ -169,7 +169,7 @@ section#items-container.grid-layout article {
   margin: 5px 5px 0 0;
   padding: 0 5px 0;
   width: 150px;
-  height: 260px;
+  /* height: 260px; */
 }
 
 /* in an item, the img */
@@ -211,6 +211,10 @@ section.grid-layout div.text {
 
 section#cart p, section#history p, section#items p {
   margin: 0;
+}
+
+div.text p.listing-link:hover {
+  cursor: pointer;
 }
 
 /*

@@ -68,6 +68,13 @@
   }
 
   /**
+   * TODO Daria: implement viewProduct, dynamic product view
+   */
+  function viewProduct() {
+    toggleScreens.call(document.getElementById('nav-product'));
+  }
+
+  /**
    * Switches from main index view to item view when button is clicked.
    */
   function indexToItems() {
@@ -324,6 +331,7 @@
     let name = document.createElement('p');
     name.classList.add('listing-link');
     name.textContent = res['name'];
+    name.addEventListener('click', viewProduct);
     text.appendChild(name);
     let price = document.createElement('p');
     price.textContent = '$' + res['price'];
