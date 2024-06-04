@@ -87,9 +87,11 @@
       let prodData = await fetchProdData.json();
       await makeProdCard(prodData);
     } catch (err) {
-      console.log(err)
+      let errMessage = gen('p');
+      errMessage.id = 'view-prod-err';
+      errMessage.textContent = 'Oh no! Try again later!';
+      document.getElementById('product').appendChild(errMessage);
     }
-
   }
 
   async function makeProdCard(prodData) {

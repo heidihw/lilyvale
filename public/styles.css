@@ -302,3 +302,7 @@ section#index #secondary img {
   flex-direction: column;
   align-items: baseline;
 }
+
+#view-prod-err {
+  font-size: 50px;
+}
