@@ -199,8 +199,8 @@
   }
 
   /**
-   *
-   * @param {*} reviewInfo
+   * Creates cards for an individual review.
+   * @param {object} reviewInfo - object containing data about a specific review.
    * @returns {HTMLNode} section node containing parts of a review including title, rating,
    *                     name of user writing the review, and description.
    */
@@ -344,7 +344,7 @@
     let heading = createLabel('Title', 'title-input');
     let titleInput = gen('input');
     titleInput.id = 'title-input';
-    titleInput.name = 'title'
+    titleInput.name = 'title';
     titleInput.type = 'text';
     titleInput.required = true;
     divContainer.appendChild(heading);
@@ -364,7 +364,7 @@
     ratingInput.type = 'number';
     ratingInput.min = 1;
     ratingInput.max = 5;
-    ratingInput.required;
+    ratingInput.required = true;
     divContainer.appendChild(heading);
     divContainer.appendChild(ratingInput);
     id('review-form').appendChild(divContainer);
@@ -414,10 +414,11 @@
   }
 
   /**
-   * Creates a portion of what will be part of the form to write a review.
+   * Creates labels for the review form.
    * @param {string} text - header for the specific portion of the review form.
    * @param {string} content - signifies what part of the form a user is writing in.
    */
+
   function createLabel(text, content) {
     let label = gen('label');
     label.textContent = text;
