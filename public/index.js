@@ -60,7 +60,7 @@
     id('new-user-form').addEventListener('submit', makeNewUser);
     id('login-form').addEventListener('submit', loginUser);
     id('nav-logout').addEventListener('click', loggingOut);
-    if (sessionStorage.getItem('username')) {
+    if (document.cookie.split('=')[1]) {
       loginView();
     } else {
       loggedOutView();
@@ -110,7 +110,6 @@
     prodImg.src = 'imgs/' +prodData['0']['src'];
     prodImg.alt = prodData['0']['name'];
     prodListing.appendChild(prodImg);
-    // let prodSection = makeProdInfo(prodData);
     let prodSection = gen('section');
     prodSection.id = 'item-' + prodData[0]['id'];
     prodListing.appendChild(prodSection);
@@ -123,7 +122,13 @@
     prodSection.appendChild(prodNodes[4]);
     prodSection.appendChild(prodNodes[5]);
     id('product').appendChild(prodListing);
-    id('add-to-cart-btn').addEventListener('click', await fillCart);
+    if (document.cookie.split('=')[1]) {
+      id('add-to-cart-btn').addEventListener('click', await fillCart);
+    } else {
+      id('add-to-cart-btn').addEventListener('click',  () => {
+        toggleScreens.call(document.getElementById('nav-login'));
+      })
+    }
   }
 
   function makeProdInfo(prodData) {
@@ -149,13 +154,6 @@
     arrayProdInfoNodes.push(descTitle);
     arrayProdInfoNodes.push(desc)
     return arrayProdInfoNodes;
-    prodSection.appendChild(prodTitle);
-    prodSection.appendChild(rating);
-    prodSection.appendChild(price);
-    prodSection.appendChild(addToCart);
-    prodSection.appendChild(descTitle);
-    prodSection.appendChild(desc);
-    return prodSection;
   }
 
   /**
@@ -209,7 +207,6 @@
       let userDataForm = await fetch('/login', {method: 'POST', body: userData});
       await statusCheck(userDataForm);
       await userDataForm.text();
-      console.log(document.cookie);
       id('username-input').value = '';
       id('password-input').value = '';
       id('login').classList.add('hidden');
@@ -239,7 +236,7 @@
    * Logs a user out of the website
    */
   function loggingOut() {
-    sessionStorage.removeItem('username');
+    document.cookie = 'uid=';
     loggedOutView();
   }
 
